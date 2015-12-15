@@ -3,17 +3,17 @@ import ROOT,math,array
 # Define the input ROOT files
 def getROOTFileName(filename):
     return {
-        "Sherpa_lvlv"     : "/gdata/atlas/amete/MC15_ModelingUncertainties/FlatNtuples/mc15_13TeV.361068.TRUTH1.root", 
-        "Powheg_WWlvlv"   : "/gdata/atlas/amete/MC15_ModelingUncertainties/FlatNtuples/mc15_13TeV.361600.TRUTH1.root",
-        "Powheg_ZZllvv"   : "/gdata/atlas/amete/MC15_ModelingUncertainties/FlatNtuples/mc15_13TeV.361604.TRUTH1.root",
-        "Powheg_ttbar"    : "/gdata/atlas/amete/MC15_ModelingUncertainties/FlatNtuples/mc15_13TeV.410000.TRUTH1.root",
-        "aMCatNLO_ttbar"  : "/gdata/atlas/amete/MC15_ModelingUncertainties/FlatNtuples/mc15_13TeV.410003.TRUTH1.root",
+        "Sherpa_lvlv"     : "/gdata/atlas/amete/MC15_ModelingUncertainties/FlatNtuples/truth_v3/mc15_13TeV.361068.TRUTH1.root", 
+        "Powheg_WWlvlv"   : "/gdata/atlas/amete/MC15_ModelingUncertainties/FlatNtuples/truth_v3/mc15_13TeV.361600.TRUTH1.root",
+        "Powheg_ZZllvv"   : "/gdata/atlas/amete/MC15_ModelingUncertainties/FlatNtuples/truth_v3/mc15_13TeV.361604.TRUTH1.root",
+        "Powheg_ttbar"    : "/gdata/atlas/amete/MC15_ModelingUncertainties/FlatNtuples/truth_v3/mc15_13TeV.410000.TRUTH1.root",
+        "aMCatNLO_ttbar"  : "/gdata/atlas/amete/MC15_ModelingUncertainties/FlatNtuples/truth_v3/mc15_13TeV.410003.TRUTH1.root",
     }.get(filename,"")
 
 # Define cross-sections
 def getCrossSection(filename):
     return {
-        "Sherpa_lvlv"   : 14.022,       # 361068
+        "Sherpa_lvlv"   : 14.022*0.91,  # 361068 https://twiki.cern.ch/twiki/bin/view/AtlasProtected/MC15SystematicUncertainties#VV_Diboson_V_W_Z 24/11/15
         "Powheg_WWlvlv" : 10.631,       # 361600
         "Powheg_ZZllvv" : 0.92498,      # 361604 
         "Powheg_ttbar"  : 831.76*0.543, # 410000
@@ -58,31 +58,34 @@ def getXtitle(variable):
 # Define region cuts
 def getRegionTCut(region):
     return {
-        "SR_SF"      : "isSF && mll > 20. && (mll<71.||mll>111.) && mT2ll>145.0 && r1>0.3" ,
-        "CR_SF"      : "isSF && mll > 20. && (mT2ll>60.  && mT2ll<110.) && pbll<20. && r1>0.4 && TMath::Abs(dphi_met_pbll)<1.5",
-        "VR_SF"      : "isSF && (mll>71.&&mll<111.) && mT2ll>110. && r1>0.3",
-        "SR_DF"      : "isDF && mll > 20. && mT2ll>145.0 && r1>0.3" ,
-        "CR_DF"      : "isDF && mll > 20. && (mT2ll>60.  && mT2ll<110.) && pbll<20. && r1>0.4",
-        "VR_DF"      : "isDF && mll > 20. && (mT2ll>110. && mT2ll<145.) && r1>0.3",
-        "VR_DF_2"    : "isDF && mll > 20. && (mT2ll>40.  && mT2ll<60. ) && pbll<20. && r1>0.4",
-        "CR_TOP"     : "isDF && mll > 20. && (mT2ll>60.  && mT2ll<110.) && pbll>30. && r1<0.4",
-        "VR_DF_INC"  : "isDF && lepton_pt[0]>20. && lepton_pt[1]>20. && mll>20.",
-        "VR_SF_INC"  : "isSF && lepton_pt[0]>20. && lepton_pt[1]>20. && mll>20.",
+        "SR_ALL_TOP" : "(isDF || (isSF && (mll<71.||mll>111.)) ) && mll > 20. && mT2ll>100.0 && r1>0.3 && (lepton_type[0]==2||lepton_type[0]==6) && (lepton_type[1]==2||lepton_type[1]==6)" ,
+        "SR_ALL_NOMT2" : "(isDF || (isSF && (mll<71.||mll>111.)) ) && mll > 20. && r1>0.3 && (lepton_type[0]==2||lepton_type[0]==6) && (lepton_type[1]==2||lepton_type[1]==6)" ,
+        "SR_ALL"     : "(isDF || (isSF && (mll<71.||mll>111.)) ) && mll > 20. && mT2ll>145.0 && r1>0.3 && (lepton_type[0]==2||lepton_type[0]==6) && (lepton_type[1]==2||lepton_type[1]==6)" ,
+        "SR_SF"      : "isSF && mll > 20. && (mll<71.||mll>111.) && mT2ll>145.0 && r1>0.3 && (lepton_type[0]==2||lepton_type[0]==6) && (lepton_type[1]==2||lepton_type[1]==6)" ,
+        "CR_SF"      : "isSF && mll > 20. && (mT2ll>60.  && mT2ll<110.) && pbll<20. && r1>0.4 && TMath::Abs(dphi_met_pbll)<1.5 && (lepton_type[0]==2||lepton_type[0]==6) && (lepton_type[1]==2||lepton_type[1]==6)",
+        "VR_SF"      : "isSF && (mll>71.&&mll<111.) && mT2ll>110. && r1>0.3 && (lepton_type[0]==2||lepton_type[0]==6) && (lepton_type[1]==2||lepton_type[1]==6)",
+        "SR_DF"      : "isDF && mll > 20. && mT2ll>145.0 && r1>0.3 && (lepton_type[0]==2||lepton_type[0]==6) && (lepton_type[1]==2||lepton_type[1]==6)" ,
+        "CR_DF"      : "isDF && mll > 20. && (mT2ll>60.  && mT2ll<110.) && pbll<20. && r1>0.4 && (lepton_type[0]==2||lepton_type[0]==6) && (lepton_type[1]==2||lepton_type[1]==6)",
+        "VR_DF"      : "isDF && mll > 20. && (mT2ll>110. && mT2ll<145.) && r1>0.3 && (lepton_type[0]==2||lepton_type[0]==6) && (lepton_type[1]==2||lepton_type[1]==6)",
+        "VR_DF_2"    : "isDF && mll > 20. && (mT2ll>40.  && mT2ll<60. ) && pbll<20. && r1>0.4 && (lepton_type[0]==2||lepton_type[0]==6) && (lepton_type[1]==2||lepton_type[1]==6)",
+        "CR_TOP"     : "isDF && mll > 20. && (mT2ll>60.  && mT2ll<110.) && pbll>30. && r1<0.4 && (lepton_type[0]==2||lepton_type[0]==6) && (lepton_type[1]==2||lepton_type[1]==6)",
+        "VR_DF_INC"  : "isDF && lepton_pt[0]>20. && lepton_pt[1]>20. && mll>20. && (lepton_type[0]==2||lepton_type[0]==6) && (lepton_type[1]==2||lepton_type[1]==6)",
+        "VR_SF_INC"  : "isSF && lepton_pt[0]>20. && lepton_pt[1]>20. && mll>20. && (lepton_type[0]==2||lepton_type[0]==6) && (lepton_type[1]==2||lepton_type[1]==6)",
     }.get(region,"1") # 1 is default if region is not found
 
 # Define histogram bins
 def getBinInformation(variable):
     return {
         "lepton_n"      : [ 10, 0, 10],
-        "jet_n"         : [ 10, 0, 10],
+        "jet_n"         : [ 20, 0, 20],
         "lepton_pt"     : [[0,20,40,60,80,100,120,140,160,180,200,225,250,300,400,500,1000]],
         "jet_pt"        : [[0,20,40,60,80,100,120,140,160,180,200,225,250,300,400,500,1000]],
         "lepton_eta"    : [50,-2.5,2.5],
         "jet_eta"       : [90,-4.5,4.5],
         "lepton_phi"    : [70,-3.5,3.5],
         "jet_phi"       : [70,-3.5,3.5],
-        "mll"           : [[0,20,40,60,80,100,120,140,160,180,200,225,250,300,400,500,1000]],
         "mT2ll"         : [[0,10,20,30,40,50,60,70,80,90,100,115,130,145,300]],
+        "mll"           : [[0,20,40,60,80,100,120,140,160,180,200,220,240,260,280,300,320,340,360,400,500,1000]],
         "met_et"        : [[0,20,40,60,80,100,120,140,160,180,200,225,250,300,400,500,1000]],
         "met_phi"       : [70,-3.5,3.5],
         "pbll"          : [[0,20,40,60,80,100,120,140,160,180,200,225,250,300,400,500,1000]],

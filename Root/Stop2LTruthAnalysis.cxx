@@ -15,6 +15,7 @@
 // EDM include(s):
 #include "xAODEventInfo/EventInfo.h"
 //#include "xAODTruth/TruthEventContainer.h"
+#include "xAODTruth/TruthVertex.h"
 #include "xAODTruth/TruthParticle.h"
 #include "xAODTruth/TruthParticleContainer.h"
 #include "xAODMissingET/MissingETContainer.h"
@@ -207,6 +208,7 @@ EL::StatusCode Stop2LTruthAnalysis :: histInitialize ()
     outputTree->Branch("lepton_type"   /* "typeleptons"   */, &m_br_lepton_type   ); 
     outputTree->Branch("lepton_origin" /* "originleptons" */, &m_br_lepton_origin ); 
     outputTree->Branch("lepton_mother" /* "motherleptons" */, &m_br_lepton_mother ); 
+    outputTree->Branch("lepton_mother_mass" /* "motherleptons" */, &m_br_lepton_mother_mass ); 
     outputTree->Branch("jet_pt"        /* "ptjets"        */, &m_br_jet_pt        ); 
     outputTree->Branch("jet_eta"       /* "etajets"       */, &m_br_jet_eta       ); 
     outputTree->Branch("jet_phi"       /* "phijets"       */, &m_br_jet_phi       ); 
@@ -289,6 +291,7 @@ EL::StatusCode Stop2LTruthAnalysis :: execute ()
     m_br_lepton_type.clear();
     m_br_lepton_origin.clear();
     m_br_lepton_mother.clear();
+    m_br_lepton_mother_mass.clear();
     m_br_jet_pt.clear(); 
     m_br_jet_eta.clear(); 
     m_br_jet_phi.clear(); 
@@ -590,8 +593,9 @@ EL::StatusCode Stop2LTruthAnalysis :: execute ()
   double meff = lep0_tlv.Pt()+lep1_tlv.Pt()+met_tlv.Pt();
   int jCounter = 0; 
   for(const auto& ijet : *jets) {
+    if(jCounter==2)                    break;    // only add first two jets
     if(ijet->p4().Pt()*MEVtoGEV < 50.) continue; // only jets w/ pt > 50 GeV 
-    if(jCounter>=2) break; // only add first two jets
+    if(fabs(ijet->eta()) > 2.5)        continue; // only jets w/ |eta| < 2.5 
     meff += ijet->p4().Pt();
     jCounter++;
   }
@@ -666,42 +670,20 @@ EL::StatusCode Stop2LTruthAnalysis :: execute ()
       m_br_lepton_flav.push_back(ipar->pdgId());
       m_br_lepton_type.push_back(ipar->auxdata< unsigned int >("classifierParticleType"));
       m_br_lepton_origin.push_back(ipar->auxdata< unsigned int >("classifierParticleOrigin"));
-      ///int lep_type = -999; int lep_origin = -999;
-      ///if(m_mcTruthClassifier!=nullptr) { 
-      ///  std::pair<MCTruthPartClassifier::ParticleType,MCTruthPartClassifier::ParticleOrigin>
-      ///  classification = m_mcTruthClassifier->particleTruthClassifier(ipar); 
-      ///  lep_type   = classification.first;
-      ///  lep_origin = classification.second;
-      ///  //Info("execute()","Type %i origin %i", lep_type, lep_origin);
-      ///}
-      ///m_br_lepton_type.push_back(lep_type);
-      ///m_br_lepton_origin.push_back(lep_origin);
-      ////////////////////////////////////////////
-      ///// Home cooked classification
-      ///bool selfDecay=false;
-      ///unsigned int infCount = 0, infLimit = 50; 
-      ///const xAOD::TruthParticle* mother = nullptr;
-      ///const xAOD::TruthParticle* curPar = ipar;
-      /////Info("loop()","\t\t\tLepton status %i pdgId %i px %.2f GeV py %.2f GeV pz %.2f GeV",ipar->status(),ipar->pdgId(),ipar_tlv.Px()*MEVtoGEV,ipar_tlv.Py()*MEVtoGEV,ipar_tlv.Pz()*MEVtoGEV);
-      ///for(unsigned int ii=0; ii < curPar->nParents(); ++ii) {
-      ///  //Info("for()","\t\t\t\tMother status %i pdgId %i px %.2f GeV py %.2f GeV pz %.2f GeV",curPar->parent(ii)->status(),curPar->parent(ii)->pdgId(),curPar->parent(ii)->p4().Px()*MEVtoGEV,curPar->parent(ii)->p4().Py()*MEVtoGEV,curPar->parent(ii)->p4().Pz()*MEVtoGEV);
-      ///}
-      ///do{
-      ///  infCount++; // Against Sherpa self copy
-      ///  for(unsigned int ii=0; ii < curPar->nParents(); ++ii) {
-      ///    selfDecay=false;
-      ///    if(curPar->parent(ii)->pdgId()==curPar->pdgId()) {
-      ///      curPar = curPar->parent(ii);
-      ///      selfDecay = true;
-      ///      break; 
-      ///    } else { // possibly make some selection?
-      ///      mother = curPar->parent(ii);
-      ///    }
-      ///  }
-      ///} while(selfDecay && infCount<infLimit);
-      ///m_br_lepton_mother.push_back(infCount<infLimit ? mother->pdgId() : 0);
-      /////Info("execute()","Lepton pdgId %i has mother pdgId %i",ipar->pdgId(),(infCount<infLimit ? mother->pdgId() : 0));
-      ////////////////////////////////////////////
+      /////////////////////////////////////////
+      // Home cooked classification 
+      // TRUTH1 doesn't have vertices or mothers for leptons in the TruthElectron/TruthMuon containers!!!
+      const xAOD::TruthVertex* partOriVert = ipar->hasProdVtx() ? ipar->prodVtx():0;
+      const xAOD::TruthParticle* mother = nullptr;
+      if( partOriVert!=0 ) {
+        for (unsigned int ipIn=0; ipIn<partOriVert->nIncomingParticles(); ++ipIn) {
+          if(!(partOriVert->incomingParticle(ipIn))) continue;
+          mother = partOriVert->incomingParticle(ipIn);
+        }
+      }
+      m_br_lepton_mother.push_back(mother!=nullptr ? mother->pdgId() : 0);
+      m_br_lepton_mother_mass.push_back(mother!=nullptr ? mother->p4().M()*MEVtoGEV : 0);
+      /////////////////////////////////////////
     }
     // Jets
     for(const auto& ipar : *jets) {

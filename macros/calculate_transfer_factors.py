@@ -32,18 +32,24 @@ def main():
         options.varname    = "r1"                                       # Dummy variable
         options.regionname = "SR_SF,CR_SF"                              # 0 is SR 1 is CR
         options.luminosity = 3340.000                                   # Luminosity should cancel in the calculation
-    elif options.process == "TOP_DF":
+    elif options.process == "TOP_ALL":
         options.inputname  = "Powheg_ttbar,aMCatNLO_ttbar"              # Samples to be used, first one is nominal
         options.grouping   = "NONE"                                     # Combination : first one is nominal
         options.varname    = "r1"                                       # Dummy variable
-        options.regionname = "SR_DF,CR_TOP"                             # 0 is SR 1 is CR
+        options.regionname = "SR_ALL,CR_TOP"                            # 0 is SR 1 is CR
         options.luminosity = 3340.000                                   # Luminosity should cancel in the calculation
-    elif options.process == "TOP_SF":
-        options.inputname  = "Powheg_ttbar,aMCatNLO_ttbar"              # Samples to be used, first one is nominal
-        options.grouping   = "NONE"                                     # Combination : first one is nominal
-        options.varname    = "r1"                                       # Dummy variable
-        options.regionname = "SR_SF,CR_TOP"                             # 0 is SR 1 is CR
-        options.luminosity = 3340.000                                   # Luminosity should cancel in the calculation
+    #elif options.process == "TOP_DF":
+    #    options.inputname  = "Powheg_ttbar,aMCatNLO_ttbar"              # Samples to be used, first one is nominal
+    #    options.grouping   = "NONE"                                     # Combination : first one is nominal
+    #    options.varname    = "r1"                                       # Dummy variable
+    #    options.regionname = "SR_DF,CR_TOP"                             # 0 is SR 1 is CR
+    #    options.luminosity = 3340.000                                   # Luminosity should cancel in the calculation
+    #elif options.process == "TOP_SF":
+    #    options.inputname  = "Powheg_ttbar,aMCatNLO_ttbar"              # Samples to be used, first one is nominal
+    #    options.grouping   = "NONE"                                     # Combination : first one is nominal
+    #    options.varname    = "r1"                                       # Dummy variable
+    #    options.regionname = "SR_SF,CR_TOP"                             # 0 is SR 1 is CR
+    #    options.luminosity = 3340.000                                   # Luminosity should cancel in the calculation
     else:
         print("ERROR :: Unknown process %s, quitting..." %(options.process))
         return
@@ -75,7 +81,8 @@ def main():
         control_region_unc   = ROOT.Double(0.)
         control_region_count = histogramsGrouped[ii][1][0].IntegralAndError(0,-1,control_region_unc)
         transfer_factors[ii] = signal_region_count/control_region_count 
-        print("Sample %s \t (%.2f fb-1) SR count %.2e +/- %.2e (%3.2f%%) CR count %.2e +/- %.2e (%3.2f%%) TF is %.2e"
+        #print("Sample %s \t (%.2f fb-1) SR count %.2e +/- %.2e (%3.2f%%) CR count %.2e +/- %.2e (%3.2f%%) TF is %.2e"
+        print("Sample %s \t (%.2f fb-1) SR count %.2f +/- %.2f (%3.2f%%) CR count %.2f +/- %.2f (%3.2f%%) TF is %.2e"
                 %(groupList[ii]         ,options.luminosity*1.e-3,
                   signal_region_count   ,signal_region_unc, (signal_region_unc/signal_region_count)*100,
                   control_region_count  ,control_region_unc, (control_region_unc/control_region_count)*100,

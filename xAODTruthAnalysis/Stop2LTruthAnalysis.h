@@ -49,6 +49,7 @@ public:
   std::vector<unsigned int>  m_br_lepton_type; //!
   std::vector<unsigned int>  m_br_lepton_origin; //!
   std::vector<int>   m_br_lepton_mother; //!
+  std::vector<float> m_br_lepton_mother_mass; //!
   std::vector<float> m_br_jet_pt; //!
   std::vector<float> m_br_jet_eta; //!
   std::vector<float> m_br_jet_phi; //!

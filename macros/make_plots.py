@@ -106,7 +106,7 @@ def main():
                         legend.AddEntry(histogramsGrouped[kk][ii][jj],inputFile,"l")
                 # Histograms are scaled in fillHistograms
                 # but here we can scale them to unity to check the shapes
-                # scaleToUnity(histogramsGrouped[kk][ii][jj]) 
+                #scaleToUnity(histogramsGrouped[kk][ii][jj]) 
                 # Add the overflow to last bin before plotting
                 addOverFlowToLastBin(histogramsGrouped[kk][ii][jj]) 
                 # Draw onto canvas
@@ -124,7 +124,7 @@ def main():
                 histogramsGrouped[kk][ii][jj].GetYaxis().SetTitle("Events")
                 histogramsGrouped[kk][ii][jj].GetYaxis().SetTitleOffset(1.3)
                 if options.log:
-                    histogramsGrouped[kk][ii][jj].GetYaxis().SetRangeUser(1.e-2,1.e1*pow(10,math.ceil(math.log(histogramsGrouped[kk][ii][jj].GetMaximum())/math.log(10))))
+                    histogramsGrouped[kk][ii][jj].GetYaxis().SetRangeUser(1.e-2,1.e2*pow(10,math.ceil(math.log(histogramsGrouped[kk][ii][jj].GetMaximum())/math.log(10))))
                 else:
                     histogramsGrouped[kk][ii][jj].GetYaxis().SetRangeUser(0.,1.5*histogramsGrouped[kk][ii][jj].GetMaximum())
                 # Calculate the ratio
