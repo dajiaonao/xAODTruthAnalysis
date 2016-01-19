@@ -152,7 +152,10 @@ int main( int argc, char* argv[] ) {
     driver.submit( job, outputPath );
   } else {
     EL::PrunDriver driver;
-    driver.options()->setString("nc_outputSampleName", "user.amete."+prodTag+".%in:name[2]%.%in:name[6]%");
+    // Official sample
+    //driver.options()->setString("nc_outputSampleName", "user.amete."+prodTag+".%in:name[2]%.%in:name[6]%");
+    // User sample
+    driver.options()->setString("nc_outputSampleName", "user.amete."+prodTag+".%in:name[4]%.%in:name[6]%");
     driver.submitOnly( job, outputPath );
   }
 

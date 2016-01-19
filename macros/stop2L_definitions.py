@@ -3,21 +3,27 @@ import ROOT,math,array
 # Define the input ROOT files
 def getROOTFileName(filename):
     return {
-        "Sherpa_lvlv"     : "/gdata/atlas/amete/MC15_ModelingUncertainties/FlatNtuples/truth_v3/mc15_13TeV.361068.TRUTH1.root", 
-        "Powheg_WWlvlv"   : "/gdata/atlas/amete/MC15_ModelingUncertainties/FlatNtuples/truth_v3/mc15_13TeV.361600.TRUTH1.root",
-        "Powheg_ZZllvv"   : "/gdata/atlas/amete/MC15_ModelingUncertainties/FlatNtuples/truth_v3/mc15_13TeV.361604.TRUTH1.root",
-        "Powheg_ttbar"    : "/gdata/atlas/amete/MC15_ModelingUncertainties/FlatNtuples/truth_v3/mc15_13TeV.410000.TRUTH1.root",
-        "aMCatNLO_ttbar"  : "/gdata/atlas/amete/MC15_ModelingUncertainties/FlatNtuples/truth_v3/mc15_13TeV.410003.TRUTH1.root",
+        "Sherpa_lvlv"        : "/gdata/atlas/amete/MC15_ModelingUncertainties/FlatNtuples/truth_v3/mc15_13TeV.361068.TRUTH1.root",
+        "Powheg_WWlvlv"      : "/gdata/atlas/amete/MC15_ModelingUncertainties/FlatNtuples/truth_v3/mc15_13TeV.361600.TRUTH1.root",
+        "Powheg_ZZllvv"      : "/gdata/atlas/amete/MC15_ModelingUncertainties/FlatNtuples/truth_v3/mc15_13TeV.361604.TRUTH1.root",
+        "Powheg_ttbar"       : "/gdata/atlas/amete/MC15_ModelingUncertainties/FlatNtuples/truth_v3/mc15_13TeV.410000.TRUTH1.root",
+        "Powheg_ttbar_radHi" : "/gdata/atlas/amete/MC15_ModelingUncertainties/FlatNtuples/truth_v3/mc15_13TeV.410001.TRUTH1.root",
+        "Powheg_ttbar_radLo" : "/gdata/atlas/amete/MC15_ModelingUncertainties/FlatNtuples/truth_v3/mc15_13TeV.410002.TRUTH1.root",
+        "aMCatNLO_ttbar"     : "/gdata/atlas/amete/MC15_ModelingUncertainties/FlatNtuples/truth_v3/mc15_13TeV.410003.TRUTH1.root",
+        "PowhegHpp_ttbar"    : "/gdata/atlas/amete/MC15_ModelingUncertainties/FlatNtuples/truth_v3/mc15_13TeV.410004.TRUTH1.root",
     }.get(filename,"")
 
 # Define cross-sections
 def getCrossSection(filename):
     return {
-        "Sherpa_lvlv"   : 14.022*0.91,  # 361068 https://twiki.cern.ch/twiki/bin/view/AtlasProtected/MC15SystematicUncertainties#VV_Diboson_V_W_Z 24/11/15
-        "Powheg_WWlvlv" : 10.631,       # 361600
-        "Powheg_ZZllvv" : 0.92498,      # 361604 
-        "Powheg_ttbar"  : 831.76*0.543, # 410000
-        "aMCatNLO_ttbar": 831.76*0.543, # 410003
+        "Sherpa_lvlv"        : 14.022*0.91,  # 361068 https://twiki.cern.ch/twiki/bin/view/AtlasProtected/MC15SystematicUncertainties#VV_Diboson_V_W_Z 24/11/15
+        "Powheg_WWlvlv"      : 10.631,       # 361600
+        "Powheg_ZZllvv"      : 0.92498,      # 361604
+        "Powheg_ttbar"       : 831.76*0.543, # 410000
+        "Powheg_ttbar_radHi" : 831.76*0.543, # 410001
+        "Powheg_ttbar_radLo" : 831.76*0.543, # 410002
+        "aMCatNLO_ttbar"     : 831.76*0.543, # 410003
+        "PowhegHpp_ttbar"    : 831.76*0.543, # 410004
     }.get(filename,"")
 
 # Define X titles

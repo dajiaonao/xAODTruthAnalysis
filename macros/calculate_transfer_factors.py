@@ -33,10 +33,10 @@ def main():
         options.regionname = "SR_SF,CR_SF"                              # 0 is SR 1 is CR
         options.luminosity = 3340.000                                   # Luminosity should cancel in the calculation
     elif options.process == "TOP_ALL":
-        options.inputname  = "Powheg_ttbar,aMCatNLO_ttbar"              # Samples to be used, first one is nominal
+        options.inputname  = "Powheg_ttbar,Powheg_ttbar_radHi,Powheg_ttbar_radLo,PowhegHpp_ttbar,aMCatNLO_ttbar"              # Samples to be used, first one is nominal
         options.grouping   = "NONE"                                     # Combination : first one is nominal
         options.varname    = "r1"                                       # Dummy variable
-        options.regionname = "SR_ALL,CR_TOP"                            # 0 is SR 1 is CR
+        options.regionname = "SR_ALL_TOP,CR_TOP"                            # 0 is SR 1 is CR
         options.luminosity = 3340.000                                   # Luminosity should cancel in the calculation
     #elif options.process == "TOP_DF":
     #    options.inputname  = "Powheg_ttbar,aMCatNLO_ttbar"              # Samples to be used, first one is nominal
@@ -76,17 +76,25 @@ def main():
     transfer_factors=[0 for x in range(len(groupList))] 
     print("")
     for ii,inputFile in enumerate(groupList):
-        signal_region_unc    = ROOT.Double(0.) 
-        signal_region_count  = histogramsGrouped[ii][0][0].IntegralAndError(0,-1,signal_region_unc)
-        control_region_unc   = ROOT.Double(0.)
-        control_region_count = histogramsGrouped[ii][1][0].IntegralAndError(0,-1,control_region_unc)
+        signal_region_unc       = ROOT.Double(0.) 
+        signal_region_count     = histogramsGrouped[ii][0][0].IntegralAndError(0,-1,signal_region_unc)
+        signal_region_unc_perc  = (signal_region_unc/signal_region_count)*100 if signal_region_unc !=0 else 0. 
+        control_region_unc      = ROOT.Double(0.)
+        control_region_count    = histogramsGrouped[ii][1][0].IntegralAndError(0,-1,control_region_unc)
+        control_region_unc_perc = (control_region_unc/control_region_count)*100 if control_region_count !=0 else 0.
         transfer_factors[ii] = signal_region_count/control_region_count 
-        #print("Sample %s \t (%.2f fb-1) SR count %.2e +/- %.2e (%3.2f%%) CR count %.2e +/- %.2e (%3.2f%%) TF is %.2e"
-        print("Sample %s \t (%.2f fb-1) SR count %.2f +/- %.2f (%3.2f%%) CR count %.2f +/- %.2f (%3.2f%%) TF is %.2e"
+        if groupList[ii] != "Powheg_ttbar_radHi" and groupList[ii] != "Powheg_ttbar_radLo":       
+            print("Sample %s \t\t (%.2f fb-1) SR count %.2f +/- %.2f (%3.2f%%) CR count %.2f +/- %.2f (%3.2f%%) TF is %.2e"
                 %(groupList[ii]         ,options.luminosity*1.e-3,
-                  signal_region_count   ,signal_region_unc, (signal_region_unc/signal_region_count)*100,
-                  control_region_count  ,control_region_unc, (control_region_unc/control_region_count)*100,
-                  transfer_factors[ii]))
+                      signal_region_count   ,signal_region_unc, signal_region_unc_perc, 
+                      control_region_count  ,control_region_unc, control_region_unc_perc,
+                      transfer_factors[ii]))
+        else:
+            print("Sample %s \t (%.2f fb-1) SR count %.2f +/- %.2f (%3.2f%%) CR count %.2f +/- %.2f (%3.2f%%) TF is %.2e"
+                %(groupList[ii]         ,options.luminosity*1.e-3,
+                      signal_region_count   ,signal_region_unc, signal_region_unc_perc, 
+                      control_region_count  ,control_region_unc, control_region_unc_perc,
+                      transfer_factors[ii]))
 
     # Calculate the uncertainty
     transfer_factor_nominal     = transfer_factors[0]
