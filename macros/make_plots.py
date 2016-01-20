@@ -98,12 +98,13 @@ def main():
             for kk,inputFile in enumerate(groupList):
                 # Fill the legend
                 if ii == 0 and jj == 0:
-                    if "0" in inputFile:
-                        legend.AddEntry(histogramsGrouped[kk][ii][jj],inputFile.replace("0","Sherpa_lvlv"),"l")
-                    elif "1+2" in inputFile:
-                        legend.AddEntry(histogramsGrouped[kk][ii][jj],inputFile.replace("1+2","Powheg_lvlv"),"l")
-                    else:
-                        legend.AddEntry(histogramsGrouped[kk][ii][jj],inputFile,"l")
+                    legend.AddEntry(histogramsGrouped[kk][ii][jj],inputFile,"l")
+                    #if "0" in inputFile:
+                    #    legend.AddEntry(histogramsGrouped[kk][ii][jj],inputFile.replace("0","Sherpa_lvlv"),"l")
+                    #elif "1+2" in inputFile:
+                    #    legend.AddEntry(histogramsGrouped[kk][ii][jj],inputFile.replace("1+2","Powheg_lvlv"),"l")
+                    #else:
+                    #    legend.AddEntry(histogramsGrouped[kk][ii][jj],inputFile,"l")
                 # Histograms are scaled in fillHistograms
                 # but here we can scale them to unity to check the shapes
                 #scaleToUnity(histogramsGrouped[kk][ii][jj]) 

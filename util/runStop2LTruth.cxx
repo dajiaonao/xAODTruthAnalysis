@@ -153,9 +153,9 @@ int main( int argc, char* argv[] ) {
   } else {
     EL::PrunDriver driver;
     // Official sample
-    //driver.options()->setString("nc_outputSampleName", "user.amete."+prodTag+".%in:name[2]%.%in:name[6]%");
+    driver.options()->setString("nc_outputSampleName", "user.amete."+prodTag+".%in:name[2]%.%in:name[6]%");
     // User sample
-    driver.options()->setString("nc_outputSampleName", "user.amete."+prodTag+".%in:name[4]%.%in:name[6]%");
+    //driver.options()->setString("nc_outputSampleName", "user.amete."+prodTag+".%in:name[4]%.%in:name[6]%");
     driver.submitOnly( job, outputPath );
   }
 

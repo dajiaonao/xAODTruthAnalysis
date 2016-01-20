@@ -3,27 +3,39 @@ import ROOT,math,array
 # Define the input ROOT files
 def getROOTFileName(filename):
     return {
-        "Sherpa_lvlv"        : "/gdata/atlas/amete/MC15_ModelingUncertainties/FlatNtuples/truth_v3/mc15_13TeV.361068.TRUTH1.root",
-        "Powheg_WWlvlv"      : "/gdata/atlas/amete/MC15_ModelingUncertainties/FlatNtuples/truth_v3/mc15_13TeV.361600.TRUTH1.root",
-        "Powheg_ZZllvv"      : "/gdata/atlas/amete/MC15_ModelingUncertainties/FlatNtuples/truth_v3/mc15_13TeV.361604.TRUTH1.root",
-        "Powheg_ttbar"       : "/gdata/atlas/amete/MC15_ModelingUncertainties/FlatNtuples/truth_v3/mc15_13TeV.410000.TRUTH1.root",
-        "Powheg_ttbar_radHi" : "/gdata/atlas/amete/MC15_ModelingUncertainties/FlatNtuples/truth_v3/mc15_13TeV.410001.TRUTH1.root",
-        "Powheg_ttbar_radLo" : "/gdata/atlas/amete/MC15_ModelingUncertainties/FlatNtuples/truth_v3/mc15_13TeV.410002.TRUTH1.root",
-        "aMCatNLO_ttbar"     : "/gdata/atlas/amete/MC15_ModelingUncertainties/FlatNtuples/truth_v3/mc15_13TeV.410003.TRUTH1.root",
-        "PowhegHpp_ttbar"    : "/gdata/atlas/amete/MC15_ModelingUncertainties/FlatNtuples/truth_v3/mc15_13TeV.410004.TRUTH1.root",
+        "Sherpa_lvlv"          : "/gdata/atlas/amete/MC15_ModelingUncertainties/FlatNtuples/truth_v3/mc15_13TeV.361068.TRUTH1.root",
+        "Sherpa_lvlv_fac4"     : "/gdata/atlas/amete/MC15_ModelingUncertainties/FlatNtuples/truth_v3/mc15_13TeV.363072.TRUTH1.root",
+        "Sherpa_lvlv_fac025"   : "/gdata/atlas/amete/MC15_ModelingUncertainties/FlatNtuples/truth_v3/mc15_13TeV.363073.TRUTH1.root",
+        "Sherpa_lvlv_renorm4"  : "/gdata/atlas/amete/MC15_ModelingUncertainties/FlatNtuples/truth_v3/mc15_13TeV.363074.TRUTH1.root",
+        "Sherpa_lvlv_renorm025": "/gdata/atlas/amete/MC15_ModelingUncertainties/FlatNtuples/truth_v3/mc15_13TeV.363075.TRUTH1.root",
+        "Sherpa_lvlv_qsf4"     : "/gdata/atlas/amete/MC15_ModelingUncertainties/FlatNtuples/truth_v3/mc15_13TeV.363076.TRUTH1.root",
+        "Sherpa_lvlv_qsf025"   : "/gdata/atlas/amete/MC15_ModelingUncertainties/FlatNtuples/truth_v3/mc15_13TeV.363077.TRUTH1.root",
+        "Powheg_WWlvlv"        : "/gdata/atlas/amete/MC15_ModelingUncertainties/FlatNtuples/truth_v3/mc15_13TeV.361600.TRUTH1.root",
+        "Powheg_ZZllvv"        : "/gdata/atlas/amete/MC15_ModelingUncertainties/FlatNtuples/truth_v3/mc15_13TeV.361604.TRUTH1.root",
+        "Powheg_ttbar"         : "/gdata/atlas/amete/MC15_ModelingUncertainties/FlatNtuples/truth_v3/mc15_13TeV.410000.TRUTH1.root",
+        "Powheg_ttbar_radHi"   : "/gdata/atlas/amete/MC15_ModelingUncertainties/FlatNtuples/truth_v3/mc15_13TeV.410001.TRUTH1.root",
+        "Powheg_ttbar_radLo"   : "/gdata/atlas/amete/MC15_ModelingUncertainties/FlatNtuples/truth_v3/mc15_13TeV.410002.TRUTH1.root",
+        "aMCatNLO_ttbar"       : "/gdata/atlas/amete/MC15_ModelingUncertainties/FlatNtuples/truth_v3/mc15_13TeV.410003.TRUTH1.root",
+        "PowhegHpp_ttbar"      : "/gdata/atlas/amete/MC15_ModelingUncertainties/FlatNtuples/truth_v3/mc15_13TeV.410004.TRUTH1.root",
     }.get(filename,"")
 
 # Define cross-sections
 def getCrossSection(filename):
     return {
-        "Sherpa_lvlv"        : 14.022*0.91,  # 361068 https://twiki.cern.ch/twiki/bin/view/AtlasProtected/MC15SystematicUncertainties#VV_Diboson_V_W_Z 24/11/15
-        "Powheg_WWlvlv"      : 10.631,       # 361600
-        "Powheg_ZZllvv"      : 0.92498,      # 361604
-        "Powheg_ttbar"       : 831.76*0.543, # 410000
-        "Powheg_ttbar_radHi" : 831.76*0.543, # 410001
-        "Powheg_ttbar_radLo" : 831.76*0.543, # 410002
-        "aMCatNLO_ttbar"     : 831.76*0.543, # 410003
-        "PowhegHpp_ttbar"    : 831.76*0.543, # 410004
+        "Sherpa_lvlv"          : 14.022*0.91,  # 361068 https://twiki.cern.ch/twiki/bin/view/AtlasProtected/MC15SystematicUncertainties#VV_Diboson_V_W_Z 24/11/15
+        "Sherpa_lvlv_fac4"     : 14.022*0.91,  # 363072
+        "Sherpa_lvlv_fac025"   : 14.022*0.91,  # 363073
+        "Sherpa_lvlv_renorm4"  : 14.022*0.91,  # 363074
+        "Sherpa_lvlv_renorm025": 14.022*0.91,  # 363075
+        "Sherpa_lvlv_qsf4"     : 14.022*0.91,  # 363076
+        "Sherpa_lvlv_qsf025"   : 14.022*0.91,  # 363077
+        "Powheg_WWlvlv"        : 10.631,       # 361600
+        "Powheg_ZZllvv"        : 0.92498,      # 361604
+        "Powheg_ttbar"         : 831.76*0.543, # 410000
+        "Powheg_ttbar_radHi"   : 831.76*0.543, # 410001
+        "Powheg_ttbar_radLo"   : 831.76*0.543, # 410002
+        "aMCatNLO_ttbar"       : 831.76*0.543, # 410003
+        "PowhegHpp_ttbar"      : 831.76*0.543, # 410004
     }.get(filename,"")
 
 # Define X titles
@@ -64,19 +76,21 @@ def getXtitle(variable):
 # Define region cuts
 def getRegionTCut(region):
     return {
-        "SR_ALL_TOP" : "(isDF || (isSF && (mll<71.||mll>111.)) ) && mll > 20. && mT2ll>100.0 && r1>0.3 && (lepton_type[0]==2||lepton_type[0]==6) && (lepton_type[1]==2||lepton_type[1]==6)" ,
-        "SR_ALL_NOMT2" : "(isDF || (isSF && (mll<71.||mll>111.)) ) && mll > 20. && r1>0.3 && (lepton_type[0]==2||lepton_type[0]==6) && (lepton_type[1]==2||lepton_type[1]==6)" ,
-        "SR_ALL"     : "(isDF || (isSF && (mll<71.||mll>111.)) ) && mll > 20. && mT2ll>145.0 && r1>0.3 && (lepton_type[0]==2||lepton_type[0]==6) && (lepton_type[1]==2||lepton_type[1]==6)" ,
-        "SR_SF"      : "isSF && mll > 20. && (mll<71.||mll>111.) && mT2ll>145.0 && r1>0.3 && (lepton_type[0]==2||lepton_type[0]==6) && (lepton_type[1]==2||lepton_type[1]==6)" ,
-        "CR_SF"      : "isSF && mll > 20. && (mT2ll>60.  && mT2ll<110.) && pbll<20. && r1>0.4 && TMath::Abs(dphi_met_pbll)<1.5 && (lepton_type[0]==2||lepton_type[0]==6) && (lepton_type[1]==2||lepton_type[1]==6)",
-        "VR_SF"      : "isSF && (mll>71.&&mll<111.) && mT2ll>110. && r1>0.3 && (lepton_type[0]==2||lepton_type[0]==6) && (lepton_type[1]==2||lepton_type[1]==6)",
-        "SR_DF"      : "isDF && mll > 20. && mT2ll>145.0 && r1>0.3 && (lepton_type[0]==2||lepton_type[0]==6) && (lepton_type[1]==2||lepton_type[1]==6)" ,
-        "CR_DF"      : "isDF && mll > 20. && (mT2ll>60.  && mT2ll<110.) && pbll<20. && r1>0.4 && (lepton_type[0]==2||lepton_type[0]==6) && (lepton_type[1]==2||lepton_type[1]==6)",
-        "VR_DF"      : "isDF && mll > 20. && (mT2ll>110. && mT2ll<145.) && r1>0.3 && (lepton_type[0]==2||lepton_type[0]==6) && (lepton_type[1]==2||lepton_type[1]==6)",
-        "VR_DF_2"    : "isDF && mll > 20. && (mT2ll>40.  && mT2ll<60. ) && pbll<20. && r1>0.4 && (lepton_type[0]==2||lepton_type[0]==6) && (lepton_type[1]==2||lepton_type[1]==6)",
-        "CR_TOP"     : "isDF && mll > 20. && (mT2ll>60.  && mT2ll<110.) && pbll>30. && r1<0.4 && (lepton_type[0]==2||lepton_type[0]==6) && (lepton_type[1]==2||lepton_type[1]==6)",
-        "VR_DF_INC"  : "isDF && lepton_pt[0]>20. && lepton_pt[1]>20. && mll>20. && (lepton_type[0]==2||lepton_type[0]==6) && (lepton_type[1]==2||lepton_type[1]==6)",
-        "VR_SF_INC"  : "isSF && lepton_pt[0]>20. && lepton_pt[1]>20. && mll>20. && (lepton_type[0]==2||lepton_type[0]==6) && (lepton_type[1]==2||lepton_type[1]==6)",
+        "SR_ALL_TOP"  : "(isDF || (isSF && (mll<71.||mll>111.)) ) && mll > 20. && mT2ll>100.0 && r1>0.3 && (lepton_type[0]==2||lepton_type[0]==6) && (lepton_type[1]==2||lepton_type[1]==6)" ,
+        "SR_ALL_NOMT2": "(isDF || (isSF && (mll<71.||mll>111.)) ) && mll > 20. && r1>0.3 && (lepton_type[0]==2||lepton_type[0]==6) && (lepton_type[1]==2||lepton_type[1]==6)" ,
+        "SR_SF_NOMT2" : "(isSF && (mll<71.||mll>111.)) && mll > 20. && r1>0.3 && (lepton_type[0]==2||lepton_type[0]==6) && (lepton_type[1]==2||lepton_type[1]==6)" ,
+        "SR_DF_NOMT2" : "isDF && mll > 20. && r1>0.3 && (lepton_type[0]==2||lepton_type[0]==6) && (lepton_type[1]==2||lepton_type[1]==6)" ,
+        "SR_ALL"      : "(isDF || (isSF && (mll<71.||mll>111.)) ) && mll > 20. && mT2ll>145.0 && r1>0.3 && (lepton_type[0]==2||lepton_type[0]==6) && (lepton_type[1]==2||lepton_type[1]==6)" ,
+        "SR_SF"       : "isSF && mll > 20. && (mll<71.||mll>111.) && mT2ll>145.0 && r1>0.3 && (lepton_type[0]==2||lepton_type[0]==6) && (lepton_type[1]==2||lepton_type[1]==6)" ,
+        "CR_SF"       : "isSF && mll > 20. && (mT2ll>60.  && mT2ll<110.) && pbll<20. && r1>0.4 && TMath::Abs(dphi_met_pbll)<1.5 && (lepton_type[0]==2||lepton_type[0]==6) && (lepton_type[1]==2||lepton_type[1]==6)",
+        "VR_SF"       : "isSF && (mll>71.&&mll<111.) && mT2ll>110. && r1>0.3 && (lepton_type[0]==2||lepton_type[0]==6) && (lepton_type[1]==2||lepton_type[1]==6)",
+        "SR_DF"       : "isDF && mll > 20. && mT2ll>145.0 && r1>0.3 && (lepton_type[0]==2||lepton_type[0]==6) && (lepton_type[1]==2||lepton_type[1]==6)" ,
+        "CR_DF"       : "isDF && mll > 20. && (mT2ll>60.  && mT2ll<110.) && pbll<20. && r1>0.4 && (lepton_type[0]==2||lepton_type[0]==6) && (lepton_type[1]==2||lepton_type[1]==6)",
+        "VR_DF"       : "isDF && mll > 20. && (mT2ll>110. && mT2ll<145.) && r1>0.3 && (lepton_type[0]==2||lepton_type[0]==6) && (lepton_type[1]==2||lepton_type[1]==6)",
+        "VR_DF_2"     : "isDF && mll > 20. && (mT2ll>40.  && mT2ll<60. ) && pbll<20. && r1>0.4 && (lepton_type[0]==2||lepton_type[0]==6) && (lepton_type[1]==2||lepton_type[1]==6)",
+        "CR_TOP"      : "isDF && mll > 20. && (mT2ll>60.  && mT2ll<110.) && pbll>30. && r1<0.4 && (lepton_type[0]==2||lepton_type[0]==6) && (lepton_type[1]==2||lepton_type[1]==6)",
+        "VR_DF_INC"   : "isDF && lepton_pt[0]>20. && lepton_pt[1]>20. && mll>20. && (lepton_type[0]==2||lepton_type[0]==6) && (lepton_type[1]==2||lepton_type[1]==6)",
+        "VR_SF_INC"   : "isSF && lepton_pt[0]>20. && lepton_pt[1]>20. && mll>20. && (lepton_type[0]==2||lepton_type[0]==6) && (lepton_type[1]==2||lepton_type[1]==6)",
     }.get(region,"1") # 1 is default if region is not found
 
 # Define histogram bins

@@ -21,14 +21,18 @@ def main():
 
     # Do the internal setup
     if options.process == "DB_DF":
-        options.inputname  = "Sherpa_lvlv,Powheg_WWlvlv,Powheg_ZZllvv"  # Samples to be used
-        options.grouping   = "0,1+2"                                    # Combination : first one is nominal
+        #options.inputname  = "Sherpa_lvlv,Powheg_WWlvlv,Powheg_ZZllvv"  # Samples to be used
+        #options.grouping   = "0,1+2"                                    # Combination : first one is nominal
+        options.inputname  = "Sherpa_lvlv,Sherpa_lvlv_fac4,Sherpa_lvlv_fac025,Sherpa_lvlv_renorm4,Sherpa_lvlv_renorm025,Sherpa_lvlv_qsf4,Sherpa_lvlv_qsf025"  # Samples to be used
+        options.grouping   = "NONE"                                     # Combination : first one is nominal
         options.varname    = "r1"                                       # Dummy variable
         options.regionname = "SR_DF,CR_DF"                              # 0 is SR 1 is CR
         options.luminosity = 3340.000                                   # Luminosity should cancel in the calculation
     elif options.process == "DB_SF":
-        options.inputname  = "Sherpa_lvlv,Powheg_WWlvlv,Powheg_ZZllvv"  # Samples to be used
-        options.grouping   = "0,1+2"                                    # Combination : first one is nominal
+        #options.inputname  = "Sherpa_lvlv,Powheg_WWlvlv,Powheg_ZZllvv"  # Samples to be used
+        #options.grouping   = "0,1+2"                                    # Combination : first one is nominal
+        options.inputname  = "Sherpa_lvlv,Sherpa_lvlv_fac4,Sherpa_lvlv_fac025,Sherpa_lvlv_renorm4,Sherpa_lvlv_renorm025,Sherpa_lvlv_qsf4,Sherpa_lvlv_qsf025"  # Samples to be used
+        options.grouping   = "NONE"                                     # Combination : first one is nominal
         options.varname    = "r1"                                       # Dummy variable
         options.regionname = "SR_SF,CR_SF"                              # 0 is SR 1 is CR
         options.luminosity = 3340.000                                   # Luminosity should cancel in the calculation
