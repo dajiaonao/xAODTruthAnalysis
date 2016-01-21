@@ -17,6 +17,10 @@ def getROOTFileName(filename):
         "Powheg_ttbar_radLo"   : "/gdata/atlas/amete/MC15_ModelingUncertainties/FlatNtuples/truth_v3/mc15_13TeV.410002.TRUTH1.root",
         "aMCatNLO_ttbar"       : "/gdata/atlas/amete/MC15_ModelingUncertainties/FlatNtuples/truth_v3/mc15_13TeV.410003.TRUTH1.root",
         "PowhegHpp_ttbar"      : "/gdata/atlas/amete/MC15_ModelingUncertainties/FlatNtuples/truth_v3/mc15_13TeV.410004.TRUTH1.root",
+        "Herwigpp_300vs180"    : "/gdata/atlas/amete/StopPolarization/outputs/FlatNtuples/Herwigpp.300vs180.truth1_v3.root",
+        "Madgraph_300vs180"    : "/gdata/atlas/amete/StopPolarization/outputs/FlatNtuples/Madgraph.300vs180.truth1_v3.root",
+        "MadgraphR_300vs180"    : "/gdata/atlas/amete/StopPolarization/outputs/FlatNtuples/MadgraphR.300vs180.truth1_v3.root",
+        "MadgraphL_300vs180"    : "/gdata/atlas/amete/StopPolarization/outputs/FlatNtuples/MadgraphL.300vs180.truth1_v3.root",
     }.get(filename,"")
 
 # Define cross-sections
@@ -36,6 +40,10 @@ def getCrossSection(filename):
         "Powheg_ttbar_radLo"   : 831.76*0.543, # 410002
         "aMCatNLO_ttbar"       : 831.76*0.543, # 410003
         "PowhegHpp_ttbar"      : 831.76*0.543, # 410004
+        "Herwigpp_300vs180"    : 8.51615*0.047643, # Official 
+        "Madgraph_300vs180"    : 8.51615*0.051921, # Private
+        "MadgraphR_300vs180"   : 8.51615*0.051921, # Private
+        "MadgraphL_300vs180"   : 8.51615*0.051921, # Private
     }.get(filename,"")
 
 # Define X titles
@@ -91,6 +99,7 @@ def getRegionTCut(region):
         "CR_TOP"      : "isDF && mll > 20. && (mT2ll>60.  && mT2ll<110.) && pbll>30. && r1<0.4 && (lepton_type[0]==2||lepton_type[0]==6) && (lepton_type[1]==2||lepton_type[1]==6)",
         "VR_DF_INC"   : "isDF && lepton_pt[0]>20. && lepton_pt[1]>20. && mll>20. && (lepton_type[0]==2||lepton_type[0]==6) && (lepton_type[1]==2||lepton_type[1]==6)",
         "VR_SF_INC"   : "isSF && lepton_pt[0]>20. && lepton_pt[1]>20. && mll>20. && (lepton_type[0]==2||lepton_type[0]==6) && (lepton_type[1]==2||lepton_type[1]==6)",
+        "VR_STOP_INC" : "lepton_pt[0]>20. && lepton_pt[1]>20. && (lepton_type[0]==2||lepton_type[0]==6) && (lepton_type[1]==2||lepton_type[1]==6)",
     }.get(region,"1") # 1 is default if region is not found
 
 # Define histogram bins
@@ -98,15 +107,15 @@ def getBinInformation(variable):
     return {
         "lepton_n"      : [ 10, 0, 10],
         "jet_n"         : [ 20, 0, 20],
-        "lepton_pt"     : [[0,20,40,60,80,100,120,140,160,180,200,225,250,300,400,500,1000]],
+        "lepton_pt"     : [ 20, 0, 200], #[[0,20,40,60,80,100,120,140,160,180,200,225,250,300,400,500,1000]],
         "jet_pt"        : [[0,20,40,60,80,100,120,140,160,180,200,225,250,300,400,500,1000]],
         "lepton_eta"    : [50,-2.5,2.5],
         "jet_eta"       : [90,-4.5,4.5],
         "lepton_phi"    : [70,-3.5,3.5],
         "jet_phi"       : [70,-3.5,3.5],
-        "mT2ll"         : [[0,10,20,30,40,50,60,70,80,90,100,115,130,145,300]],
-        "mll"           : [[0,20,40,60,80,100,120,140,160,180,200,220,240,260,280,300,320,340,360,400,500,1000]],
-        "met_et"        : [[0,20,40,60,80,100,120,140,160,180,200,225,250,300,400,500,1000]],
+        "mT2ll"         : [ 20, 0, 200], #[[0,10,20,30,40,50,60,70,80,90,100,115,130,145,300]],
+        "mll"           : [ 50, 0, 500], #[[0,20,40,60,80,100,120,140,160,180,200,220,240,260,280,300,320,340,360,400,500,1000]],
+        "met_et"        : [ 50, 0, 500], #[[0,20,40,60,80,100,120,140,160,180,200,225,250,300,400,500,1000]],
         "met_phi"       : [70,-3.5,3.5],
         "pbll"          : [[0,20,40,60,80,100,120,140,160,180,200,225,250,300,400,500,1000]],
         "r1"            : [ 10,0, 1],

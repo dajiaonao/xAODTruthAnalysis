@@ -25,7 +25,6 @@
 // Analysis include(s):
 #include <xAODTruthAnalysis/MT2_ROOT.h>
 #include <xAODTruthAnalysis/PhysicsTools.h>
-//#include <StopPolarization/PolarizationReweight.h>
 
 // ROOT include(s):
 #include <TFile.h>
@@ -266,6 +265,25 @@ EL::StatusCode Stop2LTruthAnalysis :: initialize ()
   if(m_mcTruthClassifier == nullptr) m_mcTruthClassifier = new MCTruthClassifier("myMCTruthClassifier"); 
   EL_RETURN_CHECK( "setup MCTruthClassifier()", m_mcTruthClassifier->initialize());
 
+  // Setup Polarization
+  if(m_polreweight == nullptr) { 
+    m_polreweight = new StopPolarization::PolarizationReweight; 
+    m_polreweight->setUnitMeV(); // set MeV
+    m_polreweight->setMassW(80399.); 
+    m_polreweight->setWidthW(2085.);
+    m_polreweight->setMassZ(91187.6);
+    m_polreweight->setWidthZ(2495.2);
+    m_polreweight->setMassTop(172500.);
+    m_polreweight->setWidthTop(1333.13);
+    m_polreweight->setMassWThreshold(0.);
+    m_polreweight->setMassZThreshold(0.);
+    m_polreweight->setMassTopThreshold(54000.);
+    std::string generatorName = "MadGraphPythia8";
+    m_polreweight->setGeneratorName(generatorName);
+    m_polreweight->setDecayPythia(true);
+    m_polreweight->setPhaseSpaceOnly(true);
+  }
+
   return EL::StatusCode::SUCCESS;
 }
 
@@ -310,16 +328,6 @@ EL::StatusCode Stop2LTruthAnalysis :: execute ()
   //EL_RETURN_CHECK("execute()",event->retrieve( truthEvents, "TruthEvents"));  
   ////// truthEvents->at(0)->weights().at(0) == eventInfo->mcEventWeights().at(0)
 
-  // Event counter and weight
-  m_eventCounter++;
-  float eventWeight = eventInfo->mcEventWeight();
-  h_cutflow_weighted->Fill(0.,eventWeight);
-  //if(m_eventCounter==1) {
-  //  TString histoName; histoName.Form("CutflowWeighted_%i",eventInfo->runNumber()); 
-  //  h_cutflow_weighted->SetName(histoName);
-  //  h_cutflow_weighted->SetName(histoName);
-  //}
-
   // Retrieve the truth leptons
   const xAOD::TruthParticleContainer* truthParticles = 0;
   EL_RETURN_CHECK("execute()",event->retrieve( truthParticles, "TruthParticles"));
@@ -332,7 +340,28 @@ EL::StatusCode Stop2LTruthAnalysis :: execute ()
     EL_RETURN_CHECK("execute()",event->retrieve( truthElectrons, "TruthParticles"));
     EL_RETURN_CHECK("execute()",event->retrieve( truthMuons, "TruthParticles"));
   }
+
+  ////////////////////////////////
+  // TEST TAKASHI
+  //double polreweight = 1. // None
+  //double polweight = m_polreweight->getReweightTopNeutralino(truthParticles, 1.40639, 0.7853981634); // Right
+  double polweight = m_polreweight->getReweightTopNeutralino(truthParticles, 0., 0.7853981634); // Left
+  //////////////////////////////
  
+  // Event counter and weight
+  m_eventCounter++;
+  if(m_eventCounter%1000==0) {
+    Info("execute()", "Number of events processed so far = %u", m_eventCounter );
+  }
+  float eventWeight = eventInfo->mcEventWeight(); // Event weight
+  eventWeight *= polweight; // Polarization reweight
+  h_cutflow_weighted->Fill(0.,eventWeight);
+  //if(m_eventCounter==1) {
+  //  TString histoName; histoName.Form("CutflowWeighted_%i",eventInfo->runNumber()); 
+  //  h_cutflow_weighted->SetName(histoName);
+  //  h_cutflow_weighted->SetName(histoName);
+  //}
+
   // Signal specific code
   if(isSignal) {
 
@@ -658,7 +687,7 @@ EL::StatusCode Stop2LTruthAnalysis :: execute ()
   if(saveTree) {
     m_br_runNumber      = eventInfo->runNumber();  
     m_br_eventNumber    = eventInfo->eventNumber();  
-    m_br_eventWeight    = eventInfo->mcEventWeight();
+    m_br_eventWeight    = eventInfo->mcEventWeight()*polweight; // With polweight
     m_br_mcEventWeights = eventInfo->mcEventWeights();
     // Leptons
     for(const auto& ipar : *leptons) {
@@ -739,6 +768,9 @@ EL::StatusCode Stop2LTruthAnalysis :: finalize ()
   EL_RETURN_CHECK( "setup MCTruthClassifier()", m_mcTruthClassifier->finalize());
   delete m_mcTruthClassifier;
   m_mcTruthClassifier=nullptr;
+
+  delete m_polreweight;
+  m_polreweight=nullptr;
 
   return EL::StatusCode::SUCCESS;
 }

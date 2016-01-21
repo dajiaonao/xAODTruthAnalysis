@@ -5,6 +5,8 @@
 
 #include <MCTruthClassifier/MCTruthClassifier.h>
 
+#include <StopPolarization/PolarizationReweight.h>
+
 #include <TH1.h>
 #include <TH2.h>
 #include <TTree.h>
@@ -97,6 +99,9 @@ public:
 
   // MCTruthClassifier
   MCTruthClassifier* m_mcTruthClassifier = nullptr; //!
+
+  // StopPolarization
+  StopPolarization::PolarizationReweight* m_polreweight = nullptr; //!
 
   // this is needed to distribute the algorithm to the workers
   ClassDef(Stop2LTruthAnalysis, 1);
