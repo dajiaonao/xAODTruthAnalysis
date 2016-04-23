@@ -19,8 +19,8 @@ def getROOTFileName(filename):
         "PowhegHpp_ttbar"      : "/gdata/atlas/amete/MC15_ModelingUncertainties/FlatNtuples/truth_v3/mc15_13TeV.410004.TRUTH1.root",
         "Herwigpp_300vs180"    : "/gdata/atlas/amete/StopPolarization/outputs/FlatNtuples/Herwigpp.300vs180.truth1_v3.root",
         "Madgraph_300vs180"    : "/gdata/atlas/amete/StopPolarization/outputs/FlatNtuples/Madgraph.300vs180.truth1_v3.root",
-        "MadgraphR_300vs180"    : "/gdata/atlas/amete/StopPolarization/outputs/FlatNtuples/MadgraphR.300vs180.truth1_v3.root",
-        "MadgraphL_300vs180"    : "/gdata/atlas/amete/StopPolarization/outputs/FlatNtuples/MadgraphL.300vs180.truth1_v3.root",
+        "MadgraphR_300vs180"   : "/gdata/atlas/amete/StopPolarization/outputs/FlatNtuples/MadgraphR.300vs180.truth1_v3.root",
+        "MadgraphL_300vs180"   : "/gdata/atlas/amete/StopPolarization/outputs/FlatNtuples/MadgraphL.300vs180.truth1_v3.root",
     }.get(filename,"")
 
 # Define cross-sections
@@ -63,6 +63,12 @@ def getXtitle(variable):
         "lepton_origin[0]": "Leading lepton origin", 
         "lepton_origin[1]": "Subleading lepton origin",
         "jet_n"           : "Number of jets", 
+        "bjet_n"          : "Number of bjets", 
+        "nonbjet_n"       : "Number of nonbjets", 
+        "bjet_pt[0]"      : "Leading bjet p_{T} [GeV]", 
+        "bjet_pt[1]"      : "Subleading bjet p_{T} [GeV]",
+        "nonbjet_pt[0]"   : "Leading nonbjet p_{T} [GeV]", 
+        "nonbjet_pt[1]"   : "Subleading nonbjet p_{T} [GeV]",
         "jet_pt[0]"       : "Leading jet p_{T} [GeV]", 
         "jet_pt[1]"       : "Subleading jet p_{T} [GeV]",
         "jet_eta[0]"      : "Leading jet #eta", 
@@ -76,9 +82,12 @@ def getXtitle(variable):
         "meff"            : "m_{eff} [GeV]",
         "pbll"            : "Pbll [GeV]",
         "mT2ll"           : "m_{T2}(ll) [GeV]",
+        "ptll"            : "p_{T}(ll) [GeV]",
         "mll"             : "m(ll) [GeV]",
         "r1"              : "R1",
-        "dphi_met_pbll"   : "#Delta#phi(MET,Pbll)"
+        "dphi_met_pbll"   : "#Delta#phi(MET,Pbll)",
+        "dphill"          : "#Delta#phi(l,l)",
+        "mcEventWeight"   : "MC event weight"
     }.get(variable,"N/A") # N/A is default if variable is not found
 
 # Define region cuts
@@ -99,7 +108,8 @@ def getRegionTCut(region):
         "CR_TOP"      : "isDF && mll > 20. && (mT2ll>60.  && mT2ll<110.) && pbll>30. && r1<0.4 && (lepton_type[0]==2||lepton_type[0]==6) && (lepton_type[1]==2||lepton_type[1]==6)",
         "VR_DF_INC"   : "isDF && lepton_pt[0]>20. && lepton_pt[1]>20. && mll>20. && (lepton_type[0]==2||lepton_type[0]==6) && (lepton_type[1]==2||lepton_type[1]==6)",
         "VR_SF_INC"   : "isSF && lepton_pt[0]>20. && lepton_pt[1]>20. && mll>20. && (lepton_type[0]==2||lepton_type[0]==6) && (lepton_type[1]==2||lepton_type[1]==6)",
-        "VR_STOP_INC" : "lepton_pt[0]>20. && lepton_pt[1]>20. && (lepton_type[0]==2||lepton_type[0]==6) && (lepton_type[1]==2||lepton_type[1]==6)",
+        #"VR_STOP_INC" : "(@nonbjet_pt.size()==0 || (@nonbjet_pt.size()==1 && nonbjet_pt[0] < 200. && nonbjet_pt[0] > 50.)) && lepton_pt[0]>20. && lepton_pt[1]>20. && (lepton_type[0]==2||lepton_type[0]==6) && (lepton_type[1]==2||lepton_type[1]==6) ",
+        "VR_STOP_NOHISR" : "isNOHISR && (lepton_type[0]==2||lepton_type[0]==6) && (lepton_type[1]==2||lepton_type[1]==6) ",
     }.get(region,"1") # 1 is default if region is not found
 
 # Define histogram bins
@@ -107,15 +117,20 @@ def getBinInformation(variable):
     return {
         "lepton_n"      : [ 10, 0, 10],
         "jet_n"         : [ 20, 0, 20],
-        "lepton_pt"     : [ 20, 0, 200], #[[0,20,40,60,80,100,120,140,160,180,200,225,250,300,400,500,1000]],
-        "jet_pt"        : [[0,20,40,60,80,100,120,140,160,180,200,225,250,300,400,500,1000]],
+        "bjet_n"        : [ 20, 0, 20],
+        "nonbjet_n"     : [ 20, 0, 20],
+        "lepton_pt"     : [[0,10,20,30,40,50,60,70,80,90,100,110,120,140,160,180,200,250,300]],
+        "bjet_pt"       : [[0,10,20,30,40,50,60,80,100,120,160,200,250,300]],
+        "nonbjet_pt"    : [[0,10,20,30,40,50,60,70,80,90,100,110,120,130,140,150,160,180,200,220,240,260,280,300,340,380,500]],
+        "jet_pt"        : [ 30, 0, 300], #[[0,20,40,60,80,100,120,140,160,180,200,225,250,300,400,500,1000]],
         "lepton_eta"    : [50,-2.5,2.5],
         "jet_eta"       : [90,-4.5,4.5],
         "lepton_phi"    : [70,-3.5,3.5],
         "jet_phi"       : [70,-3.5,3.5],
-        "mT2ll"         : [ 20, 0, 200], #[[0,10,20,30,40,50,60,70,80,90,100,115,130,145,300]],
-        "mll"           : [ 50, 0, 500], #[[0,20,40,60,80,100,120,140,160,180,200,220,240,260,280,300,320,340,360,400,500,1000]],
-        "met_et"        : [ 50, 0, 500], #[[0,20,40,60,80,100,120,140,160,180,200,225,250,300,400,500,1000]],
+        "mT2ll"         : [ 20, 0, 200], #[[0,10,20,30,40,50,60,70,80,90,100,110,120,130,145,300]],
+        "ptll"          : [[0,10,20,30,40,50,60,70,80,90,100,110,120,130,140,150,160,180,200,220,240,260,280,300,340,380,500]], 
+        "mll"           : [[0,10,20,30,40,50,60,70,80,90,100,110,120,130,140,150,160,180,200,220,240,260,280,300,340,380,500]], #[[0,20,40,60,80,100,120,140,160,180,200,220,240,260,280,300,320,340,360,400,500,1000]],
+        "met_et"        : [[0,10,20,30,40,50,60,70,80,90,100,110,120,130,140,150,160,180,200,220,240,260,280,300,340,380,500]], #[[0,20,40,60,80,100,120,140,160,180,200,225,250,300,400,500,1000]],
         "met_phi"       : [70,-3.5,3.5],
         "pbll"          : [[0,20,40,60,80,100,120,140,160,180,200,225,250,300,400,500,1000]],
         "r1"            : [ 10,0, 1],
@@ -123,7 +138,9 @@ def getBinInformation(variable):
         "jet_flav"      : [ 25, 0, 25],
         "lepton_type"   : [ 10, 0, 10],
         "lepton_origin" : [ 50, 0, 50],
+        "dphill"        : [35,-3.5,3.5],
         "dphi_met_pbll" : [70,-3.5,3.5],
+        "mcEventWeight" : [100, 0, 20],
     }.get(variable,[1,0.5,1.5]) # 1 is default if variable is not found
 
 # Get files
@@ -194,9 +211,12 @@ def fillHistograms(files,options):
                 if(options.debug): 
                     print("INFO :: Retrieving information for variable %s" % variable)
                 # Fill the histograms
-                if variable == "lepton_n": variable = "@lepton_pt.size()"
-                elif variable == "jet_n" : variable = "@jet_pt.size()"
-                #currentROOTTree.Draw(variable+">>"+histoName,"mcEventWeight*("+cut+")","goff")                                
+                if variable == "lepton_n"    : variable = "@lepton_pt.size()"
+                elif variable == "jet_n"     : variable = "@jet_pt.size()"
+                elif variable == "bjet_n"    : variable = "@bjet_pt.size()"
+                elif variable == "nonbjet_n" : variable = "@nonbjet_pt.size()"
+                if(options.debug):
+                    print("INFO :: Cross-section %.2f - Luminosity %.2f - Sumw %.2f"%(getCrossSection(inputFile),options.luminosity,sumw[ii]))
                 selection=("(mcEventWeight*%f*%f/%f)*(%s)"%(getCrossSection(inputFile),options.luminosity,sumw[ii],cut))
                 if options.debug:
                     print("INFO :: Selection is %s" % selection)

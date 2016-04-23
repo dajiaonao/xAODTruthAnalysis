@@ -34,7 +34,7 @@ def main():
         options.inputname  = "Sherpa_lvlv,Sherpa_lvlv_fac4,Sherpa_lvlv_fac025,Sherpa_lvlv_renorm4,Sherpa_lvlv_renorm025,Sherpa_lvlv_qsf4,Sherpa_lvlv_qsf025"  # Samples to be used
         options.grouping   = "NONE"                                     # Combination : first one is nominal
         options.varname    = "r1"                                       # Dummy variable
-        options.regionname = "SR_SF,CR_SF"                              # 0 is SR 1 is CR
+        options.regionname = "SR_SF,VR_SF" # not a typo!                # 0 is SR 1 is CR
         options.luminosity = 3340.000                                   # Luminosity should cancel in the calculation
     elif options.process == "TOP_ALL":
         options.inputname  = "Powheg_ttbar,Powheg_ttbar_radHi,Powheg_ttbar_radLo,PowhegHpp_ttbar,aMCatNLO_ttbar"              # Samples to be used, first one is nominal
@@ -42,18 +42,12 @@ def main():
         options.varname    = "r1"                                       # Dummy variable
         options.regionname = "SR_ALL_TOP,CR_TOP"                            # 0 is SR 1 is CR
         options.luminosity = 3340.000                                   # Luminosity should cancel in the calculation
-    #elif options.process == "TOP_DF":
-    #    options.inputname  = "Powheg_ttbar,aMCatNLO_ttbar"              # Samples to be used, first one is nominal
-    #    options.grouping   = "NONE"                                     # Combination : first one is nominal
-    #    options.varname    = "r1"                                       # Dummy variable
-    #    options.regionname = "SR_DF,CR_TOP"                             # 0 is SR 1 is CR
-    #    options.luminosity = 3340.000                                   # Luminosity should cancel in the calculation
-    #elif options.process == "TOP_SF":
-    #    options.inputname  = "Powheg_ttbar,aMCatNLO_ttbar"              # Samples to be used, first one is nominal
-    #    options.grouping   = "NONE"                                     # Combination : first one is nominal
-    #    options.varname    = "r1"                                       # Dummy variable
-    #    options.regionname = "SR_SF,CR_TOP"                             # 0 is SR 1 is CR
-    #    options.luminosity = 3340.000                                   # Luminosity should cancel in the calculation
+    elif options.process == "SIGNAL":
+        options.inputname  =  "Herwigpp_300vs180,Madgraph_300vs180,MadgraphR_300vs180,MadgraphL_300vs180"
+        options.grouping   = "NONE"
+        options.varname    = "lepton_n"
+        options.regionname = "ALL,ALL" # "VR_STOP_INC,VR_STOP_INC"
+        options.luminosity = 10000.0 
     else:
         print("ERROR :: Unknown process %s, quitting..." %(options.process))
         return

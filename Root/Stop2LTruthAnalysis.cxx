@@ -199,6 +199,7 @@ EL::StatusCode Stop2LTruthAnalysis :: histInitialize ()
     outputTree->Branch("isDF"          /* "isDF"          */, &m_br_isDF          ); 
     outputTree->Branch("isSS"          /* "isSS"          */, &m_br_isSS          ); 
     outputTree->Branch("isOS"          /* "isOS"          */, &m_br_isOS          ); 
+    outputTree->Branch("isNOHISR"      /* N/A             */, &m_br_isNOHISR      ); 
     outputTree->Branch("lepton_pt"     /* "ptleptons"     */, &m_br_lepton_pt     ); 
     outputTree->Branch("lepton_eta"    /* "etaleptons"    */, &m_br_lepton_eta    ); 
     outputTree->Branch("lepton_phi"    /* "phileptons"    */, &m_br_lepton_phi    ); 
@@ -208,6 +209,8 @@ EL::StatusCode Stop2LTruthAnalysis :: histInitialize ()
     outputTree->Branch("lepton_origin" /* "originleptons" */, &m_br_lepton_origin ); 
     outputTree->Branch("lepton_mother" /* "motherleptons" */, &m_br_lepton_mother ); 
     outputTree->Branch("lepton_mother_mass" /* "motherleptons" */, &m_br_lepton_mother_mass ); 
+    outputTree->Branch("bjet_pt"       /* N/A             */, &m_br_bjet_pt       ); 
+    outputTree->Branch("nonbjet_pt"    /* N/A             */, &m_br_nonbjet_pt    ); 
     outputTree->Branch("jet_pt"        /* "ptjets"        */, &m_br_jet_pt        ); 
     outputTree->Branch("jet_eta"       /* "etajets"       */, &m_br_jet_eta       ); 
     outputTree->Branch("jet_phi"       /* "phijets"       */, &m_br_jet_phi       ); 
@@ -217,6 +220,8 @@ EL::StatusCode Stop2LTruthAnalysis :: histInitialize ()
     outputTree->Branch("met_phi"       /* "METphi"        */, &m_br_met_phi       ); 
     outputTree->Branch("mT2ll"         /* "MT2"           */, &m_br_mT2ll         ); 
     outputTree->Branch("mll"           /* "Mll"           */, &m_br_mll           ); 
+    outputTree->Branch("ptll"          /* N/A             */, &m_br_ptll          ); 
+    outputTree->Branch("dphill"        /* N/A             */, &m_br_dphill        ); 
     outputTree->Branch("pbll"          /* "Pbll"          */, &m_br_pbll          ); 
     outputTree->Branch("r1"            /* "R1"            */, &m_br_r1            ); 
     outputTree->Branch("dphi_met_pbll" /* "DPhib"         */, &m_br_dphi_met_pbll ); 
@@ -298,9 +303,9 @@ EL::StatusCode Stop2LTruthAnalysis :: execute ()
 
   // Clear variables
   if(saveTree) {
-    m_br_isSF = m_br_isDF = m_br_isOS = m_br_isSS = false;
+    m_br_isSF = m_br_isDF = m_br_isOS = m_br_isNOHISR = m_br_isSS = false;
     m_br_eventNumber = m_br_met_et = m_br_met_phi = m_br_mT2ll = m_br_dphi_met_pbll = 0.; 
-    m_br_mll = m_br_pbll = m_br_r1 = m_br_eventWeight = 0.;
+    m_br_mll = m_br_pbll = m_br_ptll = m_br_dphill = m_br_r1 = m_br_eventWeight = 0.;
     m_br_lepton_pt.clear(); 
     m_br_lepton_eta.clear(); 
     m_br_lepton_phi.clear(); 
@@ -310,6 +315,8 @@ EL::StatusCode Stop2LTruthAnalysis :: execute ()
     m_br_lepton_origin.clear();
     m_br_lepton_mother.clear();
     m_br_lepton_mother_mass.clear();
+    m_br_bjet_pt.clear(); 
+    m_br_nonbjet_pt.clear(); 
     m_br_jet_pt.clear(); 
     m_br_jet_eta.clear(); 
     m_br_jet_phi.clear(); 
@@ -343,7 +350,7 @@ EL::StatusCode Stop2LTruthAnalysis :: execute ()
 
   ////////////////////////////////
   // TEST TAKASHI
-  //double polreweight = 1. // None
+  //double polweight = 1.; // None
   //double polweight = m_polreweight->getReweightTopNeutralino(truthParticles, 1.40639, 0.7853981634); // Right
   double polweight = m_polreweight->getReweightTopNeutralino(truthParticles, 0., 0.7853981634); // Left
   //////////////////////////////
@@ -354,7 +361,7 @@ EL::StatusCode Stop2LTruthAnalysis :: execute ()
     Info("execute()", "Number of events processed so far = %u", m_eventCounter );
   }
   float eventWeight = eventInfo->mcEventWeight(); // Event weight
-  eventWeight *= polweight; // Polarization reweight
+  //eventWeight *= polweight; // Polarization reweight
   h_cutflow_weighted->Fill(0.,eventWeight);
   //if(m_eventCounter==1) {
   //  TString histoName; histoName.Form("CutflowWeighted_%i",eventInfo->runNumber()); 
@@ -536,8 +543,8 @@ EL::StatusCode Stop2LTruthAnalysis :: execute ()
   for(const auto& truthEl : *truthElectrons) {
     if( truthEl->absPdgId() != 11    ) continue; // only electrons
     if( truthEl->status() != 1       ) continue; // only final state objects
-    if( truthEl->pt()*MEVtoGEV < 10. ) continue; // pT > 10 GeV
-    if( fabs(truthEl->eta()) > 2.5   ) continue; // |eta| < 2.5
+    if( truthEl->pt()*MEVtoGEV < 18. ) continue; // pT > 10 GeV
+    if( fabs(truthEl->eta()) > 2.8   ) continue; // |eta| < 2.5
 
     electrons->push_back(truthEl); // store if passed all
   } // end loop over truth electrons
@@ -545,8 +552,8 @@ EL::StatusCode Stop2LTruthAnalysis :: execute ()
   for(const auto& truthMu : *truthMuons) {
     if( truthMu->absPdgId() != 13    ) continue; // only muons
     if( truthMu->status() != 1       ) continue; // only final state objects
-    if( truthMu->pt()*MEVtoGEV < 10. ) continue; // pT > 10 GeV
-    if( fabs(truthMu->eta()) > 2.5   ) continue; // |eta| < 2.5
+    if( truthMu->pt()*MEVtoGEV < 18. ) continue; // pT > 10 GeV
+    if( fabs(truthMu->eta()) > 2.8   ) continue; // |eta| < 2.5
    
     muons->push_back(truthMu); // store if passed all
   } // end loop over truth muons
@@ -554,7 +561,7 @@ EL::StatusCode Stop2LTruthAnalysis :: execute ()
   // Sort by Pt
   std::sort(electrons->begin(),electrons->end(),SortByPt());
   std::sort(muons->begin(),muons->end(),SortByPt());
-
+    
   // Retrieve the truth jets
   const xAOD::JetContainer* truthJets = 0;
   EL_RETURN_CHECK("execute()",event->retrieve( truthJets, "AntiKt4TruthJets"));
@@ -574,9 +581,9 @@ EL::StatusCode Stop2LTruthAnalysis :: execute ()
   // Remove jets from electrons
   PhysicsTools::l_j_overlap( *electrons, *jets , 0.20, true );
   // Remove electrons from jets
-  PhysicsTools::l_j_overlap( *electrons, *jets , 0.40, false);
+  // PhysicsTools::l_j_overlap( *electrons, *jets , 0.40, false);
   // Remove muons from jets
-  PhysicsTools::l_j_overlap( *muons    , *jets , 0.40, false);
+  // PhysicsTools::l_j_overlap( *muons    , *jets , 0.40, false);
 
   // Combine electrons and muons into leptons
   std::vector<const xAOD::TruthParticle*> *leptons = new std::vector<const xAOD::TruthParticle*>();
@@ -597,9 +604,14 @@ EL::StatusCode Stop2LTruthAnalysis :: execute ()
     h_hists1D.at(m_nameToIndex1D["nLep"])->Fill(nLep,eventWeight);
   }
 
-  // Only ==2 OS lepton events
-  if(nLep != 2) return EL::StatusCode::SUCCESS;
-  if((leptons->at(0)->pdgId()*leptons->at(1)->pdgId()) > 0) return EL::StatusCode::SUCCESS;
+  //// Only ==2 OS lepton events
+  //if(nLep != 2) return EL::StatusCode::SUCCESS;
+  //if((leptons->at(0)->pdgId()*leptons->at(1)->pdgId()) > 0) return EL::StatusCode::SUCCESS;
+  // At least two leptons
+  if(nLep<2) { 
+    Info("execute()","Event %i has %i leptons, rejecting...",eventInfo->eventNumber(),nLep);
+    return EL::StatusCode::SUCCESS;
+  }
 
   // Build objects and fill histograms
   TLorentzVector lep0_tlv = leptons->at(0)->p4();
@@ -611,16 +623,17 @@ EL::StatusCode Stop2LTruthAnalysis :: execute ()
                      (*missingET)["NonInt"]->met());
 
   // Basic variables
-  bool isSF   = (leptons->at(0)->absPdgId() == leptons->at(1)->absPdgId()) ? true:false;
-  bool isDF   = !isSF;
-  bool isOS   = (leptons->at(0)->pdgId() * leptons->at(1)->pdgId() < 0) ? true:false;
-  bool isSS   = !isOS;
-  double mll  = (lep0_tlv+lep1_tlv).M();
-  double pTll = (lep0_tlv+lep1_tlv).Pt();
-  double pbll = (lep0_tlv+lep1_tlv+met_tlv).Pt();
+  bool isSF     = (leptons->at(0)->absPdgId() == leptons->at(1)->absPdgId()) ? true:false;
+  bool isDF     = !isSF;
+  bool isOS     = (leptons->at(0)->pdgId() * leptons->at(1)->pdgId() < 0) ? true:false;
+  bool isSS     = !isOS;
+  double mll    = (lep0_tlv+lep1_tlv).M();
+  double pTll   = (lep0_tlv+lep1_tlv).Pt();
+  double dphill = lep0_tlv.DeltaPhi(lep1_tlv); 
+  double pbll   = (lep0_tlv+lep1_tlv+met_tlv).Pt();
   double dphi_met_pbll = met_tlv.DeltaPhi(lep0_tlv+lep1_tlv+met_tlv);
-  double meff = lep0_tlv.Pt()+lep1_tlv.Pt()+met_tlv.Pt();
-  int jCounter = 0; 
+  double meff   = lep0_tlv.Pt()+lep1_tlv.Pt()+met_tlv.Pt();
+  int jCounter  = 0; 
   for(const auto& ijet : *jets) {
     if(jCounter==2)                    break;    // only add first two jets
     if(ijet->p4().Pt()*MEVtoGEV < 50.) continue; // only jets w/ pt > 50 GeV 
@@ -722,14 +735,25 @@ EL::StatusCode Stop2LTruthAnalysis :: execute ()
       m_br_jet_phi.push_back(ipar_tlv.Phi());
       m_br_jet_m.push_back(ipar_tlv.M()*MEVtoGEV);
       m_br_jet_flav.push_back(ipar->auxdata<int>("PartonTruthLabelID"));
+      if(ipar->auxdata<int>("PartonTruthLabelID")==5) {
+        m_br_bjet_pt.push_back(ipar_tlv.Pt()*MEVtoGEV);
+      } else {
+        m_br_nonbjet_pt.push_back(ipar_tlv.Pt()*MEVtoGEV);
+      }
     }
     // Event variables
     m_br_isSF          = isSF;
     m_br_isDF          = isDF;
     m_br_isSS          = isSS;
     m_br_isOS          = isOS;
+    m_br_isNOHISR      = true;
+    if(m_br_nonbjet_pt.size()>0) {
+      if(m_br_nonbjet_pt.at(0) > 200. || m_br_nonbjet_pt.at(0) < 50.) m_br_isNOHISR = false;
+    } 
     m_br_mT2ll         = mT2*MEVtoGEV;
     m_br_mll           = mll*MEVtoGEV; 
+    m_br_ptll          = pTll*MEVtoGEV;
+    m_br_dphill        = dphill;
     m_br_pbll          = pbll*MEVtoGEV; 
     m_br_r1            = r1; 
     m_br_met_et        = met_tlv.Pt()*MEVtoGEV;
