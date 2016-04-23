@@ -14,8 +14,9 @@
 
 // EDM include(s):
 #include "xAODEventInfo/EventInfo.h"
+#include "xAODTruth/TruthVertex.h"
 #include "xAODTruth/TruthParticle.h"
-#include "xAODTruth/TruthParticleContainer.h"
+//#include "xAODTruth/TruthParticleContainer.h"
 #include "xAODMissingET/MissingETContainer.h"
 #include "xAODJet/Jet.h"
 #include "xAODJet/JetContainer.h"
@@ -25,6 +26,7 @@
 #include <xAODTruthAnalysis/PhysicsTools.h>
 
 // ROOT include(s):
+#include <TFile.h>
 
 /// Helper macro for checking xAOD::TReturnCode return values
 #define EL_RETURN_CHECK( CONTEXT, EXP )                     \
@@ -94,54 +96,103 @@ EL::StatusCode Ewk2LTruthAnalysis :: histInitialize ()
   // trees.  This method gets called before any input files are
   // connected.
 
-  const std::string histoNames[m_nHists1D] = { "nLep 5 -0.5 4.5",
-                                               "lep0Pt 50 0 1000",
-                                               "lep0Eta 30 -3 3",  
-                                               "lep0Phi 18 -3.6 3.6", 
-                                               "lep1Pt 50 0 1000",
-                                               "lep1Eta 30 -3 3",  
-                                               "lep1Phi 18 -3.6 3.6", 
-                                               "deltaRll 30 0 6",
-                                               "deltaPhill 18 -3.6 3.6",
-                                               "mll 50 0 1000",  
-                                               "pTll 50 0 1000",
-                                               "met 50 0 1000",
-                                               "metRel 50 0 1000",
-                                               "mT2 50 0 500",
-                                               "mDeltaR 50 0 500",
-                                               "r2 20 0 1",
-                                               "deltaPhil0met 18 -3.6 3.6",
-                                               "deltaPhil1met 18 -3.6 3.6",
-                                               "dPhill_vBETA_T 9 0 3.6",
-                                               "nJet 10 -0.5 9.5",
-                                               "jet0Pt 50 0 1000",
-                                               "jet0Eta 50 -5 5",  
-                                               "jet0Phi 18 -3.6 3.6", 
-                                               "jet1Pt 50 0 1000",
-                                               "jet1Eta 50 -5 5",  
-                                               "jet1Phi 18 -3.6 3.6", 
-                                               "mx1 1000 -0.5 999.5",
-                                               "mn1 500 0 500",
-                                               "x1x1Pt 50 0 1000",
-                                               "deltaRx1x1 50 0 10",
-                                               "deltaPhix1x1 18 -3.6 3.6"
-                                             };
+  h_cutflow_weighted = new TH1D("CutflowWeighted","CutflowWeighted",10,0.,10.);
+  h_cutflow_weighted->Sumw2();
 
-  int nbin=0;  float xmin=0; float xmax=0; char hName[50]; TH1D* temp;
-  for( unsigned int i=0; i<m_nHists1D; ++i) {
-    // Create and store the histograms
-    sscanf(histoNames[i].c_str(),"%s %i %f %f",hName,&nbin,&xmin,&xmax);
-    temp = new TH1D(hName,hName,nbin,xmin,xmax);
-    temp->Sumw2();
-    h_hists1D.push_back(temp);
-    wk()->addOutput(h_hists1D.at(i));     
-    // For easy filling
-    m_nameToIndex.insert( std::pair<std::string,unsigned int>(std::string(hName),i) );
+  if(saveHists) {
+    wk()->addOutput(h_cutflow_weighted);
+
+    const std::string histoNames[m_nHists1D] = { "nLep 5 -0.5 4.5",
+                                                 "lep0Pt 50 0 1000",
+                                                 "lep0Eta 30 -3 3",  
+                                                 "lep0Phi 18 -3.6 3.6", 
+                                                 "lep1Pt 50 0 1000",
+                                                 "lep1Eta 30 -3 3",  
+                                                 "lep1Phi 18 -3.6 3.6", 
+                                                 "deltaRll 30 0 6",
+                                                 "deltaPhill 18 -3.6 3.6",
+                                                 "mll 50 0 1000",  
+                                                 "pTll 50 0 1000",
+                                                 "met 50 0 1000",
+                                                 "metRel 50 0 1000",
+                                                 "mT2 50 0 500",
+                                                 "mDeltaR 50 0 500",
+                                                 "r2 20 0 1",
+                                                 "deltaPhil0met 18 -3.6 3.6",
+                                                 "deltaPhil1met 18 -3.6 3.6",
+                                                 "dPhill_vBETA_T 9 0 3.6",
+                                                 "nJet 10 -0.5 9.5",
+                                                 "jet0Pt 50 0 1000",
+                                                 "jet0Eta 50 -5 5",  
+                                                 "jet0Phi 18 -3.6 3.6", 
+                                                 "jet1Pt 50 0 1000",
+                                                 "jet1Eta 50 -5 5",  
+                                                 "jet1Phi 18 -3.6 3.6", 
+                                                 "mx1 1000 -0.5 999.5",
+                                                 "mn1 500 0 500",
+                                                 "x1x1Pt 50 0 1000",
+                                                 "deltaRx1x1 50 0 10",
+                                                 "deltaPhix1x1 18 -3.6 3.6"
+                                               };
+
+    int nbin=0;  float xmin=0; float xmax=0; char hName[50]; TH1D* temp;
+    for( unsigned int i=0; i<m_nHists1D; ++i) {
+      // Create and store the histograms
+      sscanf(histoNames[i].c_str(),"%s %i %f %f",hName,&nbin,&xmin,&xmax);
+      temp = new TH1D(hName,hName,nbin,xmin,xmax);
+      temp->Sumw2();
+      h_hists1D.push_back(temp);
+      wk()->addOutput(h_hists1D.at(i));     
+      // For easy filling
+      m_nameToIndex.insert( std::pair<std::string,unsigned int>(std::string(hName),i) );
+    }
+  }
+
+  // Output Tree
+  if(saveTree) {
+    TFile *outputFile = wk()->getOutputFile (outputFileName);
+    outputTree = new TTree("SuperTruth"/*"susytree"*/,"SuperTruth"/*"susytree"*/);
+    h_cutflow_weighted->SetDirectory(outputFile); // Not the best solution, if both Hist and Tree written only shows up in the Tree
+    outputTree->SetDirectory(outputFile);
+    outputTree->Branch("runNumber"     /* "RunNumber"     */, &m_br_runNumber     ); 
+    outputTree->Branch("eventNumber"   /* "EventNumber"   */, &m_br_eventNumber   ); 
+    outputTree->Branch("mcEventWeight" /* "EventWeight"   */, &m_br_eventWeight   ); 
+    outputTree->Branch("mcEventWeights"/* "mcEventWeights"*/, &m_br_mcEventWeights); 
+    outputTree->Branch("susyID"        /* "susyID"        */, &m_br_susyID        ); 
+    outputTree->Branch("isSF"          /* "isSF"          */, &m_br_isSF          ); 
+    outputTree->Branch("isDF"          /* "isDF"          */, &m_br_isDF          ); 
+    outputTree->Branch("isSS"          /* "isSS"          */, &m_br_isSS          ); 
+    outputTree->Branch("isOS"          /* "isOS"          */, &m_br_isOS          ); 
+    outputTree->Branch("isNOHISR"      /* N/A             */, &m_br_isNOHISR      ); 
+    outputTree->Branch("lepton_pt"     /* "ptleptons"     */, &m_br_lepton_pt     ); 
+    outputTree->Branch("lepton_eta"    /* "etaleptons"    */, &m_br_lepton_eta    ); 
+    outputTree->Branch("lepton_phi"    /* "phileptons"    */, &m_br_lepton_phi    ); 
+    outputTree->Branch("lepton_m"      /* "massleptons"   */, &m_br_lepton_m      ); 
+    outputTree->Branch("lepton_flav"   /* "flavleptons"   */, &m_br_lepton_flav   ); 
+    outputTree->Branch("lepton_type"   /* "typeleptons"   */, &m_br_lepton_type   ); 
+    outputTree->Branch("lepton_origin" /* "originleptons" */, &m_br_lepton_origin ); 
+    outputTree->Branch("lepton_mother" /* "motherleptons" */, &m_br_lepton_mother ); 
+    outputTree->Branch("lepton_mother_mass" /* "motherleptons" */, &m_br_lepton_mother_mass ); 
+    outputTree->Branch("bjet_pt"       /* N/A             */, &m_br_bjet_pt       ); 
+    outputTree->Branch("nonbjet_pt"    /* N/A             */, &m_br_nonbjet_pt    ); 
+    outputTree->Branch("jet_pt"        /* "ptjets"        */, &m_br_jet_pt        ); 
+    outputTree->Branch("jet_eta"       /* "etajets"       */, &m_br_jet_eta       ); 
+    outputTree->Branch("jet_phi"       /* "phijets"       */, &m_br_jet_phi       ); 
+    outputTree->Branch("jet_m"         /* "massjets"      */, &m_br_jet_m         ); 
+    outputTree->Branch("jet_flav"      /* "flavjets"      */, &m_br_jet_flav      ); 
+    outputTree->Branch("met_et"        /* "MET"           */, &m_br_met_et        ); 
+    outputTree->Branch("met_phi"       /* "METphi"        */, &m_br_met_phi       ); 
+    outputTree->Branch("mT2ll"         /* "MT2"           */, &m_br_mT2ll         ); 
+    outputTree->Branch("mll"           /* "Mll"           */, &m_br_mll           ); 
+    outputTree->Branch("ptll"          /* N/A             */, &m_br_ptll          ); 
+    outputTree->Branch("dphill"        /* N/A             */, &m_br_dphill        ); 
+    outputTree->Branch("pbll"          /* "Pbll"          */, &m_br_pbll          ); 
+    outputTree->Branch("r1"            /* "R1"            */, &m_br_r1            ); 
+    outputTree->Branch("dphi_met_pbll" /* "DPhib"         */, &m_br_dphi_met_pbll ); 
   }
 
   return EL::StatusCode::SUCCESS;
 }
-
 
 
 EL::StatusCode Ewk2LTruthAnalysis :: fileExecute ()
@@ -191,6 +242,31 @@ EL::StatusCode Ewk2LTruthAnalysis :: execute ()
   // histograms and trees.  This is where most of your actual analysis
   // code will go.
 
+  // Clear variables
+  if(saveTree) {
+    m_br_susyID = 0; 
+    m_br_isSF = m_br_isDF = m_br_isOS = m_br_isNOHISR = m_br_isSS = false;
+    m_br_eventNumber = m_br_met_et = m_br_met_phi = m_br_mT2ll = m_br_dphi_met_pbll = 0.; 
+    m_br_mll = m_br_pbll = m_br_ptll = m_br_dphill = m_br_r1 = m_br_eventWeight = 0.;
+    m_br_lepton_pt.clear(); 
+    m_br_lepton_eta.clear(); 
+    m_br_lepton_phi.clear(); 
+    m_br_lepton_m.clear(); 
+    m_br_lepton_flav.clear();
+    m_br_lepton_type.clear();
+    m_br_lepton_origin.clear();
+    m_br_lepton_mother.clear();
+    m_br_lepton_mother_mass.clear();
+    m_br_bjet_pt.clear(); 
+    m_br_nonbjet_pt.clear(); 
+    m_br_jet_pt.clear(); 
+    m_br_jet_eta.clear(); 
+    m_br_jet_phi.clear(); 
+    m_br_jet_m.clear(); 
+    m_br_jet_flav.clear();
+    m_br_mcEventWeights.clear();
+  }
+
   // Event counter
   if( (m_eventCounter % 1000) ==0 ) Info("execute()", "Event number = %i", m_eventCounter );
   m_eventCounter++;
@@ -208,20 +284,39 @@ EL::StatusCode Ewk2LTruthAnalysis :: execute ()
   const xAOD::TruthParticleContainer* truthMuons = 0;
   EL_RETURN_CHECK("execute()",event->retrieve( truthMuons, "TruthMuons"));
 
+  // Find SUSY ID
+  int pdgid1 = 0, pdgid2 = 0, susyID = -1;
+  if(!FindSusyHardProc(truthParticles,pdgid1,pdgid2,false)) {
+    Info("execute()", "Cannot find SUSY process id for event %i", m_eventCounter );  
+  } else {
+    if(abs(pdgid1) == abs(pdgid2)) {
+      if(abs(pdgid1) == 1000011)      { susyID = 1; }
+      else if(abs(pdgid1) == 2000011) { susyID = 2; }
+      else if(abs(pdgid1) == 1000013) { susyID = 3; }
+      else if(abs(pdgid1) == 2000013) { susyID = 4; }
+      else if(abs(pdgid1) == 1000015) { susyID = 5; }
+      else if(abs(pdgid1) == 2000015) { susyID = 6; }
+    }
+  }
+
   // Loop over truth particles to find the sparticles
   const xAOD::TruthParticle *x1m = NULL, *x1p = NULL;
   for(const auto& truthPar : *truthParticles) {
     if( truthPar->absPdgId() == 1000024 ) {
       if( truthPar->nChildren()!=2 ) continue;
       //Info("execute()"," Found truth chargino in event %i with pdgId %i and mass %.2e and pt %.2e and %i children", m_eventCounter, truthPar->pdgId(), truthPar->m(), truthPar->pt(), truthPar->nChildren());
-      h_hists1D.at(m_nameToIndex["mx1"])->Fill(truthPar->m()*MEVtoGEV);
+      if(saveHists) {
+        h_hists1D.at(m_nameToIndex["mx1"])->Fill(truthPar->m()*MEVtoGEV);
+      }
       if(truthPar->pdgId() > 0) { x1p = truthPar; }
       else                      { x1m = truthPar; }
     }
     if( truthPar->absPdgId() == 1000022 ) {
       if( truthPar->nChildren()!=0 ) continue;
       //Info("execute()"," Found truth neutralino in event %i with pdgId %i and mass %.2e and pt %.2e and %i children", m_eventCounter, truthPar->pdgId(), truthPar->m(), truthPar->pt(), truthPar->nChildren());
-      h_hists1D.at(m_nameToIndex["mn1"])->Fill(truthPar->m()*MEVtoGEV);
+      if(saveHists) {
+        h_hists1D.at(m_nameToIndex["mn1"])->Fill(truthPar->m()*MEVtoGEV);
+      }
     }
   }
 
@@ -289,7 +384,9 @@ EL::StatusCode Ewk2LTruthAnalysis :: execute ()
 
   // Only ==2 lepton events and OS
   unsigned int nLep = leptons->size();
-  h_hists1D.at(m_nameToIndex["nLep"])->Fill(nLep);
+  if(saveHists) {
+    h_hists1D.at(m_nameToIndex["nLep"])->Fill(nLep);
+  }
   if(nLep != 2) return EL::StatusCode::SUCCESS;
   if((leptons->at(0)->pdgId()*leptons->at(1)->pdgId()) > 0) return EL::StatusCode::SUCCESS;
 
@@ -302,60 +399,231 @@ EL::StatusCode Ewk2LTruthAnalysis :: execute ()
                  0.,
                  (*missingET)["NonInt"]->met());
 
-  h_hists1D.at(m_nameToIndex["lep0Pt"]       )->Fill(lep0.Pt()*MEVtoGEV);
-  h_hists1D.at(m_nameToIndex["lep0Eta"]      )->Fill(lep0.Eta());
-  h_hists1D.at(m_nameToIndex["lep0Phi"]      )->Fill(lep0.Phi());
-  h_hists1D.at(m_nameToIndex["lep1Pt"]       )->Fill(lep1.Pt()*MEVtoGEV);
-  h_hists1D.at(m_nameToIndex["lep1Eta"]      )->Fill(lep1.Eta());
-  h_hists1D.at(m_nameToIndex["lep1Phi"]      )->Fill(lep1.Phi());
-  h_hists1D.at(m_nameToIndex["met"]          )->Fill(met.Pt()*MEVtoGEV);
-  h_hists1D.at(m_nameToIndex["mll"]          )->Fill((lep0+lep1).M()*MEVtoGEV);
-  h_hists1D.at(m_nameToIndex["pTll"]         )->Fill((lep0+lep1).Pt()*MEVtoGEV);
-  h_hists1D.at(m_nameToIndex["deltaRll"]     )->Fill(lep0.DeltaR(lep1));
-  h_hists1D.at(m_nameToIndex["deltaPhill"]   )->Fill(lep0.DeltaPhi(lep1));
-  h_hists1D.at(m_nameToIndex["deltaPhil0met"])->Fill(lep0.DeltaPhi(met));
-  h_hists1D.at(m_nameToIndex["deltaPhil1met"])->Fill(lep1.DeltaPhi(met));
+  // Basic variables
+  bool isSF     = (leptons->at(0)->absPdgId() == leptons->at(1)->absPdgId()) ? true:false;
+  bool isDF     = !isSF;
+  bool isOS     = (leptons->at(0)->pdgId() * leptons->at(1)->pdgId() < 0) ? true:false;
+  bool isSS     = !isOS;
+  double mll    = (lep0+lep1).M();
+  double pTll   = (lep0+lep1).Pt();
+  double dphill = lep0.DeltaPhi(lep1); 
+  double pbll   = (lep0+lep1+met).Pt();
+  double dphi_met_pbll = met.DeltaPhi(lep0+lep1+met);
 
-  // Compute and fill x1x1 variables
-  if( x1p != NULL && x1m != NULL) {
-    h_hists1D.at(m_nameToIndex["x1x1Pt"]      )->Fill((x1p->p4()+x1m->p4()).Pt()*MEVtoGEV);
-    h_hists1D.at(m_nameToIndex["deltaRx1x1"]  )->Fill(x1p->p4().DeltaR(x1m->p4()));
-    h_hists1D.at(m_nameToIndex["deltaPhix1x1"])->Fill(x1p->p4().DeltaPhi(x1m->p4()));
+  if(saveHists) {
+    h_hists1D.at(m_nameToIndex["lep0Pt"]       )->Fill(lep0.Pt()*MEVtoGEV);
+    h_hists1D.at(m_nameToIndex["lep0Eta"]      )->Fill(lep0.Eta());
+    h_hists1D.at(m_nameToIndex["lep0Phi"]      )->Fill(lep0.Phi());
+    h_hists1D.at(m_nameToIndex["lep1Pt"]       )->Fill(lep1.Pt()*MEVtoGEV);
+    h_hists1D.at(m_nameToIndex["lep1Eta"]      )->Fill(lep1.Eta());
+    h_hists1D.at(m_nameToIndex["lep1Phi"]      )->Fill(lep1.Phi());
+    h_hists1D.at(m_nameToIndex["met"]          )->Fill(met.Pt()*MEVtoGEV);
+    h_hists1D.at(m_nameToIndex["mll"]          )->Fill((lep0+lep1).M()*MEVtoGEV);
+    h_hists1D.at(m_nameToIndex["pTll"]         )->Fill((lep0+lep1).Pt()*MEVtoGEV);
+    h_hists1D.at(m_nameToIndex["deltaRll"]     )->Fill(lep0.DeltaR(lep1));
+    h_hists1D.at(m_nameToIndex["deltaPhill"]   )->Fill(lep0.DeltaPhi(lep1));
+    h_hists1D.at(m_nameToIndex["deltaPhil0met"])->Fill(lep0.DeltaPhi(met));
+    h_hists1D.at(m_nameToIndex["deltaPhil1met"])->Fill(lep1.DeltaPhi(met));
+
+    // Compute and fill x1x1 variables
+    if( x1p != NULL && x1m != NULL) {
+      h_hists1D.at(m_nameToIndex["x1x1Pt"]      )->Fill((x1p->p4()+x1m->p4()).Pt()*MEVtoGEV);
+      h_hists1D.at(m_nameToIndex["deltaRx1x1"]  )->Fill(x1p->p4().DeltaR(x1m->p4()));
+      h_hists1D.at(m_nameToIndex["deltaPhix1x1"])->Fill(x1p->p4().DeltaPhi(x1m->p4()));
+    }
   }
 
   // Compute and fill mT2 
   ComputeMT2 mycalc = ComputeMT2(lep0,lep1,met,0.,0.); // masses 0. 0.
   double mT2 = mycalc.Compute();
-  h_hists1D.at(m_nameToIndex["mT2"])->Fill(mT2*MEVtoGEV);
+  if(saveHists) {
+    h_hists1D.at(m_nameToIndex["mT2"])->Fill(mT2*MEVtoGEV);
+  }
 
   // Compute and fill super-razor
   double r2 = 0., dPhill_vBETA_T = 0., mDeltaR = 0.;
   r2 = met.Pt()/(met.Pt()+lep0.Pt()+lep1.Pt());
   PhysicsTools::superRazor(lep0,lep1,met,dPhill_vBETA_T,mDeltaR);
 
-  h_hists1D.at(m_nameToIndex["r2"])->Fill(r2);
-  h_hists1D.at(m_nameToIndex["dPhill_vBETA_T"])->Fill(dPhill_vBETA_T);
-  h_hists1D.at(m_nameToIndex["mDeltaR"])->Fill(mDeltaR*MEVtoGEV);
+  if(saveHists) {
+    h_hists1D.at(m_nameToIndex["r2"])->Fill(r2);
+    h_hists1D.at(m_nameToIndex["dPhill_vBETA_T"])->Fill(dPhill_vBETA_T);
+    h_hists1D.at(m_nameToIndex["mDeltaR"])->Fill(mDeltaR*MEVtoGEV);
+  }
 
   // Fill jet variables
   unsigned int nJet = jets->size();
-  h_hists1D.at(m_nameToIndex["nJet"])->Fill(nJet);
+  if(saveHists) {
+    h_hists1D.at(m_nameToIndex["nJet"])->Fill(nJet);
 
-  if( nJet > 0) { 
-    h_hists1D.at(m_nameToIndex["jet0Pt"] )->Fill(jets->at(0)->p4().Pt()*MEVtoGEV);
-    h_hists1D.at(m_nameToIndex["jet0Eta"])->Fill(jets->at(0)->p4().Eta());
-    h_hists1D.at(m_nameToIndex["jet0Phi"])->Fill(jets->at(0)->p4().Phi());
+    if( nJet > 0) { 
+      h_hists1D.at(m_nameToIndex["jet0Pt"] )->Fill(jets->at(0)->p4().Pt()*MEVtoGEV);
+      h_hists1D.at(m_nameToIndex["jet0Eta"])->Fill(jets->at(0)->p4().Eta());
+      h_hists1D.at(m_nameToIndex["jet0Phi"])->Fill(jets->at(0)->p4().Phi());
+    }
+    if( nJet > 1) {
+      h_hists1D.at(m_nameToIndex["jet1Pt"] )->Fill(jets->at(1)->p4().Pt()*MEVtoGEV);
+      h_hists1D.at(m_nameToIndex["jet1Eta"])->Fill(jets->at(1)->p4().Eta());
+      h_hists1D.at(m_nameToIndex["jet1Phi"])->Fill(jets->at(1)->p4().Phi());
+    }
   }
-  if( nJet > 1) {
-    h_hists1D.at(m_nameToIndex["jet1Pt"] )->Fill(jets->at(1)->p4().Pt()*MEVtoGEV);
-    h_hists1D.at(m_nameToIndex["jet1Eta"])->Fill(jets->at(1)->p4().Eta());
-    h_hists1D.at(m_nameToIndex["jet1Phi"])->Fill(jets->at(1)->p4().Phi());
+
+  // Fill Tree
+  if(saveTree) {
+    m_br_runNumber      = eventInfo->runNumber();  
+    m_br_eventNumber    = eventInfo->eventNumber();  
+    m_br_eventWeight    = eventInfo->mcEventWeight();
+    m_br_mcEventWeights = eventInfo->mcEventWeights();
+    // Leptons
+    for(const auto& ipar : *leptons) {
+      TLorentzVector ipar_tlv = ipar->p4(); 
+      m_br_lepton_pt.push_back(ipar_tlv.Pt()*MEVtoGEV);
+      m_br_lepton_eta.push_back(ipar_tlv.Eta());
+      m_br_lepton_phi.push_back(ipar_tlv.Phi());
+      m_br_lepton_m.push_back(ipar_tlv.M()*MEVtoGEV);
+      m_br_lepton_flav.push_back(ipar->pdgId());
+      m_br_lepton_type.push_back(ipar->auxdata< unsigned int >("classifierParticleType"));
+      m_br_lepton_origin.push_back(ipar->auxdata< unsigned int >("classifierParticleOrigin"));
+      /////////////////////////////////////////
+      // Home cooked classification 
+      // TRUTH1 doesn't have vertices or mothers for leptons in the TruthElectron/TruthMuon containers!!!
+      const xAOD::TruthVertex* partOriVert = ipar->hasProdVtx() ? ipar->prodVtx():0;
+      const xAOD::TruthParticle* mother = nullptr;
+      if( partOriVert!=0 ) {
+        for (unsigned int ipIn=0; ipIn<partOriVert->nIncomingParticles(); ++ipIn) {
+          if(!(partOriVert->incomingParticle(ipIn))) continue;
+          mother = partOriVert->incomingParticle(ipIn);
+        }
+      }
+      m_br_lepton_mother.push_back(mother!=nullptr ? mother->pdgId() : 0);
+      m_br_lepton_mother_mass.push_back(mother!=nullptr ? mother->p4().M()*MEVtoGEV : 0);
+      /////////////////////////////////////////
+    }
+    // Jets
+    for(const auto& ipar : *jets) {
+      TLorentzVector ipar_tlv = ipar->p4(); 
+      m_br_jet_pt.push_back(ipar_tlv.Pt()*MEVtoGEV);
+      m_br_jet_eta.push_back(ipar_tlv.Eta());
+      m_br_jet_phi.push_back(ipar_tlv.Phi());
+      m_br_jet_m.push_back(ipar_tlv.M()*MEVtoGEV);
+      m_br_jet_flav.push_back(ipar->auxdata<int>("PartonTruthLabelID"));
+      if(ipar->auxdata<int>("PartonTruthLabelID")==5) {
+        m_br_bjet_pt.push_back(ipar_tlv.Pt()*MEVtoGEV);
+      } else {
+        m_br_nonbjet_pt.push_back(ipar_tlv.Pt()*MEVtoGEV);
+      }
+    }
+    // Event variables
+    m_br_susyID        = susyID; 
+    m_br_isSF          = isSF;
+    m_br_isDF          = isDF;
+    m_br_isSS          = isSS;
+    m_br_isOS          = isOS;
+    m_br_isNOHISR      = true;
+    if(m_br_nonbjet_pt.size()>0) {
+      if(m_br_nonbjet_pt.at(0) > 200. || m_br_nonbjet_pt.at(0) < 50.) m_br_isNOHISR = false;
+    } 
+    m_br_mT2ll         = mT2*MEVtoGEV;
+    m_br_mll           = mll*MEVtoGEV; 
+    m_br_ptll          = pTll*MEVtoGEV;
+    m_br_dphill        = dphill;
+    m_br_pbll          = pbll*MEVtoGEV; 
+    m_br_met_et        = met.Pt()*MEVtoGEV;
+    m_br_met_phi       = met.Phi();
+    m_br_dphi_met_pbll = dphi_met_pbll; 
+    outputTree->Fill();
   }
 
   return EL::StatusCode::SUCCESS;
 }
 
+bool Ewk2LTruthAnalysis::FindSusyHardProc(const xAOD::TruthParticleContainer *truthP, int& pdgid1, int& pdgid2, bool isTruth3)
+{
+  pdgid1 = 0;
+  pdgid2 = 0;
 
+  //check for TRUTH3 structure first
+  if(isTruth3){
+    if(!truthP || truthP->size()<2){
+      return false;
+    }
+   
+    //get ID of first two BSM particles
+    pdgid1 = (*truthP)[0]->pdgId();
+    pdgid2 = (*truthP)[1]->pdgId();
+    return true;
+  }
+
+  //go for TRUTH1-like if not...
+  const xAOD::TruthParticle* firstsp(0);
+  const xAOD::TruthParticle* secondsp(0);
+
+  if (!truthP || truthP->empty()) {
+    return false;
+  }
+  for (const auto& tp : *truthP) {
+
+    //check ifSUSY particle
+    if ((abs(tp->pdgId()) > 1000000 && abs(tp->pdgId()) < 1000007) || // squarkL
+        (abs(tp->pdgId()) > 1000010 && abs(tp->pdgId()) < 1000017) || // sleptonL
+        (abs(tp->pdgId()) > 2000000 && abs(tp->pdgId()) < 2000007) || // squarkR
+        (abs(tp->pdgId()) > 2000010 && abs(tp->pdgId()) < 2000017) || // sleptonR
+        (abs(tp->pdgId()) > 1000020 && abs(tp->pdgId()) < 1000040)) { // gauginos
+
+      if (tp->nParents() != 0) {
+        if ( tp->parent(0)->absPdgId()  < 1000000) {
+          if (!firstsp) {
+            firstsp = tp;
+          } else if (!secondsp) {
+            secondsp = tp;
+          } else {
+            if (firstsp->nChildren() != 0 && tp->barcode() == firstsp->child(0)->barcode()) {
+              firstsp = tp;
+            }
+            else if (secondsp->nChildren() != 0 && tp->barcode() == secondsp->child(0)->barcode()) {
+              secondsp = tp;
+            }
+            else if (firstsp->nChildren() != 0 && firstsp->child(0)->barcode() == secondsp->barcode()) {
+              firstsp = secondsp;
+              secondsp = tp;
+            }
+            else if (secondsp->nChildren() != 0 && secondsp->child(0)->barcode() == firstsp->barcode()) {
+              secondsp = firstsp;
+              firstsp = tp;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  // quit if no sparticles found
+  if (!firstsp && !secondsp) return true; // should find none or two
+
+  if (firstsp->nChildren() == 1) {
+    for (const auto& tp : *truthP) {
+      if (tp->barcode() == firstsp->child(0)->barcode() && tp->pdgId() != firstsp->pdgId()) {
+        firstsp = tp;
+        break;
+      }
+    }
+  }
+
+  if (secondsp->nChildren() == 1) {
+    for (const auto& tp : *truthP) {
+      if (tp->barcode() == secondsp->child(0)->barcode() && tp->pdgId() != secondsp->pdgId()) {
+        secondsp = tp;
+        break;
+      }
+    }
+  }
+
+  if (abs(firstsp->pdgId()) > 1000000) pdgid1 = firstsp->pdgId();
+  if (abs(secondsp->pdgId()) > 1000000) pdgid2 = secondsp->pdgId();
+
+  // Return gracefully:
+  return true;
+}
 
 EL::StatusCode Ewk2LTruthAnalysis :: postExecute ()
 {
