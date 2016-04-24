@@ -1,6 +1,6 @@
 import os,sys,ROOT,math
 
-from stop2L_definitions import *
+from plot_definitions import *
 
 # Main function
 def main():
@@ -66,7 +66,7 @@ def main():
     canvas=ROOT.TCanvas("canvas","canvas",500,500)
     canvas.SetFillColor(0)
     canvas.cd()
-    if len(groupList) < 2:
+    if len(groupList) < 2 and options.ratio:
         print("\n\nWARNING :: Tried to plot ratio but provided only nominal sample, skipping ratio\n\n")
         options.ratio = False
     if options.ratio:
@@ -125,7 +125,8 @@ def main():
                 histogramsGrouped[kk][ii][jj].GetYaxis().SetTitle("Events")
                 histogramsGrouped[kk][ii][jj].GetYaxis().SetTitleOffset(1.3)
                 if options.log:
-                    histogramsGrouped[kk][ii][jj].GetYaxis().SetRangeUser(1.e-2,1.e2*pow(10,math.ceil(math.log(histogramsGrouped[kk][ii][jj].GetMaximum())/math.log(10))))
+                    #histogramsGrouped[kk][ii][jj].GetYaxis().SetRangeUser(1.e-2,1.e2*pow(10,math.ceil(math.log(histogramsGrouped[kk][ii][jj].GetMaximum())/math.log(10))))
+                    histogramsGrouped[kk][ii][jj].GetYaxis().SetRangeUser(1.e-5,1.e2*pow(10,math.ceil(math.log(histogramsGrouped[kk][ii][jj].GetMaximum())/math.log(10))))
                 else:
                     histogramsGrouped[kk][ii][jj].GetYaxis().SetRangeUser(0.,1.5*histogramsGrouped[kk][ii][jj].GetMaximum())
                 # Calculate the ratio
@@ -168,7 +169,7 @@ def print_userinput(options):
     print("   Set Logy                          %i " % (options.log)       )
     print("   Run in batch mode                 %i " % (options.batch)     )
     print("   Print debug information           %i " % (options.debug)     )
-    print("   Draw raio plot                    %i " % (options.ratio)     )
+    print("   Draw ratio plot                   %i " % (options.ratio)     )
     print("   Output dir is                     %s " % (options.outdir)    )
     print("   Plot format is                    %s " % (options.plotformat))
     print("\n==========================================================================")

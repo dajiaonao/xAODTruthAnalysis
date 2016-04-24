@@ -1,6 +1,6 @@
 import sys,ROOT,math
 
-from stop2L_definitions import *
+from plot_definitions import *
 
 # Main function
 def main():

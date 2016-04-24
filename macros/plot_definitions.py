@@ -21,6 +21,7 @@ def getROOTFileName(filename):
         "Madgraph_300vs180"    : "/gdata/atlas/amete/StopPolarization/outputs/FlatNtuples/Madgraph.300vs180.truth1_v3.root",
         "MadgraphR_300vs180"   : "/gdata/atlas/amete/StopPolarization/outputs/FlatNtuples/MadgraphR.300vs180.truth1_v3.root",
         "MadgraphL_300vs180"   : "/gdata/atlas/amete/StopPolarization/outputs/FlatNtuples/MadgraphL.300vs180.truth1_v3.root",
+        "MadgraphSlep_100vs1"  : "/gdata/atlas/amete/MC15_SleptonPairProduction/FLAT/DAOD_TRUTH1.MGPy8EG_A14N23LO_SlepSlep_direct_100p0_1p0_2L5_10k.pool.root",
     }.get(filename,"")
 
 # Define cross-sections
@@ -44,6 +45,7 @@ def getCrossSection(filename):
         "Madgraph_300vs180"    : 8.51615*0.051921, # Private
         "MadgraphR_300vs180"   : 8.51615*0.051921, # Private
         "MadgraphL_300vs180"   : 8.51615*0.051921, # Private
+        "MadgraphSlep_100vs1"  : 1,  # Dummy
     }.get(filename,"")
 
 # Define X titles
@@ -87,7 +89,8 @@ def getXtitle(variable):
         "r1"              : "R1",
         "dphi_met_pbll"   : "#Delta#phi(MET,Pbll)",
         "dphill"          : "#Delta#phi(l,l)",
-        "mcEventWeight"   : "MC event weight"
+        "mcEventWeight"   : "MC event weight",
+        "susyID"          : "SUSY ID",
     }.get(variable,"N/A") # N/A is default if variable is not found
 
 # Define region cuts
@@ -115,32 +118,33 @@ def getRegionTCut(region):
 # Define histogram bins
 def getBinInformation(variable):
     return {
-        "lepton_n"      : [ 10, 0, 10],
-        "jet_n"         : [ 20, 0, 20],
-        "bjet_n"        : [ 20, 0, 20],
-        "nonbjet_n"     : [ 20, 0, 20],
-        "lepton_pt"     : [[0,10,20,30,40,50,60,70,80,90,100,110,120,140,160,180,200,250,300]],
-        "bjet_pt"       : [[0,10,20,30,40,50,60,80,100,120,160,200,250,300]],
-        "nonbjet_pt"    : [[0,10,20,30,40,50,60,70,80,90,100,110,120,130,140,150,160,180,200,220,240,260,280,300,340,380,500]],
-        "jet_pt"        : [ 30, 0, 300], #[[0,20,40,60,80,100,120,140,160,180,200,225,250,300,400,500,1000]],
-        "lepton_eta"    : [50,-2.5,2.5],
-        "jet_eta"       : [90,-4.5,4.5],
+        "lepton_n"      : [ 10, 0,  10],
+        "jet_n"         : [ 20, 0,  20],
+        "bjet_n"        : [ 20, 0,  20],
+        "nonbjet_n"     : [ 20, 0,  20],
+        "lepton_pt"     : [ 50, 0, 500], 
+        "bjet_pt"       : [ 50, 0, 500], 
+        "nonbjet_pt"    : [ 50, 0, 500], 
+        "jet_pt"        : [ 10, 0, 500], #[[0,20,40,60,80,100,120,140,160,180,200,225,250,300,400,500,1000]],
+        "lepton_eta"    : [ 60,-3,3],
+        "jet_eta"       : [ 10,-5,5],
         "lepton_phi"    : [70,-3.5,3.5],
-        "jet_phi"       : [70,-3.5,3.5],
+        "jet_phi"       : [ 7,-3.5,3.5],
         "mT2ll"         : [ 20, 0, 200], #[[0,10,20,30,40,50,60,70,80,90,100,110,120,130,145,300]],
-        "ptll"          : [[0,10,20,30,40,50,60,70,80,90,100,110,120,130,140,150,160,180,200,220,240,260,280,300,340,380,500]], 
-        "mll"           : [[0,10,20,30,40,50,60,70,80,90,100,110,120,130,140,150,160,180,200,220,240,260,280,300,340,380,500]], #[[0,20,40,60,80,100,120,140,160,180,200,220,240,260,280,300,320,340,360,400,500,1000]],
-        "met_et"        : [[0,10,20,30,40,50,60,70,80,90,100,110,120,130,140,150,160,180,200,220,240,260,280,300,340,380,500]], #[[0,20,40,60,80,100,120,140,160,180,200,225,250,300,400,500,1000]],
+        "ptll"          : [ 50, 0, 500], 
+        "mll"           : [ 60, 0, 600], #[[0,20,40,60,80,100,120,140,160,180,200,220,240,260,280,300,320,340,360,400,500,1000]],
+        "met_et"        : [ 50, 0, 500], #[[0,20,40,60,80,100,120,140,160,180,200,225,250,300,400,500,1000]],
         "met_phi"       : [70,-3.5,3.5],
-        "pbll"          : [[0,20,40,60,80,100,120,140,160,180,200,225,250,300,400,500,1000]],
-        "r1"            : [ 10,0, 1],
+        "pbll"          : [ 50, 0, 500],
+        "r1"            : [ 10, 0,   1],
         "lepton_flav"   : [ 10, 10, 20],
-        "jet_flav"      : [ 25, 0, 25],
-        "lepton_type"   : [ 10, 0, 10],
-        "lepton_origin" : [ 50, 0, 50],
+        "jet_flav"      : [ 25,  0, 25],
+        "lepton_type"   : [ 10,  0, 10],
+        "lepton_origin" : [ 50,  0, 50],
         "dphill"        : [35,-3.5,3.5],
         "dphi_met_pbll" : [70,-3.5,3.5],
-        "mcEventWeight" : [100, 0, 20],
+        "mcEventWeight" : [100, 0,  20],
+        "susyID"        : [ 10, 0,  10],
     }.get(variable,[1,0.5,1.5]) # 1 is default if variable is not found
 
 # Get files

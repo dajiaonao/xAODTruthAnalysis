@@ -296,7 +296,9 @@ EL::StatusCode Ewk2LTruthAnalysis :: execute ()
       else if(abs(pdgid1) == 2000013) { susyID = 4; }
       else if(abs(pdgid1) == 1000015) { susyID = 5; }
       else if(abs(pdgid1) == 2000015) { susyID = 6; }
+      else { susyID = 0; Info("execute()", "Unexpected pair production of |pdgid| %i", abs(pdgid1)); }
     }
+    else { susyID = 0; Info("execute()", "Unexpected production of pdgid %ii - %i", pdgid1, pdgid2); }
   }
 
   // Loop over truth particles to find the sparticles
@@ -327,8 +329,8 @@ EL::StatusCode Ewk2LTruthAnalysis :: execute ()
   for(const auto& truthEl : *truthElectrons) {
     if( truthEl->absPdgId() != 11    ) continue; // only electrons
     if( truthEl->status() != 1       ) continue; // only final state objects
-    if( truthEl->pt()*MEVtoGEV < 10. ) continue; // pT > 10 GeV 
-    if( fabs(truthEl->eta()) > 2.5   ) continue; // |eta| < 2.5 
+    if( truthEl->pt()*MEVtoGEV < 10. ) continue; // pT > 5 GeV 
+    if( fabs(truthEl->eta()) > 2.5   ) continue; // |eta| < 2.8 
    
     electrons->push_back(truthEl); // store if passed all
   } // end loop over truth electrons
@@ -336,8 +338,8 @@ EL::StatusCode Ewk2LTruthAnalysis :: execute ()
   for(const auto& truthMu : *truthMuons) {
     if( truthMu->absPdgId() != 13    ) continue; // only muons
     if( truthMu->status() != 1       ) continue; // only final state objects
-    if( truthMu->pt()*MEVtoGEV < 10. ) continue; // pT > 10 GeV 
-    if( fabs(truthMu->eta()) > 2.5   ) continue; // |eta| < 2.5 
+    if( truthMu->pt()*MEVtoGEV < 10. ) continue; // pT > 5 GeV 
+    if( fabs(truthMu->eta()) > 2.5   ) continue; // |eta| < 2.8 
    
     muons->push_back(truthMu); // store if passed all
   } // end loop over truth muons
@@ -387,8 +389,8 @@ EL::StatusCode Ewk2LTruthAnalysis :: execute ()
   if(saveHists) {
     h_hists1D.at(m_nameToIndex["nLep"])->Fill(nLep);
   }
-  if(nLep != 2) return EL::StatusCode::SUCCESS;
-  if((leptons->at(0)->pdgId()*leptons->at(1)->pdgId()) > 0) return EL::StatusCode::SUCCESS;
+  if(nLep < 2) return EL::StatusCode::SUCCESS;
+  //if((leptons->at(0)->pdgId()*leptons->at(1)->pdgId()) > 0) return EL::StatusCode::SUCCESS;
 
   // Build objects and fill histograms
   TLorentzVector lep0 = leptons->at(0)->p4();
@@ -473,6 +475,7 @@ EL::StatusCode Ewk2LTruthAnalysis :: execute ()
     m_br_runNumber      = eventInfo->runNumber();  
     m_br_eventNumber    = eventInfo->eventNumber();  
     m_br_eventWeight    = eventInfo->mcEventWeight();
+    h_cutflow_weighted->Fill(0.,m_br_eventWeight);
     m_br_mcEventWeights = eventInfo->mcEventWeights();
     // Leptons
     for(const auto& ipar : *leptons) {
