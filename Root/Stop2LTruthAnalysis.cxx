@@ -264,7 +264,7 @@ EL::StatusCode Stop2LTruthAnalysis :: initialize ()
 
   // As a check, let's see the number of events in our xAOD
   m_eventCounter = 0;
-  Info("initialize()", "Number of events = %lli", event->getEntries() ); // print long long int
+  Info("initialize()", "Number of events = %llu", event->getEntries() ); // print long long int
 
   // Setup MCTruthClassifier
   if(m_mcTruthClassifier == nullptr) m_mcTruthClassifier = new MCTruthClassifier("myMCTruthClassifier"); 
@@ -609,7 +609,7 @@ EL::StatusCode Stop2LTruthAnalysis :: execute ()
   //if((leptons->at(0)->pdgId()*leptons->at(1)->pdgId()) > 0) return EL::StatusCode::SUCCESS;
   // At least two leptons
   if(nLep<2) { 
-    Info("execute()","Event %i has %i leptons, rejecting...",eventInfo->eventNumber(),nLep);
+    Info("execute()","Event %llu has %u leptons, rejecting...",eventInfo->eventNumber(),nLep);
     return EL::StatusCode::SUCCESS;
   }
 
