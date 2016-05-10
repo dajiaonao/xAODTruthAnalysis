@@ -191,40 +191,46 @@ EL::StatusCode Stop2LTruthAnalysis :: histInitialize ()
     outputTree = new TTree("SuperTruth"/*"susytree"*/,"SuperTruth"/*"susytree"*/);
     h_cutflow_weighted->SetDirectory(outputFile); // Not the best solution, if both Hist and Tree written only shows up in the Tree
     outputTree->SetDirectory(outputFile);
-    outputTree->Branch("runNumber"     /* "RunNumber"     */, &m_br_runNumber     ); 
-    outputTree->Branch("eventNumber"   /* "EventNumber"   */, &m_br_eventNumber   ); 
-    outputTree->Branch("mcEventWeight" /* "EventWeight"   */, &m_br_eventWeight   ); 
-    outputTree->Branch("mcEventWeights"/* "mcEventWeights"*/, &m_br_mcEventWeights); 
-    outputTree->Branch("isSF"          /* "isSF"          */, &m_br_isSF          ); 
-    outputTree->Branch("isDF"          /* "isDF"          */, &m_br_isDF          ); 
-    outputTree->Branch("isSS"          /* "isSS"          */, &m_br_isSS          ); 
-    outputTree->Branch("isOS"          /* "isOS"          */, &m_br_isOS          ); 
-    outputTree->Branch("isNOHISR"      /* N/A             */, &m_br_isNOHISR      ); 
-    outputTree->Branch("lepton_pt"     /* "ptleptons"     */, &m_br_lepton_pt     ); 
-    outputTree->Branch("lepton_eta"    /* "etaleptons"    */, &m_br_lepton_eta    ); 
-    outputTree->Branch("lepton_phi"    /* "phileptons"    */, &m_br_lepton_phi    ); 
-    outputTree->Branch("lepton_m"      /* "massleptons"   */, &m_br_lepton_m      ); 
-    outputTree->Branch("lepton_flav"   /* "flavleptons"   */, &m_br_lepton_flav   ); 
-    outputTree->Branch("lepton_type"   /* "typeleptons"   */, &m_br_lepton_type   ); 
-    outputTree->Branch("lepton_origin" /* "originleptons" */, &m_br_lepton_origin ); 
-    outputTree->Branch("lepton_mother" /* "motherleptons" */, &m_br_lepton_mother ); 
+    outputTree->Branch("runNumber"     /* "RunNumber"     */, &m_br_runNumber        ); 
+    outputTree->Branch("eventNumber"   /* "EventNumber"   */, &m_br_eventNumber      ); 
+    outputTree->Branch("mcEventWeight" /* "EventWeight"   */, &m_br_eventWeight      ); 
+    outputTree->Branch("mcPolWeight_L" /* "EventWeight"   */, &m_br_eventPolWeight_L ); 
+    outputTree->Branch("mcPolWeight_R" /* "EventWeight"   */, &m_br_eventPolWeight_R ); 
+    outputTree->Branch("mcPolWeight_M" /* "EventWeight"   */, &m_br_eventPolWeight_M ); 
+    outputTree->Branch("mcEventWeights"/* "mcEventWeights"*/, &m_br_mcEventWeights   ); 
+    outputTree->Branch("isSF"          /* "isSF"          */, &m_br_isSF             ); 
+    outputTree->Branch("isDF"          /* "isDF"          */, &m_br_isDF             ); 
+    outputTree->Branch("isSS"          /* "isSS"          */, &m_br_isSS             ); 
+    outputTree->Branch("isOS"          /* "isOS"          */, &m_br_isOS             ); 
+    outputTree->Branch("isNOHISR"      /* N/A             */, &m_br_isNOHISR         ); 
+    outputTree->Branch("lepton_pt"     /* "ptleptons"     */, &m_br_lepton_pt        ); 
+    outputTree->Branch("lepton_eta"    /* "etaleptons"    */, &m_br_lepton_eta       ); 
+    outputTree->Branch("lepton_phi"    /* "phileptons"    */, &m_br_lepton_phi       ); 
+    outputTree->Branch("lepton_m"      /* "massleptons"   */, &m_br_lepton_m         ); 
+    outputTree->Branch("lepton_flav"   /* "flavleptons"   */, &m_br_lepton_flav      ); 
+    outputTree->Branch("lepton_type"   /* "typeleptons"   */, &m_br_lepton_type      ); 
+    outputTree->Branch("lepton_origin" /* "originleptons" */, &m_br_lepton_origin    ); 
+    outputTree->Branch("lepton_mother" /* "motherleptons" */, &m_br_lepton_mother    ); 
     outputTree->Branch("lepton_mother_mass" /* "motherleptons" */, &m_br_lepton_mother_mass ); 
-    outputTree->Branch("bjet_pt"       /* N/A             */, &m_br_bjet_pt       ); 
-    outputTree->Branch("nonbjet_pt"    /* N/A             */, &m_br_nonbjet_pt    ); 
-    outputTree->Branch("jet_pt"        /* "ptjets"        */, &m_br_jet_pt        ); 
-    outputTree->Branch("jet_eta"       /* "etajets"       */, &m_br_jet_eta       ); 
-    outputTree->Branch("jet_phi"       /* "phijets"       */, &m_br_jet_phi       ); 
-    outputTree->Branch("jet_m"         /* "massjets"      */, &m_br_jet_m         ); 
-    outputTree->Branch("jet_flav"      /* "flavjets"      */, &m_br_jet_flav      ); 
-    outputTree->Branch("met_et"        /* "MET"           */, &m_br_met_et        ); 
-    outputTree->Branch("met_phi"       /* "METphi"        */, &m_br_met_phi       ); 
-    outputTree->Branch("mT2ll"         /* "MT2"           */, &m_br_mT2ll         ); 
-    outputTree->Branch("mll"           /* "Mll"           */, &m_br_mll           ); 
-    outputTree->Branch("ptll"          /* N/A             */, &m_br_ptll          ); 
-    outputTree->Branch("dphill"        /* N/A             */, &m_br_dphill        ); 
-    outputTree->Branch("pbll"          /* "Pbll"          */, &m_br_pbll          ); 
-    outputTree->Branch("r1"            /* "R1"            */, &m_br_r1            ); 
-    outputTree->Branch("dphi_met_pbll" /* "DPhib"         */, &m_br_dphi_met_pbll ); 
+    outputTree->Branch("bjet_pt"       /* N/A             */, &m_br_bjet_pt          ); 
+    outputTree->Branch("nonbjet_pt"    /* N/A             */, &m_br_nonbjet_pt       ); 
+    outputTree->Branch("jet_pt"        /* "ptjets"        */, &m_br_jet_pt           ); 
+    outputTree->Branch("jet_eta"       /* "etajets"       */, &m_br_jet_eta          ); 
+    outputTree->Branch("jet_phi"       /* "phijets"       */, &m_br_jet_phi          ); 
+    outputTree->Branch("jet_m"         /* "massjets"      */, &m_br_jet_m            ); 
+    outputTree->Branch("jet_flav"      /* "flavjets"      */, &m_br_jet_flav         ); 
+    outputTree->Branch("truth_wbmass"  /* "truth_wbmass"  */, &m_br_truth_wbmass     ); 
+    outputTree->Branch("truth_wmass"   /* "truth_wmass"   */, &m_br_truth_wmass      ); 
+    outputTree->Branch("truth_thetal"  /* "truth_thetal"  */, &m_br_truth_thetal     ); 
+    outputTree->Branch("met_et"        /* "MET"           */, &m_br_met_et           ); 
+    outputTree->Branch("met_phi"       /* "METphi"        */, &m_br_met_phi          ); 
+    outputTree->Branch("mT2ll"         /* "MT2"           */, &m_br_mT2ll            ); 
+    outputTree->Branch("mll"           /* "Mll"           */, &m_br_mll              ); 
+    outputTree->Branch("ptll"          /* N/A             */, &m_br_ptll             ); 
+    outputTree->Branch("dphill"        /* N/A             */, &m_br_dphill           ); 
+    outputTree->Branch("pbll"          /* "Pbll"          */, &m_br_pbll             ); 
+    outputTree->Branch("r1"            /* "R1"            */, &m_br_r1               ); 
+    outputTree->Branch("dphi_met_pbll" /* "DPhib"         */, &m_br_dphi_met_pbll    ); 
   }
 
   return EL::StatusCode::SUCCESS;
@@ -305,7 +311,8 @@ EL::StatusCode Stop2LTruthAnalysis :: execute ()
   if(saveTree) {
     m_br_isSF = m_br_isDF = m_br_isOS = m_br_isNOHISR = m_br_isSS = false;
     m_br_eventNumber = m_br_met_et = m_br_met_phi = m_br_mT2ll = m_br_dphi_met_pbll = 0.; 
-    m_br_mll = m_br_pbll = m_br_ptll = m_br_dphill = m_br_r1 = m_br_eventWeight = 0.;
+    m_br_mll = m_br_pbll = m_br_ptll = m_br_dphill = m_br_r1 = 0.; 
+    m_br_eventWeight = m_br_eventPolWeight_L = m_br_eventPolWeight_R = m_br_eventPolWeight_M = 0.;
     m_br_lepton_pt.clear(); 
     m_br_lepton_eta.clear(); 
     m_br_lepton_phi.clear(); 
@@ -323,6 +330,9 @@ EL::StatusCode Stop2LTruthAnalysis :: execute ()
     m_br_jet_m.clear(); 
     m_br_jet_flav.clear();
     m_br_mcEventWeights.clear();
+    m_br_truth_wbmass.clear();
+    m_br_truth_wmass.clear();
+    m_br_truth_thetal.clear();
   }
 
   // Event info
@@ -349,10 +359,13 @@ EL::StatusCode Stop2LTruthAnalysis :: execute ()
   }
 
   ////////////////////////////////
-  // TEST TAKASHI
-  //double polweight = 1.; // None
-  //double polweight = m_polreweight->getReweightTopNeutralino(truthParticles, 1.40639, 0.7853981634); // Right
-  double polweight = m_polreweight->getReweightTopNeutralino(truthParticles, 0., 0.7853981634); // Left
+  // Polarization reweighting 
+  float polweight_R = 0, polweight_L = 0, polweight_M = 0.; 
+  if(isSignal) { 
+    polweight_R = m_polreweight->getReweightTopNeutralino(truthParticles, 1.40639, 0.7853981634); // Right
+    polweight_L = m_polreweight->getReweightTopNeutralino(truthParticles, 0.00000, 0.7853981634); // Left
+    polweight_M = m_polreweight->getReweightTopNeutralino(truthParticles, 0.7853981634, 0.7853981634); // Mass-only
+  }
   //////////////////////////////
  
   // Event counter and weight
@@ -363,13 +376,11 @@ EL::StatusCode Stop2LTruthAnalysis :: execute ()
   float eventWeight = eventInfo->mcEventWeight(); // Event weight
   //eventWeight *= polweight; // Polarization reweight
   h_cutflow_weighted->Fill(0.,eventWeight);
-  //if(m_eventCounter==1) {
-  //  TString histoName; histoName.Form("CutflowWeighted_%i",eventInfo->runNumber()); 
-  //  h_cutflow_weighted->SetName(histoName);
-  //  h_cutflow_weighted->SetName(histoName);
-  //}
 
   // Signal specific code
+  double thetal[2] = {0.};
+  double wbMass[2] = {0.};
+  double wMass[2]  = {0.};
   if(isSignal) {
 
     // Loop over truth particles to find the stop
@@ -479,9 +490,10 @@ EL::StatusCode Stop2LTruthAnalysis :: execute ()
     }
 
     // Calculate the boosts
-    double thetal[2] = {0.};
     for(unsigned int ipar=0; ipar<2; ipar++) {
       TLorentzVector top_hlv        = wbosons[ipar]->p4() + bquarks[ipar]->p4();
+      wMass[ipar]                   = wbosons[ipar]->p4().M();
+      wbMass[ipar]                  = top_hlv.M();
       TLorentzVector lepton_hlv     = wleptons[ipar]->p4();
       TLorentzVector neutralino_hlv = neutralinos[ipar]->p4();
       TVector3 boostVec             = top_hlv.BoostVector();
@@ -489,24 +501,6 @@ EL::StatusCode Stop2LTruthAnalysis :: execute ()
       neutralino_hlv.Boost(-boostVec);
       thetal[ipar]                  = neutralino_hlv.Angle(lepton_hlv.Vect());
     }
-
-    //////////////////////////////////
-    //// TEST TAKASHI
-    //StopPolarization::PolarizationReweight *polreweight = new StopPolarization::PolarizationReweight;
-    //polreweight->setUnitMeV(); // set MeV
-    //polreweight->setMassW(80399.); 
-    //polreweight->setWidthW(2085.);
-    //polreweight->setMassZ(91187.6);
-    //polreweight->setWidthZ(2495.2);
-    //polreweight->setMassWThreshold(0.);
-    //polreweight->setMassZThreshold(0.);
-    //std::string generatorName = "MadGraphPythia8";
-    //polreweight->setGeneratorName(generatorName);
-    //polreweight->setDecayPythia(true);
-    //polreweight->setPhaseSpaceOnly(true);
-    //double weight = polreweight->getReweightTopNeutralino(truthParticles, 0.785419, 1.40637);
-    //delete polreweight;
-    ////////////////////////////////
 
     // Compute and fill core event variables
     if(saveHists) {
@@ -543,8 +537,8 @@ EL::StatusCode Stop2LTruthAnalysis :: execute ()
   for(const auto& truthEl : *truthElectrons) {
     if( truthEl->absPdgId() != 11    ) continue; // only electrons
     if( truthEl->status() != 1       ) continue; // only final state objects
-    if( truthEl->pt()*MEVtoGEV < 18. ) continue; // pT > 10 GeV
-    if( fabs(truthEl->eta()) > 2.8   ) continue; // |eta| < 2.5
+    if( truthEl->pt()*MEVtoGEV < 20. ) continue; // pT > 20 GeV
+    if( fabs(truthEl->eta()) > 2.5   ) continue; // |eta| < 2.5
 
     electrons->push_back(truthEl); // store if passed all
   } // end loop over truth electrons
@@ -552,8 +546,8 @@ EL::StatusCode Stop2LTruthAnalysis :: execute ()
   for(const auto& truthMu : *truthMuons) {
     if( truthMu->absPdgId() != 13    ) continue; // only muons
     if( truthMu->status() != 1       ) continue; // only final state objects
-    if( truthMu->pt()*MEVtoGEV < 18. ) continue; // pT > 10 GeV
-    if( fabs(truthMu->eta()) > 2.8   ) continue; // |eta| < 2.5
+    if( truthMu->pt()*MEVtoGEV < 20. ) continue; // pT > 20 GeV
+    if( fabs(truthMu->eta()) > 2.5   ) continue; // |eta| < 2.5
    
     muons->push_back(truthMu); // store if passed all
   } // end loop over truth muons
@@ -609,7 +603,7 @@ EL::StatusCode Stop2LTruthAnalysis :: execute ()
   //if((leptons->at(0)->pdgId()*leptons->at(1)->pdgId()) > 0) return EL::StatusCode::SUCCESS;
   // At least two leptons
   if(nLep<2) { 
-    Info("execute()","Event %llu has %u leptons, rejecting...",eventInfo->eventNumber(),nLep);
+    //Info("execute()","Event %llu has %u leptons, rejecting...",eventInfo->eventNumber(),nLep);
     return EL::StatusCode::SUCCESS;
   }
 
@@ -698,10 +692,19 @@ EL::StatusCode Stop2LTruthAnalysis :: execute ()
 
   // Fill Tree
   if(saveTree) {
-    m_br_runNumber      = eventInfo->runNumber();  
-    m_br_eventNumber    = eventInfo->eventNumber();  
-    m_br_eventWeight    = eventInfo->mcEventWeight()*polweight; // With polweight
-    m_br_mcEventWeights = eventInfo->mcEventWeights();
+    m_br_runNumber        = eventInfo->runNumber();  
+    m_br_eventNumber      = eventInfo->eventNumber();  
+    m_br_eventWeight      = eventInfo->mcEventWeight();
+    m_br_eventPolWeight_L = polweight_L;
+    m_br_eventPolWeight_R = polweight_R;
+    m_br_eventPolWeight_M = polweight_M;
+    m_br_mcEventWeights   = eventInfo->mcEventWeights();
+    // Truth
+    for(unsigned int ii=0; ii<2; ii++) {
+      m_br_truth_wbmass.push_back(wbMass[ii]*MEVtoGEV);
+      m_br_truth_wmass.push_back(wMass[ii]*MEVtoGEV);
+      m_br_truth_thetal.push_back(thetal[ii]);
+    }
     // Leptons
     for(const auto& ipar : *leptons) {
       TLorentzVector ipar_tlv = ipar->p4(); 

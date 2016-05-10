@@ -17,10 +17,15 @@ def getROOTFileName(filename):
         "Powheg_ttbar_radLo"   : "/gdata/atlas/amete/MC15_ModelingUncertainties/FlatNtuples/truth_v3/mc15_13TeV.410002.TRUTH1.root",
         "aMCatNLO_ttbar"       : "/gdata/atlas/amete/MC15_ModelingUncertainties/FlatNtuples/truth_v3/mc15_13TeV.410003.TRUTH1.root",
         "PowhegHpp_ttbar"      : "/gdata/atlas/amete/MC15_ModelingUncertainties/FlatNtuples/truth_v3/mc15_13TeV.410004.TRUTH1.root",
-        "Herwigpp_300vs180"    : "/gdata/atlas/amete/StopPolarization/outputs/FlatNtuples/Herwigpp.300vs180.truth1_v3.root",
-        "Madgraph_300vs180"    : "/gdata/atlas/amete/StopPolarization/outputs/FlatNtuples/Madgraph.300vs180.truth1_v3.root",
-        "MadgraphR_300vs180"   : "/gdata/atlas/amete/StopPolarization/outputs/FlatNtuples/MadgraphR.300vs180.truth1_v3.root",
-        "MadgraphL_300vs180"   : "/gdata/atlas/amete/StopPolarization/outputs/FlatNtuples/MadgraphL.300vs180.truth1_v3.root",
+        #"Herwigpp_300vs180"    : "/gdata/atlas/amete/StopPolarization/outputs/FlatNtuples/Herwigpp.300vs180.truth1_v3.root",
+        #"Madgraph_300vs180"    : "/gdata/atlas/amete/StopPolarization/outputs/FlatNtuples/Madgraph.300vs180.truth1_v3.root",
+        #"MadgraphR_300vs180"   : "/gdata/atlas/amete/StopPolarization/outputs/FlatNtuples/MadgraphR.300vs180.truth1_v3.root",
+        #"MadgraphL_300vs180"   : "/gdata/atlas/amete/StopPolarization/outputs/FlatNtuples/MadgraphL.300vs180.truth1_v3.root",
+        "Herwigpp_300vs180"    : "/data/uclhc/uci/user/amete/stop_signal_flat/FLAT_406011.HppEG_UE5C6L1_Tt_bWN_t300_n180_2Lep18.root",
+        "Madgraph_300vs180"    : "/data/uclhc/uci/user/amete/stop_signal_flat/FLAT_387948.MGPy8EG_A14N23LO_TT_bWN_300_180_2L15.root",
+        "MadgraphM_300vs180"   : "/data/uclhc/uci/user/amete/stop_signal_flat/FLAT_387948.MGPy8EG_A14N23LO_TT_bWN_300_180_2L15.root",
+        "MadgraphR_300vs180"   : "/data/uclhc/uci/user/amete/stop_signal_flat/FLAT_387948.MGPy8EG_A14N23LO_TT_bWN_300_180_2L15.root",
+        "MadgraphL_300vs180"   : "/data/uclhc/uci/user/amete/stop_signal_flat/FLAT_387948.MGPy8EG_A14N23LO_TT_bWN_300_180_2L15.root",
         "MadgraphSlep_100vs1"  : "/gdata/atlas/amete/MC15_SleptonPairProduction/FLAT/DAOD_TRUTH1.MGPy8EG_A14N23LO_SlepSlep_direct_100p0_1p0_2L5_10k.pool.root",
     }.get(filename,"")
 
@@ -42,9 +47,10 @@ def getCrossSection(filename):
         "aMCatNLO_ttbar"       : 831.76*0.543, # 410003
         "PowhegHpp_ttbar"      : 831.76*0.543, # 410004
         "Herwigpp_300vs180"    : 8.51615*0.047643, # Official 
-        "Madgraph_300vs180"    : 8.51615*0.051921, # Private
-        "MadgraphR_300vs180"   : 8.51615*0.051921, # Private
-        "MadgraphL_300vs180"   : 8.51615*0.051921, # Private
+        "Madgraph_300vs180"    : 8.51615*0.060136, # Official
+        "MadgraphM_300vs180"   : 8.51615*0.060136, # Official
+        "MadgraphR_300vs180"   : 8.51615*0.060136, # Official
+        "MadgraphL_300vs180"   : 8.51615*0.060136, # Official
         "MadgraphSlep_100vs1"  : 1,  # Dummy
     }.get(filename,"")
 
@@ -91,6 +97,15 @@ def getXtitle(variable):
         "dphill"          : "#Delta#phi(l,l)",
         "mcEventWeight"   : "MC event weight",
         "susyID"          : "SUSY ID",
+        "truth_wbmass"    : "Mass of the W+b system [GeV]",
+        "truth_wbmass[0]" : "Mass of the first W+b system [GeV]",
+        "truth_wbmass[1]" : "Mass of the second W+b system [GeV]",
+        "truth_wmass"     : "Mass of the W [GeV]",
+        "truth_wmass[0]"  : "Mass of the first W [GeV]",
+        "truth_wmass[1]"  : "Mass of the second W [GeV]",
+        "TMath::Cos(truth_thetal)"    : "cos#theta",
+        "TMath::Cos(truth_thetal[0])" : "cos#theta of the first system",
+        "TMath::Cos(truth_thetal[1])" : "cos#theta of the second system",
     }.get(variable,"N/A") # N/A is default if variable is not found
 
 # Define region cuts
@@ -113,6 +128,7 @@ def getRegionTCut(region):
         "VR_SF_INC"   : "isSF && lepton_pt[0]>20. && lepton_pt[1]>20. && mll>20. && (lepton_type[0]==2||lepton_type[0]==6) && (lepton_type[1]==2||lepton_type[1]==6)",
         #"VR_STOP_INC" : "(@nonbjet_pt.size()==0 || (@nonbjet_pt.size()==1 && nonbjet_pt[0] < 200. && nonbjet_pt[0] > 50.)) && lepton_pt[0]>20. && lepton_pt[1]>20. && (lepton_type[0]==2||lepton_type[0]==6) && (lepton_type[1]==2||lepton_type[1]==6) ",
         "VR_STOP_NOHISR" : "isNOHISR && (lepton_type[0]==2||lepton_type[0]==6) && (lepton_type[1]==2||lepton_type[1]==6) ",
+        "VR_STOP2L_INC" : "isOS && lepton_pt[0]>20. && lepton_pt[1]>20. && (lepton_type[0]==2||lepton_type[0]==6) && (lepton_type[1]==2||lepton_type[1]==6)",
     }.get(region,"1") # 1 is default if region is not found
 
 # Define histogram bins
@@ -122,7 +138,7 @@ def getBinInformation(variable):
         "jet_n"         : [ 20, 0,  20],
         "bjet_n"        : [ 20, 0,  20],
         "nonbjet_n"     : [ 20, 0,  20],
-        "lepton_pt"     : [ 50, 0, 500], 
+        "lepton_pt"     : [ 25, 0, 250], 
         "bjet_pt"       : [ 50, 0, 500], 
         "nonbjet_pt"    : [ 50, 0, 500], 
         "jet_pt"        : [ 10, 0, 500], #[[0,20,40,60,80,100,120,140,160,180,200,225,250,300,400,500,1000]],
@@ -145,6 +161,9 @@ def getBinInformation(variable):
         "dphi_met_pbll" : [70,-3.5,3.5],
         "mcEventWeight" : [100, 0,  20],
         "susyID"        : [ 10, 0,  10],
+        "truth_wmass"   : [40, 60, 100],
+        "truth_wbmass"  : [50, 50, 150],
+        "TMath::Cos(truth_thetal)"  : [10, -1, 1], # Cos of thetal
     }.get(variable,[1,0.5,1.5]) # 1 is default if variable is not found
 
 # Get files
@@ -166,13 +185,13 @@ def getSumOfWeights(files):
 def setColors(files):
     colors=[0 for x in range(len(files))] 
     for ii,iiFile in enumerate(files):
-        if ii == 0: colors[ii] = ROOT.kBlue
+        if ii == 0:   colors[ii] = ROOT.kBlack #ROOT.kBlue
         elif ii == 1: colors[ii] = ROOT.kSpring-1 
-        elif ii == 2: colors[ii] = ROOT.kMagenta 
-        elif ii == 3: colors[ii] = ROOT.kCyan+1
-        elif ii == 4: colors[ii] = ROOT.kViolet+1
+        elif ii == 2: colors[ii] = ROOT.kAzure-3 
+        elif ii == 3: colors[ii] = ROOT.kOrange+1 #ROOT.kCyan+1
+        elif ii == 4: colors[ii] = ROOT.kMagenta 
         elif ii == 5: colors[ii] = ROOT.kAzure+1
-        elif ii == 6: colors[ii] = ROOT.kOrange+1 
+        elif ii == 6: colors[ii] = ROOT.kViolet+1 
         elif ii == 7: colors[ii] = ROOT.kYellow+1
     return colors
 
@@ -192,7 +211,7 @@ def fillHistograms(files,options):
         # Find the tree 
         currentROOTTree = files[ii].Get("SuperTruth")
         if not currentROOTTree:
-            print("WARNING :: Cannot find ROOT tree in the file %s"%fullInputFileName)
+            print("WARNING :: Cannot find ROOT tree in the file %s"%inputFile)
             continue
         # Loop over regions 
         for jj,region in enumerate(regionList):
@@ -221,7 +240,14 @@ def fillHistograms(files,options):
                 elif variable == "nonbjet_n" : variable = "@nonbjet_pt.size()"
                 if(options.debug):
                     print("INFO :: Cross-section %.2f - Luminosity %.2f - Sumw %.2f"%(getCrossSection(inputFile),options.luminosity,sumw[ii]))
-                selection=("(mcEventWeight*%f*%f/%f)*(%s)"%(getCrossSection(inputFile),options.luminosity,sumw[ii],cut))
+                if "MadgraphM" in inputFile:
+                    selection=("(mcEventWeight*mcPolWeight_M*%f*%f/%f)*(%s)"%(getCrossSection(inputFile),options.luminosity,sumw[ii],cut))
+                elif "MadgraphR" in inputFile:
+                    selection=("(mcEventWeight*mcPolWeight_R*%f*%f/%f)*(%s)"%(getCrossSection(inputFile),options.luminosity,sumw[ii],cut))
+                elif "MadgraphL" in inputFile:
+                    selection=("(mcEventWeight*mcPolWeight_L*%f*%f/%f)*(%s)"%(getCrossSection(inputFile),options.luminosity,sumw[ii],cut))
+                else:
+                    selection=("(mcEventWeight*%f*%f/%f)*(%s)"%(getCrossSection(inputFile),options.luminosity,sumw[ii],cut))
                 if options.debug:
                     print("INFO :: Selection is %s" % selection)
                 currentROOTTree.Draw(variable+">>"+histoName,selection,"goff")                                

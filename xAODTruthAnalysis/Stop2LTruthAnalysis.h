@@ -42,6 +42,9 @@ public:
   unsigned long long m_br_runNumber; //!
   unsigned long long m_br_eventNumber; //!
   float m_br_eventWeight; //! mcEventWeights[0]
+  float m_br_eventPolWeight_L; //! Polarization weight left 
+  float m_br_eventPolWeight_R; //! Polarization weight right
+  float m_br_eventPolWeight_M; //! Polarization weight mass-only
   std::vector<float> m_br_mcEventWeights; //!
   std::vector<float> m_br_lepton_pt; //!
   std::vector<float> m_br_lepton_eta; //!
@@ -59,6 +62,9 @@ public:
   std::vector<float> m_br_jet_phi; //!
   std::vector<float> m_br_jet_m; //!
   std::vector<int>   m_br_jet_flav; //!
+  std::vector<float> m_br_truth_wbmass; //!
+  std::vector<float> m_br_truth_wmass; //!
+  std::vector<float> m_br_truth_thetal; //!
   bool m_br_isSF;     //!
   bool m_br_isDF;     //!
   bool m_br_isSS;     //!

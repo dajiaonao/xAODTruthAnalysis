@@ -126,9 +126,9 @@ def main():
                 histogramsGrouped[kk][ii][jj].GetYaxis().SetTitleOffset(1.3)
                 if options.log:
                     #histogramsGrouped[kk][ii][jj].GetYaxis().SetRangeUser(1.e-2,1.e2*pow(10,math.ceil(math.log(histogramsGrouped[kk][ii][jj].GetMaximum())/math.log(10))))
-                    histogramsGrouped[kk][ii][jj].GetYaxis().SetRangeUser(1.e-5,1.e2*pow(10,math.ceil(math.log(histogramsGrouped[kk][ii][jj].GetMaximum())/math.log(10))))
+                    histogramsGrouped[kk][ii][jj].GetYaxis().SetRangeUser(1.e-1,1.e2*pow(10,math.ceil(math.log(histogramsGrouped[kk][ii][jj].GetMaximum())/math.log(10))))
                 else:
-                    histogramsGrouped[kk][ii][jj].GetYaxis().SetRangeUser(0.,1.5*histogramsGrouped[kk][ii][jj].GetMaximum())
+                    histogramsGrouped[kk][ii][jj].GetYaxis().SetRangeUser(0.,2*histogramsGrouped[kk][ii][jj].GetMaximum())
                 # Calculate the ratio
                 if not options.ratio or kk==0: # 0 is assumed to be the denominator
                     continue
@@ -150,7 +150,7 @@ def main():
             # Save canvas
             if not os.path.exists(options.outdir):
                 os.mkdir(options.outdir)
-            canvas.SaveAs(("%s/%s_%s.%s"%(options.outdir,region,variable.replace("[","").replace("]",""),options.plotformat)))
+            canvas.SaveAs(("%s/%s_%s.%s"%(options.outdir,region,variable.replace("[","").replace("]","").replace("TMath::","").replace("(","").replace(")",""),options.plotformat)))
 
 
 # Print user input
