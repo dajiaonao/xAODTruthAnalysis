@@ -1,6 +1,7 @@
 //#include <xAODTruthAnalysis/MT2_ROOT.h>
 #include <xAODTruthAnalysis/Stop2LTruthAnalysis.h>
 #include <xAODTruthAnalysis/Ewk2LTruthAnalysis.h>
+#include <xAODTruthAnalysis/StrongSS3LTruthAnalysis.h>
 
 #ifdef __CINT__
 
@@ -15,4 +16,5 @@
 //#pragma link C++ class ComputeMT2+;
 #pragma link C++ class Stop2LTruthAnalysis+;
 #pragma link C++ class Ewk2LTruthAnalysis+;
+#pragma link C++ class StrongSS3LTruthAnalysis+;
 //#endif
