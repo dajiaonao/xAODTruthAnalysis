@@ -221,8 +221,15 @@ EL::StatusCode Stop2LTruthAnalysis :: histInitialize ()
     outputTree->Branch("jet_phi"       /* "phijets"       */, &m_br_jet_phi          ); 
     outputTree->Branch("jet_m"         /* "massjets"      */, &m_br_jet_m            ); 
     outputTree->Branch("jet_flav"      /* "flavjets"      */, &m_br_jet_flav         ); 
+    outputTree->Branch("truth_ststpt"  /* "truth_ststpt"  */, &m_br_truth_ststpt     ); 
+    outputTree->Branch("truth_ststmass"/* "truth_ststmass"*/, &m_br_truth_ststmass   ); 
+    outputTree->Branch("truth_stpt"    /* "truth_stpt"    */, &m_br_truth_stpt       ); 
     outputTree->Branch("truth_stmass"  /* "truth_stmass"  */, &m_br_truth_stmass     ); 
+    outputTree->Branch("truth_n1pt"    /* "truth_n1pt"    */, &m_br_truth_n1pt       ); 
+    outputTree->Branch("truth_n1mass"  /* "truth_n1mass"  */, &m_br_truth_n1mass     ); 
+    outputTree->Branch("truth_wbpt"    /* "truth_wbpt"    */, &m_br_truth_wbpt       ); 
     outputTree->Branch("truth_wbmass"  /* "truth_wbmass"  */, &m_br_truth_wbmass     ); 
+    outputTree->Branch("truth_wpt"     /* "truth_wpt"     */, &m_br_truth_wpt        ); 
     outputTree->Branch("truth_wmass"   /* "truth_wmass"   */, &m_br_truth_wmass      ); 
     outputTree->Branch("truth_thetal"  /* "truth_thetal"  */, &m_br_truth_thetal     ); 
     outputTree->Branch("met_et"        /* "MET"           */, &m_br_met_et           ); 
@@ -319,7 +326,7 @@ EL::StatusCode Stop2LTruthAnalysis :: execute ()
   // Clear variables
   if(saveTree) {
     m_br_isSF = m_br_isDF = m_br_isOS = m_br_isNOHISR = m_br_isSS = false;
-    m_br_eventNumber = m_br_met_et = m_br_met_phi = m_br_mT2ll = m_br_dphi_met_pbll = 0.; 
+    m_br_eventNumber = m_br_met_et = m_br_met_phi = m_br_mT2ll = m_br_dphi_met_pbll = m_br_truth_ststpt = m_br_truth_ststmass = 0.; 
     m_br_mll = m_br_pbll = m_br_ptll = m_br_dphill = m_br_r1 = 0.; 
     m_br_eventWeight = m_br_eventPolWeight_L = m_br_eventPolWeight_R = m_br_eventPolWeight_M = 0.; //m_br_eventWmassWeight = 0.;
     m_br_lepton_pt.clear(); 
@@ -339,8 +346,13 @@ EL::StatusCode Stop2LTruthAnalysis :: execute ()
     m_br_jet_m.clear(); 
     m_br_jet_flav.clear();
     m_br_mcEventWeights.clear();
+    m_br_truth_stpt.clear();
     m_br_truth_stmass.clear();
+    m_br_truth_n1pt.clear();
+    m_br_truth_n1mass.clear();
+    m_br_truth_wbpt.clear();
     m_br_truth_wbmass.clear();
+    m_br_truth_wpt.clear();
     m_br_truth_wmass.clear();
     m_br_truth_thetal.clear();
   }
@@ -393,8 +405,15 @@ EL::StatusCode Stop2LTruthAnalysis :: execute ()
 
   // Signal specific code
   double thetal[2] = {0.};
+  double ststpt    =   0.;
+  double ststmass  =   0.;
+  double stPt[2]   = {0.};
   double stMass[2] = {0.};
+  double n1Pt[2]   = {0.};
+  double n1Mass[2] = {0.};
+  double wbPt[2]   = {0.};
   double wbMass[2] = {0.};
+  double wPt[2]    = {0.};
   double wMass[2]  = {0.};
   if(isSignal) {
 
@@ -556,8 +575,13 @@ EL::StatusCode Stop2LTruthAnalysis :: execute ()
     // Calculate the boosts
     for(unsigned int ipar=0; ipar<2; ipar++) {
       TLorentzVector top_hlv        = wbosons[ipar]->p4() + bquarks[ipar]->p4();
+      stPt[ipar]                    = stops[ipar]->p4().Pt();
       stMass[ipar]                  = stops[ipar]->p4().M();
+      n1Pt[ipar]                    = neutralinos[ipar]->p4().Pt();
+      n1Mass[ipar]                  = neutralinos[ipar]->p4().M();
+      wPt[ipar]                     = wbosons[ipar]->p4().Pt();
       wMass[ipar]                   = wbosons[ipar]->p4().M();
+      wbPt[ipar]                    = top_hlv.Pt();
       wbMass[ipar]                  = top_hlv.M();
       TLorentzVector lepton_hlv     = wleptons[ipar]->p4();
       TLorentzVector neutralino_hlv = neutralinos[ipar]->p4();
@@ -566,6 +590,8 @@ EL::StatusCode Stop2LTruthAnalysis :: execute ()
       neutralino_hlv.Boost(-boostVec);
       thetal[ipar]                  = neutralino_hlv.Angle(lepton_hlv.Vect());
     }
+    ststpt   = (stops[0]->p4()+stops[1]->p4()).Pt();
+    ststmass = (stops[0]->p4()+stops[1]->p4()).M();
 
     // Compute and fill core event variables
     if(saveHists) {
@@ -773,9 +799,16 @@ EL::StatusCode Stop2LTruthAnalysis :: execute ()
     //else                            { m_br_eventWmassWeight *= h_wmassFit->Eval(wMass[1]*MEVtoGEV); }
     //// Play around <<<<<
     // Truth
+    m_br_truth_ststpt   = ststpt*MEVtoGEV;
+    m_br_truth_ststmass = ststmass*MEVtoGEV;
     for(unsigned int ii=0; ii<2; ii++) {
+      m_br_truth_stpt.push_back(stPt[ii]*MEVtoGEV);
       m_br_truth_stmass.push_back(stMass[ii]*MEVtoGEV);
+      m_br_truth_n1pt.push_back(n1Pt[ii]*MEVtoGEV);
+      m_br_truth_n1mass.push_back(n1Mass[ii]*MEVtoGEV);
+      m_br_truth_wbpt.push_back(wbPt[ii]*MEVtoGEV);
       m_br_truth_wbmass.push_back(wbMass[ii]*MEVtoGEV);
+      m_br_truth_wpt.push_back(wPt[ii]*MEVtoGEV);
       m_br_truth_wmass.push_back(wMass[ii]*MEVtoGEV);
       m_br_truth_thetal.push_back(thetal[ii]);
     }

@@ -66,8 +66,13 @@ public:
   std::vector<float> m_br_jet_phi; //!
   std::vector<float> m_br_jet_m; //!
   std::vector<int>   m_br_jet_flav; //!
+  std::vector<float> m_br_truth_stpt; //!
   std::vector<float> m_br_truth_stmass; //!
+  std::vector<float> m_br_truth_n1pt; //!
+  std::vector<float> m_br_truth_n1mass; //!
+  std::vector<float> m_br_truth_wbpt; //!
   std::vector<float> m_br_truth_wbmass; //!
+  std::vector<float> m_br_truth_wpt; //!
   std::vector<float> m_br_truth_wmass; //!
   std::vector<float> m_br_truth_thetal; //!
   bool m_br_isSF;     //!
@@ -75,6 +80,8 @@ public:
   bool m_br_isSS;     //!
   bool m_br_isOS;     //!
   bool m_br_isNOHISR;     //!
+  float m_br_truth_ststpt; //!
+  float m_br_truth_ststmass; //!
   float m_br_mll;     //!
   float m_br_ptll;     //!
   float m_br_dphill;     //!
