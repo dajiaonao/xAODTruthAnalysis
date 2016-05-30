@@ -10,11 +10,14 @@
 #include <TH1.h>
 #include <TH2.h>
 #include <TTree.h>
+#include <TF1.h>
 //#include <TFile.h>
 //#include <TGraph.h>
 
 #include <vector>       // std::vector
 #include <map>          // std::map
+
+#include "xAODTruth/TruthParticleFwd.h"
 
 class Stop2LTruthAnalysis : public EL::Algorithm
 {
@@ -45,6 +48,7 @@ public:
   float m_br_eventPolWeight_L; //! Polarization weight left 
   float m_br_eventPolWeight_R; //! Polarization weight right
   float m_br_eventPolWeight_M; //! Polarization weight mass-only
+  float m_br_eventWmassWeight; //! 
   std::vector<float> m_br_mcEventWeights; //!
   std::vector<float> m_br_lepton_pt; //!
   std::vector<float> m_br_lepton_eta; //!
@@ -62,6 +66,7 @@ public:
   std::vector<float> m_br_jet_phi; //!
   std::vector<float> m_br_jet_m; //!
   std::vector<int>   m_br_jet_flav; //!
+  std::vector<float> m_br_truth_stmass; //!
   std::vector<float> m_br_truth_wbmass; //!
   std::vector<float> m_br_truth_wmass; //!
   std::vector<float> m_br_truth_thetal; //!
@@ -94,12 +99,16 @@ public:
   virtual EL::StatusCode finalize ();
   virtual EL::StatusCode histFinalize ();
 
+  // Internal functions
+  void printTruthInfo(const xAOD::TruthParticle* particle);
+
   // Event variables
   private:
   unsigned int m_eventCounter; //!
 
   // Histograms
   private:
+  TF1* h_wmassFit; //!
   TH1* h_cutflow_weighted; //!
   static const unsigned int m_nHists1D = 48, m_nHists2D = 2;
   std::vector<TH1*> h_hists1D; //!

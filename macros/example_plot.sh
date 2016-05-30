@@ -1,6 +1,6 @@
 #!/bin/bash
 
-var="lepton_n"
+#var="lepton_n"
 #var="${var},lepton_pt[0]"
 #var="${var},lepton_eta[0]"
 #var="${var},lepton_phi[0]"
@@ -42,21 +42,42 @@ var="lepton_n"
 ##var="${var},truth_wbmass[1]"
 ##var="${var},TMath::Cos(truth_thetal[0])"
 ##var="${var},TMath::Cos(truth_thetal[1])"
-var="${var},truth_wmass"
-var="${var},truth_wbmass"
+#var="${var},truth_wmass"
+var="truth_wbmass"
 var="${var},TMath::Cos(truth_thetal)"
 
-var2="lepton_pt[0]"
+var2="truth_wmass"
+#var2="${var2},truth_stmass"
 
 ### Sleptons
 ##var="${var},susyID"
 ##python make_plots.py -i "MadgraphSlep_100vs1" -v "${var}" -f "eps" -l 1 -b -L;
 
 ### Stop Polarization
-##python make_plots.py -i "Herwigpp_300vs180,Madgraph_300vs180,MadgraphR_300vs180,MadgraphL_300vs180" -v "mcEventWeight" -r "ALL,VR_STOP_NOHISR" -f "eps" -l 10000 -L -b -a;
-##python make_plots.py -i "Herwigpp_300vs180,Madgraph_300vs180,MadgraphR_300vs180,MadgraphL_300vs180" -v "${var}" -r "ALL,VR_STOP_NOHISR" -f "eps" -l 10000 -L -b -a;
-python make_plots.py -i "Herwigpp_300vs180,MadgraphR_300vs180,MadgraphM_300vs180,MadgraphL_300vs180,Madgraph_300vs180" -v "${var}" -r "VR_STOP2L_INC" -f "eps" -l 10000 -b -a; 
-python make_plots.py -i "Herwigpp_300vs180,MadgraphR_300vs180,MadgraphM_300vs180,MadgraphL_300vs180,Madgraph_300vs180" -v "${var2}" -r "VR_STOP2L_INC" -f "eps" -l 10000 -b -a -L; 
+##python make_plots.py -i "Herwigpp_300vs180,MadgraphF_300vs180,MadgraphR_300vs180,MadgraphM_300vs180,MadgraphL_300vs180,Madgraph_300vs180" -v "${var}" -r "VR_STOP2L_INC" -f "eps" -l 10000 -b -a; 
+##python make_plots.py -i "Herwigpp_300vs180,MadgraphF_300vs180,MadgraphR_300vs180,MadgraphM_300vs180,MadgraphL_300vs180,Madgraph_300vs180" -v "${var2}" -r "VR_STOP2L_INC" -f "eps" -l 10000 -b -a -L; 
+#python make_plots.py -i "TakashiF_250vs125,TakashiL_250vs125,Takashi_250vs125" -v "${var}" -r "VR_STOP2L_INC" -f "eps" -l 10000 -b -a; 
+#python make_plots.py -i "TakashiF_250vs125,TakashiL_250vs125,Takashi_250vs125" -v "${var2}" -r "VR_STOP2L_INC" -f "eps" -l 10000 -b -a -L; 
+#python make_plots.py -i "Herwigpp_250vs160,MadgraphR_250vs160,Madgraph_250vs160" -v "${var}"  -r "VR_STOP2L_INC" -f "eps" -l 10000 -b -a; 
+#python make_plots.py -i "Herwigpp_250vs160,MadgraphR_250vs160,Madgraph_250vs160" -v "${var2}" -r "VR_STOP2L_INC" -f "eps" -l 10000 -b -a -L; 
+#python make_plots.py -i "Herwigpp_300vs150,MadgraphR_300vs150,Madgraph_300vs150" -v "${var}"  -r "VR_STOP2L_INC" -f "eps" -l 10000 -b -a; 
+#python make_plots.py -i "Herwigpp_300vs150,MadgraphR_300vs150,Madgraph_300vs150" -v "${var2}" -r "VR_STOP2L_INC" -f "eps" -l 10000 -b -a -L; 
+#python make_plots.py -i "Herwigpp_300vs180,MadgraphF_300vs180,MadgraphT_300vs180,MadgraphR_300vs180,Madgraph_300vs180" -v "${var}"  -r "VR_STOP2L_INC" -f "eps" -l 10000 -b -a; 
+#python make_plots.py -i "Herwigpp_300vs180,MadgraphF_300vs180,MadgraphT_300vs180,MadgraphR_300vs180,Madgraph_300vs180" -v "${var2}" -r "VR_STOP2L_INC" -f "eps" -l 10000 -b -a -L; 
+#python make_plots.py -i "HerwigppL_250vs160,MadgraphL_250vs160,Madgraph_250vs160" -v "${var}"  -r "VR_STOP2L_INC" -f "eps" -l 10000 -b -a; 
+#python make_plots.py -i "HerwigppL_250vs160,MadgraphL_250vs160,Madgraph_250vs160" -v "${var2}" -r "VR_STOP2L_INC" -f "eps" -l 10000 -b -a -L; 
+#python make_plots.py -i "HerwigppL_300vs180,MadgraphL_300vs180,Madgraph_300vs180" -v "${var}"  -r "VR_STOP2L_INC" -f "eps" -l 10000 -b -a; 
+#python make_plots.py -i "HerwigppL_300vs180,MadgraphL_300vs180,Madgraph_300vs180" -v "${var2}" -r "VR_STOP2L_INC" -f "eps" -l 10000 -b -a -L; 
+#python make_plots.py -i "HerwigppR_300vs180,HerwigppL_300vs180" -v "${var}"  -r "VR_STOP2L_INC" -f "eps" -l 10000 -b -a; 
+#python make_plots.py -i "HerwigppR_300vs180,HerwigppL_300vs180" -v "${var2}" -r "VR_STOP2L_INC" -f "eps" -l 10000 -b -a -L; 
+#python make_plots.py -i "HerwigppR_300vs180,MadgraphFR_300vs180,MadgraphR_300vs180,Madgraph_300vs180" -v "${var}"  -r "VR_STOP2L_INC" -f "eps" -l 10000 -b -a; 
+#python make_plots.py -i "HerwigppR_300vs180,MadgraphFR_300vs180,MadgraphR_300vs180,Madgraph_300vs180" -v "${var2}" -r "VR_STOP2L_INC" -f "eps" -l 10000 -b -a -L; 
+#python make_plots.py -i "HerwigppL_300vs180,MadgraphL_300vs180,Madgraph_300vs180" -v "${var}"  -r "VR_STOP2L_INC" -f "eps" -l 10000 -b -a; 
+#python make_plots.py -i "HerwigppL_300vs180,MadgraphL_300vs180,Madgraph_300vs180" -v "${var2}" -r "VR_STOP2L_INC" -f "eps" -l 10000 -b -a -L; 
+python make_plots.py -i "MadgraphM_300vs180,MadgraphR_300vs180,MadgraphL_300vs180" -v "${var}"  -r "VR_STOP2L_INC" -f "eps" -l 10000 -b -a; 
+python make_plots.py -i "MadgraphM_300vs180,MadgraphR_300vs180,MadgraphL_300vs180" -v "${var2}" -r "VR_STOP2L_INC" -f "eps" -l 10000 -b -a -L; 
+
+
 
 ### Dibosons
 ##python make_plots.py -i "Sherpa_lvlv,Powheg_WWlvlv,Powheg_ZZllvv" -g "0,1+2" -v "${var}" -r "CR_SF,CR_DF" -f "eps" -L -b -a;

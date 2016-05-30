@@ -107,7 +107,7 @@ def main():
                     #    legend.AddEntry(histogramsGrouped[kk][ii][jj],inputFile,"l")
                 # Histograms are scaled in fillHistograms
                 # but here we can scale them to unity to check the shapes
-                #scaleToUnity(histogramsGrouped[kk][ii][jj]) 
+                scaleToUnity(histogramsGrouped[kk][ii][jj]) 
                 # Add the overflow to last bin before plotting
                 addOverFlowToLastBin(histogramsGrouped[kk][ii][jj]) 
                 # Draw onto canvas
@@ -122,13 +122,14 @@ def main():
                 histogramsGrouped[kk][ii][jj].GetXaxis().SetTitleOffset(1.3)
                 if options.ratio:
                     histogramsGrouped[kk][ii][jj].GetXaxis().SetLabelOffset(10)
-                histogramsGrouped[kk][ii][jj].GetYaxis().SetTitle("Events")
+                #histogramsGrouped[kk][ii][jj].GetYaxis().SetTitle("Events")
+                histogramsGrouped[kk][ii][jj].GetYaxis().SetTitle("arb. units")
                 histogramsGrouped[kk][ii][jj].GetYaxis().SetTitleOffset(1.3)
                 if options.log:
                     #histogramsGrouped[kk][ii][jj].GetYaxis().SetRangeUser(1.e-2,1.e2*pow(10,math.ceil(math.log(histogramsGrouped[kk][ii][jj].GetMaximum())/math.log(10))))
-                    histogramsGrouped[kk][ii][jj].GetYaxis().SetRangeUser(1.e-1,1.e2*pow(10,math.ceil(math.log(histogramsGrouped[kk][ii][jj].GetMaximum())/math.log(10))))
+                    histogramsGrouped[kk][ii][jj].GetYaxis().SetRangeUser(1.e-5,1.e2*pow(10,math.ceil(math.log(histogramsGrouped[kk][ii][jj].GetMaximum())/math.log(10))))
                 else:
-                    histogramsGrouped[kk][ii][jj].GetYaxis().SetRangeUser(0.,2*histogramsGrouped[kk][ii][jj].GetMaximum())
+                    histogramsGrouped[kk][ii][jj].GetYaxis().SetRangeUser(0.,1.75*histogramsGrouped[kk][ii][jj].GetMaximum())
                 # Calculate the ratio
                 if not options.ratio or kk==0: # 0 is assumed to be the denominator
                     continue
@@ -144,7 +145,8 @@ def main():
             # Draw the legend and decorations
             legend.Draw()
             ROOT.myText(0.20,0.88,ROOT.kBlack,"#bf{ATLAS} Internal")
-            ROOT.myText(0.20,0.83,ROOT.kBlack,("%.2f fb^{-1} #sqrt{s} = 13 TeV"% (options.luminosity*1.e-3)))
+            #ROOT.myText(0.20,0.83,ROOT.kBlack,("%.2f fb^{-1} #sqrt{s} = 13 TeV"% (options.luminosity*1.e-3)))
+            ROOT.myText(0.20,0.83,ROOT.kBlack,("#sqrt{s} = 13 TeV"))
             ROOT.myText(0.55,0.88,ROOT.kBlack,("Region : %s"% (region)))
             ROOT.gPad.SetLogy(options.log)
             # Save canvas

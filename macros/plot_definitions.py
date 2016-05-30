@@ -21,11 +21,25 @@ def getROOTFileName(filename):
         #"Madgraph_300vs180"    : "/gdata/atlas/amete/StopPolarization/outputs/FlatNtuples/Madgraph.300vs180.truth1_v3.root",
         #"MadgraphR_300vs180"   : "/gdata/atlas/amete/StopPolarization/outputs/FlatNtuples/MadgraphR.300vs180.truth1_v3.root",
         #"MadgraphL_300vs180"   : "/gdata/atlas/amete/StopPolarization/outputs/FlatNtuples/MadgraphL.300vs180.truth1_v3.root",
-        "Herwigpp_300vs180"    : "/data/uclhc/uci/user/amete/stop_signal_flat/FLAT_406011.HppEG_UE5C6L1_Tt_bWN_t300_n180_2Lep18.root",
+        "Herwigpp_250vs160"    : "/data/uclhc/uci/user/amete/stop_signal_flat/FLAT_406009.HppEG_UE5C6L1_Tt_bWN_t250_n160_2Lep18.root",
+        "HerwigppL_250vs160"   : "/data/uclhc/uci/user/amete/stop_signal_flat/FLAT_999999.HppEG_UE5C6L1_Tt_bWN_t250_n160_2Lep18.root",
+        "Madgraph_250vs160"    : "/data/uclhc/uci/user/amete/stop_signal_flat/FLAT_387943.MGPy8EG_A14N23LO_TT_bWN_250_160_2L15.root",
+        "MadgraphL_250vs160"   : "/data/uclhc/uci/user/amete/stop_signal_flat/FLAT_387943.MGPy8EG_A14N23LO_TT_bWN_250_160_2L15.root",
+        "MadgraphR_250vs160"   : "/data/uclhc/uci/user/amete/stop_signal_flat/FLAT_387943.MGPy8EG_A14N23LO_TT_bWN_250_160_2L15.root",
+        "Herwigpp_300vs150"    : "/data/uclhc/uci/user/amete/stop_signal_flat/FLAT_406010.HppEG_UE5C6L1_Tt_bWN_t300_n150_2Lep18.root",
+        "Madgraph_300vs150"    : "/data/uclhc/uci/user/amete/stop_signal_flat/FLAT_387947.MGPy8EG_A14N23LO_TT_bWN_300_150_2L15.root",
+        "MadgraphR_300vs150"   : "/data/uclhc/uci/user/amete/stop_signal_flat/FLAT_387947.MGPy8EG_A14N23LO_TT_bWN_300_150_2L15.root",
+        "HerwigppR_300vs180"   : "/data/uclhc/uci/user/amete/stop_signal_flat/FLAT_406011.HppEG_UE5C6L1_Tt_bWN_t300_n180_2Lep18.root",
+        "HerwigppL_300vs180"   : "/data/uclhc/uci/user/amete/stop_signal_flat/FLAT_999998.HppEG_UE5C6L1_Tt_bWN_t300_n180_2Lep18.root",
         "Madgraph_300vs180"    : "/data/uclhc/uci/user/amete/stop_signal_flat/FLAT_387948.MGPy8EG_A14N23LO_TT_bWN_300_180_2L15.root",
         "MadgraphM_300vs180"   : "/data/uclhc/uci/user/amete/stop_signal_flat/FLAT_387948.MGPy8EG_A14N23LO_TT_bWN_300_180_2L15.root",
         "MadgraphR_300vs180"   : "/data/uclhc/uci/user/amete/stop_signal_flat/FLAT_387948.MGPy8EG_A14N23LO_TT_bWN_300_180_2L15.root",
         "MadgraphL_300vs180"   : "/data/uclhc/uci/user/amete/stop_signal_flat/FLAT_387948.MGPy8EG_A14N23LO_TT_bWN_300_180_2L15.root",
+        "MadgraphFR_300vs180"   : "/data/uclhc/uci/user/amete/stop_signal_flat/FLAT_123457.MGPy8EG_A14N_TTright_bWN_300_180_2Lep18.root",
+        "MadgraphT_300vs180"   : "/data/uclhc/uci/user/amete/stop_signal_flat/FLAT_123458.MGPy8EG_A14N_TTright_bWN_300_180_2Lep18.root",
+        "TakashiF_250vs125"    : "/data/uclhc/uci/user/amete/stop_signal_flat/takashi/FLAT_999927.MGPy8EG_A14N23LO_TT_directBWNleft_250_125.root",
+        "TakashiL_250vs125"    : "/data/uclhc/uci/user/amete/stop_signal_flat/takashi/FLAT9_99929.MGPy8EG_A14N23LO_TT_directBWN_250_125.root",
+        "Takashi_250vs125"     : "/data/uclhc/uci/user/amete/stop_signal_flat/takashi/FLAT9_99929.MGPy8EG_A14N23LO_TT_directBWN_250_125.root",
         "MadgraphSlep_100vs1"  : "/gdata/atlas/amete/MC15_SleptonPairProduction/FLAT/DAOD_TRUTH1.MGPy8EG_A14N23LO_SlepSlep_direct_100p0_1p0_2L5_10k.pool.root",
     }.get(filename,"")
 
@@ -46,11 +60,25 @@ def getCrossSection(filename):
         "Powheg_ttbar_radLo"   : 831.76*0.543, # 410002
         "aMCatNLO_ttbar"       : 831.76*0.543, # 410003
         "PowhegHpp_ttbar"      : 831.76*0.543, # 410004
-        "Herwigpp_300vs180"    : 8.51615*0.047643, # Official 
+        "Herwigpp_250vs160"    : 21.5949*0.040720, # Official 
+        "Madgraph_250vs160"    : 21.5949*0.048089, # Official
+        "MadgraphL_250vs160"   : 21.5949*0.048089, # Official
+        "MadgraphR_250vs160"   : 21.5949*0.048089, # Official
+        "Herwigpp_300vs150"    : 8.51615*0.061771, # Official
+        "Madgraph_300vs150"    : 8.51615*0.078449, # Official
+        "MadgraphR_300vs150"   : 8.51615*0.078449, # Official
+        "HerwigppR_300vs180"   : 8.51615*0.047643, # Official 
         "Madgraph_300vs180"    : 8.51615*0.060136, # Official
         "MadgraphM_300vs180"   : 8.51615*0.060136, # Official
         "MadgraphR_300vs180"   : 8.51615*0.060136, # Official
         "MadgraphL_300vs180"   : 8.51615*0.060136, # Official
+        "MadgraphFR_300vs180"   : 8.51615*0.216*0.216*0.7123521869, # Private
+        "MadgraphT_300vs180"   : 8.51615*0.216*0.216*0.7150234369, # Private
+        "HerwigppL_250vs160"   : 21.5949*0.04002850029, # Private
+        "HerwigppL_300vs180"   : 8.51615*0.04516371848, # Private
+        "Takashi_250vs125"     : 1,  # Dummy
+        "TakashiL_250vs125"    : 1,  # Dummy
+        "TakashiF_250vs125"    : 1,  # Dummy
         "MadgraphSlep_100vs1"  : 1,  # Dummy
     }.get(filename,"")
 
@@ -97,6 +125,9 @@ def getXtitle(variable):
         "dphill"          : "#Delta#phi(l,l)",
         "mcEventWeight"   : "MC event weight",
         "susyID"          : "SUSY ID",
+        "truth_stmass"    : "Mass of the stop [GeV]",
+        "truth_stmass[0]" : "Mass of the first stop [GeV]",
+        "truth_stmass[1]" : "Mass of the second stop [GeV]",
         "truth_wbmass"    : "Mass of the W+b system [GeV]",
         "truth_wbmass[0]" : "Mass of the first W+b system [GeV]",
         "truth_wbmass[1]" : "Mass of the second W+b system [GeV]",
@@ -161,8 +192,10 @@ def getBinInformation(variable):
         "dphi_met_pbll" : [70,-3.5,3.5],
         "mcEventWeight" : [100, 0,  20],
         "susyID"        : [ 10, 0,  10],
+        #"truth_stmass"  : [20,289.5, 309.5],
+        "truth_stmass"  : [20,289.5-50, 309.5-50],
         "truth_wmass"   : [40, 60, 100],
-        "truth_wbmass"  : [50, 50, 150],
+        "truth_wbmass"  : [75, 50, 200],
         "TMath::Cos(truth_thetal)"  : [10, -1, 1], # Cos of thetal
     }.get(variable,[1,0.5,1.5]) # 1 is default if variable is not found
 
@@ -185,14 +218,14 @@ def getSumOfWeights(files):
 def setColors(files):
     colors=[0 for x in range(len(files))] 
     for ii,iiFile in enumerate(files):
-        if ii == 0:   colors[ii] = ROOT.kBlack #ROOT.kBlue
+        if ii == 0:   colors[ii] = ROOT.kBlack 
         elif ii == 1: colors[ii] = ROOT.kSpring-1 
-        elif ii == 2: colors[ii] = ROOT.kAzure-3 
-        elif ii == 3: colors[ii] = ROOT.kOrange+1 #ROOT.kCyan+1
-        elif ii == 4: colors[ii] = ROOT.kMagenta 
-        elif ii == 5: colors[ii] = ROOT.kAzure+1
-        elif ii == 6: colors[ii] = ROOT.kViolet+1 
-        elif ii == 7: colors[ii] = ROOT.kYellow+1
+        elif ii == 2: colors[ii] = ROOT.kMagenta 
+        elif ii == 3: colors[ii] = ROOT.kCyan-3
+        elif ii == 4: colors[ii] = ROOT.kAzure-3 
+        elif ii == 5: colors[ii] = ROOT.kOrange+1 
+        elif ii == 6: colors[ii] = ROOT.kYellow+1 
+        elif ii == 7: colors[ii] = ROOT.kRed
     return colors
 
 # Fill histograms
@@ -244,7 +277,7 @@ def fillHistograms(files,options):
                     selection=("(mcEventWeight*mcPolWeight_M*%f*%f/%f)*(%s)"%(getCrossSection(inputFile),options.luminosity,sumw[ii],cut))
                 elif "MadgraphR" in inputFile:
                     selection=("(mcEventWeight*mcPolWeight_R*%f*%f/%f)*(%s)"%(getCrossSection(inputFile),options.luminosity,sumw[ii],cut))
-                elif "MadgraphL" in inputFile:
+                elif ("MadgraphL" in inputFile) or ("TakashiL" in inputFile):
                     selection=("(mcEventWeight*mcPolWeight_L*%f*%f/%f)*(%s)"%(getCrossSection(inputFile),options.luminosity,sumw[ii],cut))
                 else:
                     selection=("(mcEventWeight*%f*%f/%f)*(%s)"%(getCrossSection(inputFile),options.luminosity,sumw[ii],cut))
