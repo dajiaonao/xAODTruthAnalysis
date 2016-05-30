@@ -28,7 +28,9 @@ Three analyses are defined: {runEwk2LTruth, runStop2LTruth, runStrongSS3LTruth} 
 
 $exec -i input_dir -o output_dir --options # for each available option do $exec -h
 
-If output trees are requested, these will appear under output_dir.
+input_dir has the input DAOD_TRUTH files.
+
+If output trees are requested (default in some cases), these will appear under output_dir/data-myOutput/.
 
 These trees can be analyzed simply in ROOT. 
 
