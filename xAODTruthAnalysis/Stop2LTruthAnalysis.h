@@ -80,6 +80,9 @@ public:
   bool m_br_isSS;     //!
   bool m_br_isOS;     //!
   bool m_br_isNOHISR;     //!
+  float m_br_truth_n1n1phi; //!
+  float m_br_truth_ststphi; //!
+  float m_br_truth_n1n1pt; //!
   float m_br_truth_ststpt; //!
   float m_br_truth_ststmass; //!
   float m_br_mll;     //!
