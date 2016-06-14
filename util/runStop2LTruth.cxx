@@ -47,6 +47,7 @@ int main( int argc, char* argv[] ) {
   bool saveROOTwithTree      = false;
   bool saveROOTwithHist      = false;
   bool submitToGrid          = false;
+  bool submitToCondor        = false;
   int  nEvents               = -1;
   bool isRecoSample          = false;
 
@@ -72,6 +73,8 @@ int main( int argc, char* argv[] ) {
       saveROOTwithTree = true;
     else if (strcmp(argv[i], "--submitToGrid") == 0)
       submitToGrid = true;
+    else if (strcmp(argv[i], "--submitToCondor") == 0)
+      submitToCondor = true;
     else if (strcmp(argv[i], "--isRecoSample") == 0)
       isRecoSample = true;
     else
@@ -113,10 +116,12 @@ int main( int argc, char* argv[] ) {
 
   // use SampleHandler to scan all of the subdirectories of a directory for particular MC single file:
   const char* inputFilePath = gSystem->ExpandPathName (inputPath.c_str());
-  if(!submitToGrid) {
+  if(!submitToGrid && !submitToCondor) {
     SH::ScanDir().sampleDepth(sampleDepth).samplePattern(samplePattern).scan(sh, inputFilePath);
-  } else {
+  } else if (submitToGrid) {
     SH::scanDQ2(sh, inputFilePath);
+  } else {
+    SH::readFileList(sh, "sample", inputFilePath);
   }
 
   // Set the name of the input TTree. It's always "CollectionTree"
