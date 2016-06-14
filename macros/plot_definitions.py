@@ -3,7 +3,8 @@ import ROOT,math,array
 # Define the input ROOT files
 def getROOTFileName(filename):
     return {
-        "Sherpa_lvlv"          : "/gdata/atlas/amete/MC15_ModelingUncertainties/FlatNtuples/truth_v3/mc15_13TeV.361068.TRUTH1.root",
+#        "Sherpa_lvlv"          : "/gdata/atlas/amete/MC15_ModelingUncertainties/FlatNtuples/truth_v3/mc15_13TeV.361068.TRUTH1.root",
+        "Sherpa_lvlv"          : "/tmp/amete/truth_test/outputPath/data-myOutput/DAOD_TRUTH1.08418763._000004.pool.root.1.root",
         "Sherpa_lvlv_fac4"     : "/gdata/atlas/amete/MC15_ModelingUncertainties/FlatNtuples/truth_v3/mc15_13TeV.363072.TRUTH1.root",
         "Sherpa_lvlv_fac025"   : "/gdata/atlas/amete/MC15_ModelingUncertainties/FlatNtuples/truth_v3/mc15_13TeV.363073.TRUTH1.root",
         "Sherpa_lvlv_renorm4"  : "/gdata/atlas/amete/MC15_ModelingUncertainties/FlatNtuples/truth_v3/mc15_13TeV.363074.TRUTH1.root",
@@ -37,10 +38,16 @@ def getROOTFileName(filename):
         "MadgraphL_300vs180"   : "/data/uclhc/uci/user/amete/stop_signal_flat/FLAT_387948.MGPy8EG_A14N23LO_TT_bWN_300_180_2L15.root",
         "MadgraphFR_300vs180"   : "/data/uclhc/uci/user/amete/stop_signal_flat/FLAT_123457.MGPy8EG_A14N_TTright_bWN_300_180_2Lep18.root",
         "MadgraphT_300vs180"   : "/data/uclhc/uci/user/amete/stop_signal_flat/FLAT_123458.MGPy8EG_A14N_TTright_bWN_300_180_2Lep18.root",
-        "TakashiF_250vs125"    : "/data/uclhc/uci/user/amete/stop_signal_flat/takashi/FLAT_999927.MGPy8EG_A14N23LO_TT_directBWNleft_250_125.root",
-        "TakashiL_250vs125"    : "/data/uclhc/uci/user/amete/stop_signal_flat/takashi/FLAT9_99929.MGPy8EG_A14N23LO_TT_directBWN_250_125.root",
-        "Takashi_250vs125"     : "/data/uclhc/uci/user/amete/stop_signal_flat/takashi/FLAT9_99929.MGPy8EG_A14N23LO_TT_directBWN_250_125.root",
-        "MadgraphSlep_100vs1"  : "/gdata/atlas/amete/MC15_SleptonPairProduction/FLAT/DAOD_TRUTH1.MGPy8EG_A14N23LO_SlepSlep_direct_100p0_1p0_2L5_10k.pool.root",
+        "MadgraphFL_250vs125"    : "/data/uclhc/uci/user/amete/stop_signal_flat/takashi/FLAT_999927.MGPy8EG_A14N23LO_TT_directBWNleft_250_125.root",
+        "MadgraphL_250vs125"    : "/data/uclhc/uci/user/amete/stop_signal_flat/takashi/FLAT_999929.MGPy8EG_A14N23LO_TT_directBWN_250_125.root",
+        "MadgraphM_250vs125"    : "/data/uclhc/uci/user/amete/stop_signal_flat/takashi/FLAT_999929.MGPy8EG_A14N23LO_TT_directBWN_250_125.root",
+        "MadgraphR_250vs125"    : "/data/uclhc/uci/user/amete/stop_signal_flat/takashi/FLAT_999929.MGPy8EG_A14N23LO_TT_directBWN_250_125.root",
+        "Madgraph_250vs125"     : "/data/uclhc/uci/user/amete/stop_signal_flat/takashi/FLAT_999929.MGPy8EG_A14N23LO_TT_directBWN_250_125.root",
+        "HerwigppL_250vs125"   : "/data/uclhc/uci/user/amete/stop_signal_flat/FLAT_999997.HppEG_UE5C6L1_Tt_bWN_t250_n125_2Lep18.root",
+        "SerhanFL_250vs125"    : "/data/uclhc/uci/user/amete/stop_signal_flat/FLAT_123460.MGPy8EG_A14N_TTleft_bWN_250_125_2Lep18.root",
+        "SerhanFR_250vs125"    : "/data/uclhc/uci/user/amete/stop_signal_flat/FLAT_123461.MGPy8EG_A14N_TTright_bWN_250_125_2Lep18.root",
+        #"MadgraphSlep_100vs1"  : "/gdata/atlas/amete/MC15_SleptonPairProduction/FLAT/DAOD_TRUTH1.MGPy8EG_A14N23LO_SlepSlep_direct_100p0_1p0_2L5_10k.pool.root",
+        "MadgraphSlep_100vs1"  : "/data/uclhc/uci/user/amete/slepton_signal_flat/DAOD_TRUTH1.MGPy8EG_A14N23LO_SlepSlep_direct_100p0_1p0_2L5_10k.pool.root",
     }.get(filename,"")
 
 # Define cross-sections
@@ -76,9 +83,14 @@ def getCrossSection(filename):
         "MadgraphT_300vs180"   : 8.51615*0.216*0.216*0.7150234369, # Private
         "HerwigppL_250vs160"   : 21.5949*0.04002850029, # Private
         "HerwigppL_300vs180"   : 8.51615*0.04516371848, # Private
-        "Takashi_250vs125"     : 1,  # Dummy
-        "TakashiL_250vs125"    : 1,  # Dummy
-        "TakashiF_250vs125"    : 1,  # Dummy
+        "Madgraph_250vs125"     : 1,  # Dummy
+        "MadgraphM_250vs125"    : 1,  # Dummy
+        "MadgraphL_250vs125"    : 1,  # Dummy
+        "MadgraphR_250vs125"    : 1,  # Dummy
+        "MadgraphFL_250vs125"    : 1,  # Dummy
+        "HerwigppL_250vs125"    : 1,  # Dummy
+        "SerhanFL_250vs125"    : 1,  # Dummy
+        "SerhanFR_250vs125"    : 1,  # Dummy
         "MadgraphSlep_100vs1"  : 1,  # Dummy
     }.get(filename,"")
 
@@ -120,17 +132,45 @@ def getXtitle(variable):
         "mT2ll"           : "m_{T2}(ll) [GeV]",
         "ptll"            : "p_{T}(ll) [GeV]",
         "mll"             : "m(ll) [GeV]",
+        "mDRll"           : "m_{#DetlaR}(ll) [GeV]",
+        "RPT"             : "R_{PT}",
+        "gamInvRp1"       : "1/#gamma_{P}^{PP}",
+        "DPB_vSS"         : "DPB_vSS",
+        "isDF"            : "isDF",
+        "isSF"            : "isSF",
+        "isOS"            : "isOS",
         "r1"              : "R1",
         "dphi_met_pbll"   : "#Delta#phi(MET,Pbll)",
         "dphill"          : "#Delta#phi(l,l)",
         "mcEventWeight"   : "MC event weight",
         "susyID"          : "SUSY ID",
+        "truth_ststpt"    : "Pt of the stop-pair [GeV]",
+        "truth_ststphi"   : "#Delta#phi of the stop-pair",
+        "truth_ststmass"  : "Mass of the stop-pair [GeV]",
+        "truth_n1n1pt"    : "Pt of the neutralino-pair [GeV]",
+        "truth_n1n1phi"   : "#Delta#phi of the neutralino-pair",
+        "truth_n1n1mass"  : "Mass of the neutralino-pair [GeV]",
+        "truth_stpt"      : "Pt of the stop [GeV]",
+        "truth_stpt[0]"   : "Pt of the first stop [GeV]",
+        "truth_stpt[1]"   : "Pt of the second stop [GeV]",
         "truth_stmass"    : "Mass of the stop [GeV]",
         "truth_stmass[0]" : "Mass of the first stop [GeV]",
         "truth_stmass[1]" : "Mass of the second stop [GeV]",
+        "truth_n1pt"      : "Pt of the neutralino [GeV]",
+        "truth_n1pt[0]"   : "Pt of the first neutralino [GeV]",
+        "truth_n1pt[1]"   : "Pt of the second neutralino [GeV]",
+        "truth_n1mass"    : "Mass of the neutralino [GeV]",
+        "truth_n1mass[0]" : "Mass of the first neutralino [GeV]",
+        "truth_n1mass[1]" : "Mass of the second neutralino [GeV]",
+        "truth_wbpt"      : "Pt of the W+b system [GeV]",
+        "truth_wbpt[0]"   : "Pt of the first W+b system [GeV]",
+        "truth_wbpt[1]"   : "Pt of the second W+b system [GeV]",
         "truth_wbmass"    : "Mass of the W+b system [GeV]",
         "truth_wbmass[0]" : "Mass of the first W+b system [GeV]",
         "truth_wbmass[1]" : "Mass of the second W+b system [GeV]",
+        "truth_wpt"       : "Pt of the W [GeV]",
+        "truth_wpt[0]"    : "Pt of the first W [GeV]",
+        "truth_wpt[1]"    : "Pt of the second W [GeV]",
         "truth_wmass"     : "Mass of the W [GeV]",
         "truth_wmass[0]"  : "Mass of the first W [GeV]",
         "truth_wmass[1]"  : "Mass of the second W [GeV]",
@@ -141,25 +181,39 @@ def getXtitle(variable):
 
 # Define region cuts
 def getRegionTCut(region):
+    # Stop2L regions
+    isOSDF       = "(@lepton_pt.size()==2&&isDF&&isOS&&lepton_pt[0]>20.&&lepton_pt[1]>20.&&(lepton_type[0]==2||lepton_type[0]==6)&&(lepton_type[1]==2||lepton_type[1]==6))"
+    isOSSF       = "(@lepton_pt.size()==2&&isSF&&isOS&&lepton_pt[0]>20.&&lepton_pt[1]>20.&&(lepton_type[0]==2||lepton_type[0]==6)&&(lepton_type[1]==2||lepton_type[1]==6))"
+    zVeto        = "(TMath::Abs(mll-91.2)>10.)"
+    bVeto        = "(@bjet_pt.size()==0)"
+    bSelection   = "(@bjet_pt.size()>0)"
+    commonSRCuts = "(RPT>0.5&&gamInvRp1>0.8&&DPB_vSS>(0.85*TMath::Abs(cosTheta_b)+1.8))" 
     return {
-        "SR_ALL_TOP"  : "(isDF || (isSF && (mll<71.||mll>111.)) ) && mll > 20. && mT2ll>100.0 && r1>0.3 && (lepton_type[0]==2||lepton_type[0]==6) && (lepton_type[1]==2||lepton_type[1]==6)" ,
-        "SR_ALL_NOMT2": "(isDF || (isSF && (mll<71.||mll>111.)) ) && mll > 20. && r1>0.3 && (lepton_type[0]==2||lepton_type[0]==6) && (lepton_type[1]==2||lepton_type[1]==6)" ,
-        "SR_SF_NOMT2" : "(isSF && (mll<71.||mll>111.)) && mll > 20. && r1>0.3 && (lepton_type[0]==2||lepton_type[0]==6) && (lepton_type[1]==2||lepton_type[1]==6)" ,
-        "SR_DF_NOMT2" : "isDF && mll > 20. && r1>0.3 && (lepton_type[0]==2||lepton_type[0]==6) && (lepton_type[1]==2||lepton_type[1]==6)" ,
-        "SR_ALL"      : "(isDF || (isSF && (mll<71.||mll>111.)) ) && mll > 20. && mT2ll>145.0 && r1>0.3 && (lepton_type[0]==2||lepton_type[0]==6) && (lepton_type[1]==2||lepton_type[1]==6)" ,
-        "SR_SF"       : "isSF && mll > 20. && (mll<71.||mll>111.) && mT2ll>145.0 && r1>0.3 && (lepton_type[0]==2||lepton_type[0]==6) && (lepton_type[1]==2||lepton_type[1]==6)" ,
-        "CR_SF"       : "isSF && mll > 20. && (mT2ll>60.  && mT2ll<110.) && pbll<20. && r1>0.4 && TMath::Abs(dphi_met_pbll)<1.5 && (lepton_type[0]==2||lepton_type[0]==6) && (lepton_type[1]==2||lepton_type[1]==6)",
-        "VR_SF"       : "isSF && (mll>71.&&mll<111.) && mT2ll>110. && r1>0.3 && (lepton_type[0]==2||lepton_type[0]==6) && (lepton_type[1]==2||lepton_type[1]==6)",
-        "SR_DF"       : "isDF && mll > 20. && mT2ll>145.0 && r1>0.3 && (lepton_type[0]==2||lepton_type[0]==6) && (lepton_type[1]==2||lepton_type[1]==6)" ,
-        "CR_DF"       : "isDF && mll > 20. && (mT2ll>60.  && mT2ll<110.) && pbll<20. && r1>0.4 && (lepton_type[0]==2||lepton_type[0]==6) && (lepton_type[1]==2||lepton_type[1]==6)",
-        "VR_DF"       : "isDF && mll > 20. && (mT2ll>110. && mT2ll<145.) && r1>0.3 && (lepton_type[0]==2||lepton_type[0]==6) && (lepton_type[1]==2||lepton_type[1]==6)",
-        "VR_DF_2"     : "isDF && mll > 20. && (mT2ll>40.  && mT2ll<60. ) && pbll<20. && r1>0.4 && (lepton_type[0]==2||lepton_type[0]==6) && (lepton_type[1]==2||lepton_type[1]==6)",
-        "CR_TOP"      : "isDF && mll > 20. && (mT2ll>60.  && mT2ll<110.) && pbll>30. && r1<0.4 && (lepton_type[0]==2||lepton_type[0]==6) && (lepton_type[1]==2||lepton_type[1]==6)",
-        "VR_DF_INC"   : "isDF && lepton_pt[0]>20. && lepton_pt[1]>20. && mll>20. && (lepton_type[0]==2||lepton_type[0]==6) && (lepton_type[1]==2||lepton_type[1]==6)",
-        "VR_SF_INC"   : "isSF && lepton_pt[0]>20. && lepton_pt[1]>20. && mll>20. && (lepton_type[0]==2||lepton_type[0]==6) && (lepton_type[1]==2||lepton_type[1]==6)",
-        #"VR_STOP_INC" : "(@nonbjet_pt.size()==0 || (@nonbjet_pt.size()==1 && nonbjet_pt[0] < 200. && nonbjet_pt[0] > 50.)) && lepton_pt[0]>20. && lepton_pt[1]>20. && (lepton_type[0]==2||lepton_type[0]==6) && (lepton_type[1]==2||lepton_type[1]==6) ",
-        "VR_STOP_NOHISR" : "isNOHISR && (lepton_type[0]==2||lepton_type[0]==6) && (lepton_type[1]==2||lepton_type[1]==6) ",
+        "Stop2L_SRw_SF" : "(" + isOSSF + "&&" + commonSRCuts + "&&mDRll>95.&&"  + bVeto      + "&&" + zVeto + ")",
+        "Stop2L_SRw_DF" : "(" + isOSDF + "&&" + commonSRCuts + "&&mDRll>95.&&"  + bVeto      + ")",
+        "Stop2L_SRt_SF" : "(" + isOSSF + "&&" + commonSRCuts + "&&mDRll>110.&&" + bSelection + "&&" + zVeto + ")",
+        "Stop2L_SRt_DF" : "(" + isOSDF + "&&" + commonSRCuts + "&&mDRll>110.&&" + bSelection + ")",
+        "Stop2L_CR_Top" : "(" + isOSDF + "&&" + bSelection   + "&&mDRll>80.&&RPT>0.5&&DPB_vSS<(0.85*TMath::Abs(cosTheta_b)+1.8))",
+        "Stop2L_CR_VV"  : "(" + isOSDF + "&&" + bVeto        + "&&mDRll>30.&&RPT>0.2&&RPT<0.5&&gamInvRp1>0.8&&DPB_vSS<(0.85*TMath::Abs(cosTheta_b)+1.8))",
+        "SR_ALL_TOP"    : "(isDF || (isSF && (mll<71.||mll>111.)) ) && mll > 20. && mT2ll>100.0 && r1>0.3 && (lepton_type[0]==2||lepton_type[0]==6) && (lepton_type[1]==2||lepton_type[1]==6)" ,
+        "SR_ALL_NOMT2"  : "(isDF || (isSF && (mll<71.||mll>111.)) ) && mll > 20. && r1>0.3 && (lepton_type[0]==2||lepton_type[0]==6) && (lepton_type[1]==2||lepton_type[1]==6)" ,
+        "SR_SF_NOMT2"   : "(isSF && (mll<71.||mll>111.)) && mll > 20. && r1>0.3 && (lepton_type[0]==2||lepton_type[0]==6) && (lepton_type[1]==2||lepton_type[1]==6)" ,
+        "SR_DF_NOMT2"   : "isDF && mll > 20. && r1>0.3 && (lepton_type[0]==2||lepton_type[0]==6) && (lepton_type[1]==2||lepton_type[1]==6)" ,
+        "SR_ALL"        : "(isDF || (isSF && (mll<71.||mll>111.)) ) && mll > 20. && mT2ll>145.0 && r1>0.3 && (lepton_type[0]==2||lepton_type[0]==6) && (lepton_type[1]==2||lepton_type[1]==6)" ,
+        "SR_SF"         : "isSF && mll > 20. && (mll<71.||mll>111.) && mT2ll>145.0 && r1>0.3 && (lepton_type[0]==2||lepton_type[0]==6) && (lepton_type[1]==2||lepton_type[1]==6)" ,
+        "CR_SF"         : "isSF && mll > 20. && (mT2ll>60.  && mT2ll<110.) && pbll<20. && r1>0.4 && TMath::Abs(dphi_met_pbll)<1.5 && (lepton_type[0]==2||lepton_type[0]==6) && (lepton_type[1]==2||lepton_type[1]==6)",
+        "VR_SF"         : "isSF && (mll>71.&&mll<111.) && mT2ll>110. && r1>0.3 && (lepton_type[0]==2||lepton_type[0]==6) && (lepton_type[1]==2||lepton_type[1]==6)",
+        "SR_DF"         : "isDF && mll > 20. && mT2ll>145.0 && r1>0.3 && (lepton_type[0]==2||lepton_type[0]==6) && (lepton_type[1]==2||lepton_type[1]==6)" ,
+        "CR_DF"         : "isDF && mll > 20. && (mT2ll>60.  && mT2ll<110.) && pbll<20. && r1>0.4 && (lepton_type[0]==2||lepton_type[0]==6) && (lepton_type[1]==2||lepton_type[1]==6)",
+        "VR_DF"         : "isDF && mll > 20. && (mT2ll>110. && mT2ll<145.) && r1>0.3 && (lepton_type[0]==2||lepton_type[0]==6) && (lepton_type[1]==2||lepton_type[1]==6)",
+        "VR_DF_2"       : "isDF && mll > 20. && (mT2ll>40.  && mT2ll<60. ) && pbll<20. && r1>0.4 && (lepton_type[0]==2||lepton_type[0]==6) && (lepton_type[1]==2||lepton_type[1]==6)",
+        "CR_TOP"        : "isDF && mll > 20. && (mT2ll>60.  && mT2ll<110.) && pbll>30. && r1<0.4 && (lepton_type[0]==2||lepton_type[0]==6) && (lepton_type[1]==2||lepton_type[1]==6)",
+        "VR_DF_INC"     : "isDF && lepton_pt[0]>20. && lepton_pt[1]>20. && mll>20. && (lepton_type[0]==2||lepton_type[0]==6) && (lepton_type[1]==2||lepton_type[1]==6)",
+        "VR_SF_INC"     : "isSF && lepton_pt[0]>20. && lepton_pt[1]>20. && mll>20. && (lepton_type[0]==2||lepton_type[0]==6) && (lepton_type[1]==2||lepton_type[1]==6)",
+        #"VR_STOP_INC"  : "(@nonbjet_pt.size()==0 || (@nonbjet_pt.size()==1 && nonbjet_pt[0] < 200. && nonbjet_pt[0] > 50.)) && lepton_pt[0]>20. && lepton_pt[1]>20. && (lepton_type[0]==2||lepton_type[0]==6) && (lepton_type[1]==2||lepton_type[1]==6) ",
+        "VR_STOP_NOHISR": "isNOHISR && (lepton_type[0]==2||lepton_type[0]==6) && (lepton_type[1]==2||lepton_type[1]==6) ",
         "VR_STOP2L_INC" : "isOS && lepton_pt[0]>20. && lepton_pt[1]>20. && (lepton_type[0]==2||lepton_type[0]==6) && (lepton_type[1]==2||lepton_type[1]==6)",
+        "VR_SUSY_LEP"   : "@lepton_pt.size()==3"
     }.get(region,"1") # 1 is default if region is not found
 
 # Define histogram bins
@@ -170,9 +224,9 @@ def getBinInformation(variable):
         "bjet_n"        : [ 20, 0,  20],
         "nonbjet_n"     : [ 20, 0,  20],
         "lepton_pt"     : [ 25, 0, 250], 
-        "bjet_pt"       : [ 50, 0, 500], 
-        "nonbjet_pt"    : [ 50, 0, 500], 
-        "jet_pt"        : [ 10, 0, 500], #[[0,20,40,60,80,100,120,140,160,180,200,225,250,300,400,500,1000]],
+        "bjet_pt"       : [ 25, 0, 250], 
+        "nonbjet_pt"    : [ 30, 0, 750], 
+        "jet_pt"        : [ 30, 0, 300], #[[0,20,40,60,80,100,120,140,160,180,200,225,250,300,400,500,1000]],
         "lepton_eta"    : [ 60,-3,3],
         "jet_eta"       : [ 10,-5,5],
         "lepton_phi"    : [70,-3.5,3.5],
@@ -180,9 +234,16 @@ def getBinInformation(variable):
         "mT2ll"         : [ 20, 0, 200], #[[0,10,20,30,40,50,60,70,80,90,100,110,120,130,145,300]],
         "ptll"          : [ 50, 0, 500], 
         "mll"           : [ 60, 0, 600], #[[0,20,40,60,80,100,120,140,160,180,200,220,240,260,280,300,320,340,360,400,500,1000]],
-        "met_et"        : [ 50, 0, 500], #[[0,20,40,60,80,100,120,140,160,180,200,225,250,300,400,500,1000]],
+        "mDRll"         : [ 20, 0, 200],
+        "RPT"           : [ 10, 0, 1],
+        "gamInvRp1"     : [ 10, 0, 1],
+        "DPB_vSS"       : [ 35, 0, 3.5],
+        "isDF"          : [  2, 0, 2],
+        "isSF"          : [  2, 0, 2],
+        "isOS"          : [  2, 0, 2],
+        "met_et"        : [ 30, 0, 750], #[[0,20,40,60,80,100,120,140,160,180,200,225,250,300,400,500,1000]],
         "met_phi"       : [70,-3.5,3.5],
-        "pbll"          : [ 50, 0, 500],
+        "pbll"          : [ 50, 0, 1000],
         "r1"            : [ 10, 0,   1],
         "lepton_flav"   : [ 10, 10, 20],
         "jet_flav"      : [ 25,  0, 25],
@@ -192,10 +253,20 @@ def getBinInformation(variable):
         "dphi_met_pbll" : [70,-3.5,3.5],
         "mcEventWeight" : [100, 0,  20],
         "susyID"        : [ 10, 0,  10],
-        #"truth_stmass"  : [20,289.5, 309.5],
-        "truth_stmass"  : [20,289.5-50, 309.5-50],
-        "truth_wmass"   : [40, 60, 100],
-        "truth_wbmass"  : [75, 50, 200],
+        "truth_n1n1pt"  : [ 30, 0, 750],
+        "truth_n1n1phi" : [70,-3.5,3.5],
+        "truth_n1n1mass": [ 75, 500, 2000],
+        "truth_ststpt"  : [ 30, 0, 750],
+        "truth_ststphi" : [70,-3.5,3.5],
+        "truth_ststmass": [ 75, 500, 2000],
+        "truth_stpt"    : [ 50, 0, 1000],
+        "truth_stmass"  : [20,289.5, 309.5],
+        "truth_n1pt"    : [ 50, 0, 1000],
+        "truth_n1mass"  : [20, 169.5, 189.5],
+        "truth_wpt"     : [ 50,  0, 1000],
+        "truth_wmass"   : [ 40, 60, 100],
+        "truth_wbpt"    : [ 50,  0, 1000],
+        "truth_wbmass"  : [ 75, 50, 200],
         "TMath::Cos(truth_thetal)"  : [10, -1, 1], # Cos of thetal
     }.get(variable,[1,0.5,1.5]) # 1 is default if variable is not found
 
@@ -221,8 +292,8 @@ def setColors(files):
         if ii == 0:   colors[ii] = ROOT.kBlack 
         elif ii == 1: colors[ii] = ROOT.kSpring-1 
         elif ii == 2: colors[ii] = ROOT.kMagenta 
-        elif ii == 3: colors[ii] = ROOT.kCyan-3
-        elif ii == 4: colors[ii] = ROOT.kAzure-3 
+        elif ii == 3: colors[ii] = ROOT.kAzure-3
+        elif ii == 4: colors[ii] = ROOT.kCyan-3 
         elif ii == 5: colors[ii] = ROOT.kOrange+1 
         elif ii == 6: colors[ii] = ROOT.kYellow+1 
         elif ii == 7: colors[ii] = ROOT.kRed
@@ -281,6 +352,7 @@ def fillHistograms(files,options):
                     selection=("(mcEventWeight*mcPolWeight_L*%f*%f/%f)*(%s)"%(getCrossSection(inputFile),options.luminosity,sumw[ii],cut))
                 else:
                     selection=("(mcEventWeight*%f*%f/%f)*(%s)"%(getCrossSection(inputFile),options.luminosity,sumw[ii],cut))
+                    #selection=("(mcEventWeight*%f*%f/%f)*(%s)"%(1,1,1,cut))
                 if options.debug:
                     print("INFO :: Selection is %s" % selection)
                 currentROOTTree.Draw(variable+">>"+histoName,selection,"goff")                                

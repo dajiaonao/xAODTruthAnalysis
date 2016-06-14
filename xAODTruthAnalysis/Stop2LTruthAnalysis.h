@@ -94,6 +94,11 @@ public:
   float m_br_met_phi; //!
   float m_br_mT2ll;   //!
   float m_br_dphi_met_pbll; //!
+  float m_br_mDRll; //!
+  float m_br_cosTheta_b; //!
+  float m_br_gamInvRp1; //!
+  float m_br_RPT; //!
+  float m_br_DPB_vSS; //!
 
   // this is a standard constructor
   Stop2LTruthAnalysis ();

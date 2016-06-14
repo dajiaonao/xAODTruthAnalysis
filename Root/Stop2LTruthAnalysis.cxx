@@ -30,6 +30,9 @@
 // ROOT include(s):
 #include <TFile.h>
 
+// RestFrames stuff
+#include "RestFrames/RestFrames.hh"
+
 /// Helper macro for checking xAOD::TReturnCode return values
 #define EL_RETURN_CHECK( CONTEXT, EXP )                     \
    do {                                                     \
@@ -58,7 +61,7 @@ struct SortByPt {
 // this is needed to distribute the algorithm to the workers
 ClassImp(Stop2LTruthAnalysis)
 
-
+using namespace RestFrames;
 
 Stop2LTruthAnalysis :: Stop2LTruthAnalysis ()
 {
@@ -244,6 +247,11 @@ EL::StatusCode Stop2LTruthAnalysis :: histInitialize ()
     outputTree->Branch("pbll"          /* "Pbll"          */, &m_br_pbll             ); 
     outputTree->Branch("r1"            /* "R1"            */, &m_br_r1               ); 
     outputTree->Branch("dphi_met_pbll" /* "DPhib"         */, &m_br_dphi_met_pbll    ); 
+    outputTree->Branch("mDRll"         /* "mDRll"         */, &m_br_mDRll            ); 
+    outputTree->Branch("cosTheta_b"    /* "cosTheta_b"    */, &m_br_cosTheta_b       ); 
+    outputTree->Branch("RPT"           /* "RPT"           */, &m_br_RPT              ); 
+    outputTree->Branch("gamInvRp1"     /* "gamInvRp1"     */, &m_br_gamInvRp1        ); 
+    outputTree->Branch("DPB_vSS"       /* "DPB_vSS"       */, &m_br_DPB_vSS          ); 
   }
 
   return EL::StatusCode::SUCCESS;
@@ -330,6 +338,7 @@ EL::StatusCode Stop2LTruthAnalysis :: execute ()
   if(saveTree) {
     m_br_isSF = m_br_isDF = m_br_isOS = m_br_isNOHISR = m_br_isSS = false;
     m_br_eventNumber = m_br_met_et = m_br_met_phi = m_br_mT2ll = m_br_dphi_met_pbll = 0.; 
+    m_br_mDRll = m_br_RPT = m_br_gamInvRp1 = m_br_DPB_vSS = m_br_cosTheta_b = 0;
     m_br_truth_ststpt = m_br_truth_ststmass = m_br_truth_ststphi = m_br_truth_n1n1pt = m_br_truth_n1n1phi = 0. ; 
     m_br_mll = m_br_pbll = m_br_ptll = m_br_dphill = m_br_r1 = 0.; 
     m_br_eventWeight = m_br_eventPolWeight_L = m_br_eventPolWeight_R = m_br_eventPolWeight_M = 0.; //m_br_eventWmassWeight = 0.;
@@ -400,7 +409,7 @@ EL::StatusCode Stop2LTruthAnalysis :: execute ()
  
   // Event counter and weight
   m_eventCounter++;
-  if(m_eventCounter%1000==0) {
+  if(m_eventCounter%10000==0) {
     Info("execute()", "Number of events processed so far = %u", m_eventCounter );
   }
   float eventWeight = eventInfo->mcEventWeight(); // Event weight
@@ -665,7 +674,7 @@ EL::StatusCode Stop2LTruthAnalysis :: execute ()
 
   for(const auto& truthJet : *truthJets) {
     if( truthJet->pt()*MEVtoGEV < 20. ) continue; // pT > 20 GeV 
-    if( fabs(truthJet->eta()) > 4.5   ) continue; // |eta| < 4.5
+    if( fabs(truthJet->eta()) > 2.8   ) continue; // |eta| < 2.8
     jets->push_back(truthJet);
   } // end loop over truth jets
 
@@ -791,6 +800,120 @@ EL::StatusCode Stop2LTruthAnalysis :: execute ()
     }
   }
 
+  // cosTheta_b
+  double cthllb = 0.;
+  if(!isOS) cthllb = -999.;
+  else {
+    TLorentzVector lepPos, lepNeg; 
+    if(leptons->at(0)->pdgId()>0) { lepNeg = lep0_tlv; lepPos = lep1_tlv; }
+    else                          { lepNeg = lep1_tlv; lepPos = lep0_tlv; }
+    TVector3 boost = (lep0_tlv+lep1_tlv).BoostVector();
+    lepNeg.Boost(-boost); 
+    lepPos.Boost(-boost); 
+    cthllb = tanh((lepPos.Eta()-lepNeg.Eta())/2);
+  }
+
+  // Compute Jigsaw
+  double MDR_jigsaw       = -999.; // "m_Delta^R
+  double DPB_vSS_jigsaw   = -999.; // "delta-phi-beta-R"
+  double RPT_jigsaw       = -999.; // "R_p_{T}"
+  double gamInvRp1_jigsaw = -999.;
+
+  // declare the frames
+  LabRecoFrame lab("lab", "lab");
+  DecayRecoFrame ss("ss", "ss");
+  DecayRecoFrame s1("s1", "s1");
+  DecayRecoFrame s2("s2", "s2");
+  VisibleRecoFrame v1("v1", "v1");
+  VisibleRecoFrame v2("v2", "v2");
+  InvisibleRecoFrame i1("i1", "i1");
+  InvisibleRecoFrame i2("i2", "i2");
+
+  // connect the frames
+  lab.SetChildFrame(ss);
+  ss.AddChildFrame(s1);
+  ss.AddChildFrame(s2);
+  s1.AddChildFrame(v1);
+  s1.AddChildFrame(i1);
+  s2.AddChildFrame(v2);
+  s2.AddChildFrame(i2);
+
+  // check that the decay tree is connected properly
+  if(!lab.InitializeTree()) {
+    printf("makeMiniNtuple_Stop2L\t RestFrames::InitializeTree ERROR (\"%i\")    Unable to initialize tree from lab frame. Exitting. ",__LINE__);
+    exit(1); 
+  }
+
+  // define groups
+  InvisibleGroup inv("inv", "invsible group jigsaws");
+  inv.AddFrame(i1);
+  inv.AddFrame(i2);
+
+  CombinatoricGroup vis("vis", "visible object jigsaws");
+  vis.AddFrame(v1);
+  vis.SetNElementsForFrame(v1, 1, false);
+  vis.AddFrame(v2);
+  vis.SetNElementsForFrame(v2, 1, false);
+
+  SetMassInvJigsaw MinMassJigsaw("MinMass", "Invisible system mass jigsaw");
+  inv.AddJigsaw(MinMassJigsaw);
+
+  SetRapidityInvJigsaw RapidityJigsaw("RapidityJigsaw", "invisible system rapidity jigsaw");
+  inv.AddJigsaw(RapidityJigsaw);
+  RapidityJigsaw.AddVisibleFrames(lab.GetListVisibleFrames());
+
+  ContraBoostInvJigsaw ContraBoostJigsaw("ContraBoostJigsaw", "ContraBoost Invariant Jigsaw");
+  inv.AddJigsaw(ContraBoostJigsaw);
+  ContraBoostJigsaw.AddVisibleFrames((s1.GetListVisibleFrames()), 0);
+  ContraBoostJigsaw.AddVisibleFrames((s2.GetListVisibleFrames()), 1);
+  ContraBoostJigsaw.AddInvisibleFrame(i1, 0);
+  ContraBoostJigsaw.AddInvisibleFrame(i2, 1);
+
+  MinMassesCombJigsaw HemiJigsaw("hemi_jigsaw", "Minimize m_{v_{1,2}} jigsaw");
+  vis.AddJigsaw(HemiJigsaw);
+  HemiJigsaw.AddFrame(v1, 0);
+  HemiJigsaw.AddFrame(v2, 1);
+
+  // check that the jigsaws are in place
+  if(!lab.InitializeAnalysis()) {
+    printf("makeMiniNtuple_Stop2L\t RestFrames::InitializeAnalysis ERROR (\"%i\")    Unable to initialize analysis from lab frame. Exitting.",__LINE__);
+    exit(1);
+  }
+
+  // clear the event for sho
+  lab.ClearEvent();
+
+  // set the met
+  TVector3 met3vector(met_tlv.Px(), met_tlv.Py(), met_tlv.Pz());
+  inv.SetLabFrameThreeVector(met3vector);
+
+  // add leptons to the visible group
+  // leptons holds TLorentzVectors
+  vis.AddLabFrameFourVector(lep0_tlv);
+  vis.AddLabFrameFourVector(lep1_tlv);
+
+  // analayze that
+  if(!lab.AnalyzeEvent()) {
+    printf("makeMiniNtuple_Stop2L\t RestFrames::AnalyzeEvent ERROR. Exitting.");
+    exit(1);
+  }
+
+  /// system mass
+  double shat_jigsaw = ss.GetMass();
+
+  // RATIO OF CM pT
+  TVector3 vPTT = ss.GetFourVector(lab).Vect();
+  RPT_jigsaw = vPTT.Pt() / (vPTT.Pt() + shat_jigsaw / 4.);
+
+  // shapes
+  gamInvRp1_jigsaw = ss.GetVisibleShape();
+
+  // MDR_jigsaw
+  MDR_jigsaw = 2.0 * v1.GetEnergy(s1);
+
+  // BOOST ANGLES
+  DPB_vSS_jigsaw = ss.GetDeltaPhiBoostVisible();
+
   // Fill Tree
   if(saveTree) {
     m_br_runNumber        = eventInfo->runNumber();  
@@ -882,6 +1005,11 @@ EL::StatusCode Stop2LTruthAnalysis :: execute ()
     m_br_met_et        = met_tlv.Pt()*MEVtoGEV;
     m_br_met_phi       = met_tlv.Phi();
     m_br_dphi_met_pbll = dphi_met_pbll; 
+    m_br_mDRll         = MDR_jigsaw*MEVtoGEV;
+    m_br_cosTheta_b    = cthllb;
+    m_br_gamInvRp1     = gamInvRp1_jigsaw;
+    m_br_RPT           = RPT_jigsaw;
+    m_br_DPB_vSS       = DPB_vSS_jigsaw;
     outputTree->Fill();
   }
 

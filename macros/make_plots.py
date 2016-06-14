@@ -107,7 +107,7 @@ def main():
                     #    legend.AddEntry(histogramsGrouped[kk][ii][jj],inputFile,"l")
                 # Histograms are scaled in fillHistograms
                 # but here we can scale them to unity to check the shapes
-                scaleToUnity(histogramsGrouped[kk][ii][jj]) 
+                #scaleToUnity(histogramsGrouped[kk][ii][jj]) 
                 # Add the overflow to last bin before plotting
                 addOverFlowToLastBin(histogramsGrouped[kk][ii][jj]) 
                 # Draw onto canvas
