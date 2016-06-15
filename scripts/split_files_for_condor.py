@@ -1,7 +1,7 @@
 #!/bin/usr/python
 import os
 
-nfiles     = 10
+nfiles     = 5
 folder_in  = "/data/uclhc/uci/user/amete/truth_analysis/inputs/sample_list"
 folder_out = "/data/uclhc/uci/user/amete/truth_analysis/inputs/sample_list_split"
 

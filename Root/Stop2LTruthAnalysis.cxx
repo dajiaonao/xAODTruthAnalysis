@@ -322,6 +322,10 @@ EL::StatusCode Stop2LTruthAnalysis :: initialize ()
   h_wmassFit->SetParameter(1,-3.95410918e-01);
   h_wmassFit->SetParameter(2,1.99415474e+01);
 
+  // Random
+  m_random = new TRandom3();
+  m_random->SetSeed(0);
+
   return EL::StatusCode::SUCCESS;
 }
 
@@ -981,7 +985,8 @@ EL::StatusCode Stop2LTruthAnalysis :: execute ()
       m_br_jet_phi.push_back(ipar_tlv.Phi());
       m_br_jet_m.push_back(ipar_tlv.M()*MEVtoGEV);
       m_br_jet_flav.push_back(ipar->auxdata<int>("PartonTruthLabelID"));
-      if(ipar->auxdata<int>("PartonTruthLabelID")==5) {
+      //if(ipar->auxdata<int>("PartonTruthLabelID")==5) { 
+      if(isBJet(ipar_tlv.Eta(),ipar->auxdata<int>("PartonTruthLabelID"))) {
         m_br_bjet_pt.push_back(ipar_tlv.Pt()*MEVtoGEV);
       } else {
         m_br_nonbjet_pt.push_back(ipar_tlv.Pt()*MEVtoGEV);
@@ -1047,6 +1052,9 @@ EL::StatusCode Stop2LTruthAnalysis :: finalize ()
   delete m_polreweight;
   m_polreweight=nullptr;
 
+  delete m_random;
+  m_random=nullptr;
+
   return EL::StatusCode::SUCCESS;
 }
 
@@ -1065,6 +1073,22 @@ EL::StatusCode Stop2LTruthAnalysis :: histFinalize ()
   // that it gets called on all worker nodes regardless of whether
   // they processed input events.
   return EL::StatusCode::SUCCESS;
+}
+
+// Is BJet
+bool Stop2LTruthAnalysis :: isBJet(const double eta, const int label) {
+  if(fabs(eta) > 2.5) return false;
+  // https://twiki.cern.ch/twiki/bin/viewauth/AtlasProtected/BTaggingBenchmarks#MV2c10_tagger_added_on_11th_May
+  if( label == 5 ) { 
+    if(m_random->Uniform(1) > 0.7697  ) return false; // true b-jet 
+  } else if ( label == 4 ) { 
+    if(m_random->Uniform(1) > 1/6.21  ) return false; // true c-jet 
+  } else if ( label == 15 ) { 
+    if(m_random->Uniform(1) > 1/22.04 ) return false; // true tau-jet 
+  } else {
+    if(m_random->Uniform(1) > 1/134.34) return false; // everything else
+  }
+  return true;
 }
 
 // Print info

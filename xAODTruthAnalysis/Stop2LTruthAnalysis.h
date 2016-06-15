@@ -13,6 +13,7 @@
 #include <TF1.h>
 //#include <TFile.h>
 //#include <TGraph.h>
+#include <TRandom3.h>
 
 #include <vector>       // std::vector
 #include <map>          // std::map
@@ -116,6 +117,7 @@ public:
 
   // Internal functions
   void printTruthInfo(const xAOD::TruthParticle* particle);
+  bool isBJet(const double eta, const int label);
 
   // Event variables
   private:
@@ -137,6 +139,9 @@ public:
 
   // StopPolarization
   StopPolarization::PolarizationReweight* m_polreweight = nullptr; //!
+
+  // Random number
+  TRandom3*    m_random = nullptr; //!
 
   // this is needed to distribute the algorithm to the workers
   ClassDef(Stop2LTruthAnalysis, 1);
