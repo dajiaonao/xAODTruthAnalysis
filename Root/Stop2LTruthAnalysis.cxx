@@ -985,8 +985,8 @@ EL::StatusCode Stop2LTruthAnalysis :: execute ()
       m_br_jet_phi.push_back(ipar_tlv.Phi());
       m_br_jet_m.push_back(ipar_tlv.M()*MEVtoGEV);
       m_br_jet_flav.push_back(ipar->auxdata<int>("PartonTruthLabelID"));
-      //if(ipar->auxdata<int>("PartonTruthLabelID")==5) { 
-      if(isBJet(ipar_tlv.Eta(),ipar->auxdata<int>("PartonTruthLabelID"))) {
+      if(ipar->auxdata<int>("PartonTruthLabelID")==5 && fabs(ipar_tlv.Eta()) < 2.5) { 
+      //if(isBJet(ipar_tlv.Eta(),ipar->auxdata<int>("PartonTruthLabelID"))) {
         m_br_bjet_pt.push_back(ipar_tlv.Pt()*MEVtoGEV);
       } else {
         m_br_nonbjet_pt.push_back(ipar_tlv.Pt()*MEVtoGEV);

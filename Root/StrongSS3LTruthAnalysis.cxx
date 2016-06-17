@@ -224,6 +224,8 @@ EL::StatusCode StrongSS3LTruthAnalysis :: execute ()
   xAOD::TEvent* event = wk()->xaodEvent();
   const xAOD::EventInfo* eventInfo = 0;
   EL_RETURN_CHECK("execute()",event->retrieve( eventInfo, "EventInfo"));  
+  float eventWeight = eventInfo->mcEventWeight();
+  h_cutflow_weighted->Fill(0.,eventWeight);
 
   // Retrieve the truth leptons
   const xAOD::TruthParticleContainer* truthParticles = 0;
@@ -338,7 +340,6 @@ EL::StatusCode StrongSS3LTruthAnalysis :: execute ()
     m_br_runNumber      = eventInfo->runNumber();  
     m_br_eventNumber    = eventInfo->eventNumber();  
     m_br_eventWeight    = eventInfo->mcEventWeight();
-    h_cutflow_weighted->Fill(0.,m_br_eventWeight);
     m_br_mcEventWeights = eventInfo->mcEventWeights();
     // Leptons
     for(const auto& ipar : *leptons) {

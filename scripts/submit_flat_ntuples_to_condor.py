@@ -6,8 +6,8 @@ import subprocess
 
 ana_name            = "runStop2LTruth"
 tar_location        = "/data/uclhc/uci/user/amete/"
-out_dir             = "/data/uclhc/uci/user/amete/truth_analysis_run/outputs/" 
-log_dir             = "/data/uclhc/uci/user/amete/truth_analysis_run/logs/" 
+out_dir             = "/data/uclhc/uci/user/amete/truth_analysis_run/outputs_2/" 
+log_dir             = "/data/uclhc/uci/user/amete/truth_analysis_run/logs_2/" 
 tarred_dir          = "truth_analysis/"
 filelist_dir        = "/data/uclhc/uci/user/amete/truth_analysis/inputs/"
 in_job_filelist_dir = "/truth_analysis/inputs/"

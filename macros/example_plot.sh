@@ -1,23 +1,23 @@
 #!/bin/bash
 
 var="lepton_n"
-var="${var},isDF"
-var="${var},isSF"
-var="${var},isOS"
-var="${var},lepton_pt[0]"
+#var="${var},isDF"
+#var="${var},isSF"
+#var="${var},isOS"
+#var="${var},lepton_pt[0]"
 #var="${var},lepton_eta[0]"
 #var="${var},lepton_phi[0]"
 #var="${var},lepton_flav[0]"
-var="${var},lepton_type[0]"
+#var="${var},lepton_type[0]"
 #var="${var},lepton_origin[0]"
-var="${var},lepton_pt[1]"
+#var="${var},lepton_pt[1]"
 #var="${var},lepton_eta[1]"
 #var="${var},lepton_phi[1]"
 #var="${var},lepton_flav[1]"
-var="${var},lepton_type[1]"
+#var="${var},lepton_type[1]"
 #var="${var},lepton_origin[1]"
 #var="${var},jet_n"
-var="${var},bjet_n"
+#var="${var},bjet_n"
 #var="${var},nonbjet_n"
 #var="${var},bjet_pt[0]"
 #var="${var},nonbjet_pt[0]"
@@ -35,8 +35,8 @@ var="${var},bjet_n"
 #var="${var},met_phi"
 #var="${var},r1"
 #var="${var},pbll"
-var="${var},mT2ll"
-var="${var},mll"
+#var="${var},mT2ll"
+#var="${var},mll"
 var="${var},mDRll"
 var="${var},RPT"
 var="${var},gamInvRp1"
@@ -86,7 +86,8 @@ var="${var},cosTheta_b"
 #var2="${var2},TMath::Cos(truth_thetal)"
 
 ## Stop2L 3-body
-python make_plots.py -i "Sherpa_lvlv,Sherpa_lvlv" -v "${var}" -f "eps" -l 3210 -b -a -L;
+#python make_plots.py -i "Sherpa_lvlv,Sherpa_lvlv_fac4,Sherpa_lvlv_fac025,Sherpa_lvlv_renorm4,Sherpa_lvlv_renorm025,Sherpa_lvlv_qsf4,Sherpa_lvlv_qsf025" -v "${var}" -r "Stop2L_CR_VV_noMDR" -f "eps" -l 3210 -b -a -L;
+python make_plots.py -i "Powheg_ttbar,Powheg_ttbar_radHi,Powheg_ttbar_radLo,PowhegHpp_ttbar" -v "${var}" -r "Stop2L_CR_Top_noMDR" -f "eps" -l 3210 -b -a -L;
 
 ### Sleptons
 #var="${var},susyID"

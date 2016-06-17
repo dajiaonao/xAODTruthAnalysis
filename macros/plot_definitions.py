@@ -3,21 +3,20 @@ import ROOT,math,array
 # Define the input ROOT files
 def getROOTFileName(filename):
     return {
-#        "Sherpa_lvlv"          : "/gdata/atlas/amete/MC15_ModelingUncertainties/FlatNtuples/truth_v3/mc15_13TeV.361068.TRUTH1.root",
-        "Sherpa_lvlv"          : "/tmp/amete/truth_test/outputPath/data-myOutput/DAOD_TRUTH1.08418763._000004.pool.root.1.root",
-        "Sherpa_lvlv_fac4"     : "/gdata/atlas/amete/MC15_ModelingUncertainties/FlatNtuples/truth_v3/mc15_13TeV.363072.TRUTH1.root",
-        "Sherpa_lvlv_fac025"   : "/gdata/atlas/amete/MC15_ModelingUncertainties/FlatNtuples/truth_v3/mc15_13TeV.363073.TRUTH1.root",
-        "Sherpa_lvlv_renorm4"  : "/gdata/atlas/amete/MC15_ModelingUncertainties/FlatNtuples/truth_v3/mc15_13TeV.363074.TRUTH1.root",
-        "Sherpa_lvlv_renorm025": "/gdata/atlas/amete/MC15_ModelingUncertainties/FlatNtuples/truth_v3/mc15_13TeV.363075.TRUTH1.root",
-        "Sherpa_lvlv_qsf4"     : "/gdata/atlas/amete/MC15_ModelingUncertainties/FlatNtuples/truth_v3/mc15_13TeV.363076.TRUTH1.root",
-        "Sherpa_lvlv_qsf025"   : "/gdata/atlas/amete/MC15_ModelingUncertainties/FlatNtuples/truth_v3/mc15_13TeV.363077.TRUTH1.root",
-        "Powheg_WWlvlv"        : "/gdata/atlas/amete/MC15_ModelingUncertainties/FlatNtuples/truth_v3/mc15_13TeV.361600.TRUTH1.root",
-        "Powheg_ZZllvv"        : "/gdata/atlas/amete/MC15_ModelingUncertainties/FlatNtuples/truth_v3/mc15_13TeV.361604.TRUTH1.root",
-        "Powheg_ttbar"         : "/gdata/atlas/amete/MC15_ModelingUncertainties/FlatNtuples/truth_v3/mc15_13TeV.410000.TRUTH1.root",
-        "Powheg_ttbar_radHi"   : "/gdata/atlas/amete/MC15_ModelingUncertainties/FlatNtuples/truth_v3/mc15_13TeV.410001.TRUTH1.root",
-        "Powheg_ttbar_radLo"   : "/gdata/atlas/amete/MC15_ModelingUncertainties/FlatNtuples/truth_v3/mc15_13TeV.410002.TRUTH1.root",
-        "aMCatNLO_ttbar"       : "/gdata/atlas/amete/MC15_ModelingUncertainties/FlatNtuples/truth_v3/mc15_13TeV.410003.TRUTH1.root",
-        "PowhegHpp_ttbar"      : "/gdata/atlas/amete/MC15_ModelingUncertainties/FlatNtuples/truth_v3/mc15_13TeV.410004.TRUTH1.root",
+        "Sherpa_lvlv"          : "/data/uclhc/uci/user/amete/truth_analysis_run/combined/out_361068.root",
+        "Sherpa_lvlv_fac4"     : "/data/uclhc/uci/user/amete/truth_analysis_run/combined/out_363072.root",
+        "Sherpa_lvlv_fac025"   : "/data/uclhc/uci/user/amete/truth_analysis_run/combined/out_363073.root",
+        "Sherpa_lvlv_renorm4"  : "/data/uclhc/uci/user/amete/truth_analysis_run/combined/out_363074.root",
+        "Sherpa_lvlv_renorm025": "/data/uclhc/uci/user/amete/truth_analysis_run/combined/out_363075.root",
+        "Sherpa_lvlv_qsf4"     : "/data/uclhc/uci/user/amete/truth_analysis_run/combined/out_363076.root",
+        "Sherpa_lvlv_qsf025"   : "/data/uclhc/uci/user/amete/truth_analysis_run/combined/out_363077.root",
+        "Powheg_WWlvlv"        : "/data/uclhc/uci/user/amete/truth_analysis_run/combined/out_361600.root",
+        "Powheg_ZZllvv"        : "/data/uclhc/uci/user/amete/truth_analysis_run/combined/out_361604.root",
+        "Powheg_ttbar"         : "/data/uclhc/uci/user/amete/truth_analysis_run/combined/out_410000.root",
+        "Powheg_ttbar_radHi"   : "/data/uclhc/uci/user/amete/truth_analysis_run/combined/out_410001.root",
+        "Powheg_ttbar_radLo"   : "/data/uclhc/uci/user/amete/truth_analysis_run/combined/out_410002.root",
+        "aMCatNLO_ttbar"       : "/data/uclhc/uci/user/amete/truth_analysis_run/combined/out_410003.root",
+        "PowhegHpp_ttbar"      : "/data/uclhc/uci/user/amete/truth_analysis_run/combined/out_410004.root",
         #"Herwigpp_300vs180"    : "/gdata/atlas/amete/StopPolarization/outputs/FlatNtuples/Herwigpp.300vs180.truth1_v3.root",
         #"Madgraph_300vs180"    : "/gdata/atlas/amete/StopPolarization/outputs/FlatNtuples/Madgraph.300vs180.truth1_v3.root",
         #"MadgraphR_300vs180"   : "/gdata/atlas/amete/StopPolarization/outputs/FlatNtuples/MadgraphR.300vs180.truth1_v3.root",
@@ -79,16 +78,16 @@ def getCrossSection(filename):
         "MadgraphM_300vs180"   : 8.51615*0.060136, # Official
         "MadgraphR_300vs180"   : 8.51615*0.060136, # Official
         "MadgraphL_300vs180"   : 8.51615*0.060136, # Official
-        "MadgraphFR_300vs180"   : 8.51615*0.216*0.216*0.7123521869, # Private
+        "MadgraphFR_300vs180"  : 8.51615*0.216*0.216*0.7123521869, # Private
         "MadgraphT_300vs180"   : 8.51615*0.216*0.216*0.7150234369, # Private
         "HerwigppL_250vs160"   : 21.5949*0.04002850029, # Private
         "HerwigppL_300vs180"   : 8.51615*0.04516371848, # Private
-        "Madgraph_250vs125"     : 1,  # Dummy
-        "MadgraphM_250vs125"    : 1,  # Dummy
-        "MadgraphL_250vs125"    : 1,  # Dummy
-        "MadgraphR_250vs125"    : 1,  # Dummy
-        "MadgraphFL_250vs125"    : 1,  # Dummy
-        "HerwigppL_250vs125"    : 1,  # Dummy
+        "Madgraph_250vs125"    : 1,  # Dummy
+        "MadgraphM_250vs125"   : 1,  # Dummy
+        "MadgraphL_250vs125"   : 1,  # Dummy
+        "MadgraphR_250vs125"   : 1,  # Dummy
+        "MadgraphFL_250vs125"  : 1,  # Dummy
+        "HerwigppL_250vs125"   : 1,  # Dummy
         "SerhanFL_250vs125"    : 1,  # Dummy
         "SerhanFR_250vs125"    : 1,  # Dummy
         "MadgraphSlep_100vs1"  : 1,  # Dummy
@@ -132,10 +131,11 @@ def getXtitle(variable):
         "mT2ll"           : "m_{T2}(ll) [GeV]",
         "ptll"            : "p_{T}(ll) [GeV]",
         "mll"             : "m(ll) [GeV]",
-        "mDRll"           : "m_{#DetlaR}(ll) [GeV]",
+        "mDRll"           : "m_{#Delta R}(ll) [GeV]",
         "RPT"             : "R_{PT}",
         "gamInvRp1"       : "1/#gamma_{P}^{PP}",
-        "DPB_vSS"         : "DPB_vSS",
+        "DPB_vSS"         : "#Delta#phi(#beta_{PP}^{LAB},p_{V}^{PP})",
+        "cosTheta_b"      : "cos#theta_{b}",
         "isDF"            : "isDF",
         "isSF"            : "isSF",
         "isOS"            : "isOS",
@@ -195,6 +195,8 @@ def getRegionTCut(region):
         "Stop2L_SRt_DF" : "(" + isOSDF + "&&" + commonSRCuts + "&&mDRll>110.&&" + bSelection + ")",
         "Stop2L_CR_Top" : "(" + isOSDF + "&&" + bSelection   + "&&mDRll>80.&&RPT>0.5&&DPB_vSS<(0.85*TMath::Abs(cosTheta_b)+1.8))",
         "Stop2L_CR_VV"  : "(" + isOSDF + "&&" + bVeto        + "&&mDRll>30.&&RPT>0.2&&RPT<0.5&&gamInvRp1>0.8&&DPB_vSS<(0.85*TMath::Abs(cosTheta_b)+1.8))",
+        "Stop2L_CR_Top_noMDR" : "(" + isOSDF + "&&" + bSelection   + "&&RPT>0.5&&DPB_vSS<(0.85*TMath::Abs(cosTheta_b)+1.8))",
+        "Stop2L_CR_VV_noMDR"  : "(" + isOSDF + "&&" + bVeto        + "&&RPT>0.2&&RPT<0.5&&gamInvRp1>0.8&&DPB_vSS<(0.85*TMath::Abs(cosTheta_b)+1.8))",
         "SR_ALL_TOP"    : "(isDF || (isSF && (mll<71.||mll>111.)) ) && mll > 20. && mT2ll>100.0 && r1>0.3 && (lepton_type[0]==2||lepton_type[0]==6) && (lepton_type[1]==2||lepton_type[1]==6)" ,
         "SR_ALL_NOMT2"  : "(isDF || (isSF && (mll<71.||mll>111.)) ) && mll > 20. && r1>0.3 && (lepton_type[0]==2||lepton_type[0]==6) && (lepton_type[1]==2||lepton_type[1]==6)" ,
         "SR_SF_NOMT2"   : "(isSF && (mll<71.||mll>111.)) && mll > 20. && r1>0.3 && (lepton_type[0]==2||lepton_type[0]==6) && (lepton_type[1]==2||lepton_type[1]==6)" ,
@@ -234,17 +236,18 @@ def getBinInformation(variable):
         "mT2ll"         : [ 20, 0, 200], #[[0,10,20,30,40,50,60,70,80,90,100,110,120,130,145,300]],
         "ptll"          : [ 50, 0, 500], 
         "mll"           : [ 60, 0, 600], #[[0,20,40,60,80,100,120,140,160,180,200,220,240,260,280,300,320,340,360,400,500,1000]],
-        "mDRll"         : [ 20, 0, 200],
+        "mDRll"         : [[0,10,20,30,40,50,60,70,80,120,160,200]],
         "RPT"           : [ 10, 0, 1],
         "gamInvRp1"     : [ 10, 0, 1],
-        "DPB_vSS"       : [ 35, 0, 3.5],
+        "cosTheta_b"    : [ 10, -1, 1],
+        "DPB_vSS"       : [ 16, 0, 3.2],
         "isDF"          : [  2, 0, 2],
         "isSF"          : [  2, 0, 2],
         "isOS"          : [  2, 0, 2],
         "met_et"        : [ 30, 0, 750], #[[0,20,40,60,80,100,120,140,160,180,200,225,250,300,400,500,1000]],
-        "met_phi"       : [70,-3.5,3.5],
+        "met_phi"       : [ 70,-3.5,3.5],
         "pbll"          : [ 50, 0, 1000],
-        "r1"            : [ 10, 0,   1],
+        "r1"            : [ 10,  0,  1],
         "lepton_flav"   : [ 10, 10, 20],
         "jet_flav"      : [ 25,  0, 25],
         "lepton_type"   : [ 10,  0, 10],
