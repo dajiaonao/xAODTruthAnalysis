@@ -83,7 +83,7 @@ def main():
     legend.SetBorderSize(0)
     legend.SetFillColor(0)
 
-    # Loop over regions 
+    ## Loop over regions 
     for ii,region in enumerate(regionList):
         # Loop over variables
         for jj,variable in enumerate(variableList):
@@ -94,7 +94,7 @@ def main():
                 dummyHisto.GetXaxis().SetTitle(getXtitle(variable))
                 dummyHisto.Draw()
                 topPad.cd()
-            # Loop over files 
+            ## Loop over files 
             for kk,inputFile in enumerate(groupList):
                 # Fill the legend
                 if ii == 0 and jj == 0:

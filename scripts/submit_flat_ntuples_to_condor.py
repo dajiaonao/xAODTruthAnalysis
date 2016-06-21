@@ -14,13 +14,21 @@ in_job_filelist_dir = "/truth_analysis/inputs/"
 
 samples = ["sample_list_split"]
 
-doBrick = False
+doBrick = True  #False
 doLocal = True 
-doSDSC  = True 
-doUC    = True 
+doSDSC  = False #True 
+doUC    = False #True 
 
 def main():
     print "SubmitCondorSF"
+
+    submitMissing=True
+    if submitMissing:
+        missing_dsids     = []
+        missing_dsid_file = open('%s/missing.txt'%(out_dir))
+        for dsid in missing_dsid_file:
+            missing_dsids.append(dsid.split('\n')[0])
+        missing_dsid_file.close()
 
     look_for_condor_executable()
 
@@ -37,6 +45,14 @@ def main():
         for dataset in sample_lists :
             fullname = str(os.path.abspath(dataset))
             print "    > %s"%dataset
+
+            if submitMissing:
+                submitDS = False
+                for dsid in missing_dsids:
+                    if dsid in dataset:
+                        submitDS = True
+                if not submitDS:
+                    continue
 
             dataset = "." + dataset[dataset.find(in_job_filelist_dir):]
             print "    >> %s"%dataset

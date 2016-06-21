@@ -1,6 +1,17 @@
 #!/bin/bash
 
-var="lepton_n"
+var="mDRll"
+var="${var},mll"
+var="${var},RPT"
+var="${var},gamInvRp1"
+var="${var},DPB_vSS"
+var="${var},cosTheta_b"
+
+### ST2L 3-body
+python make_plots.py -i "Sherpa_lvlv,Sherpa_lvlv_fac4,Sherpa_lvlv_fac025,Sherpa_lvlv_renorm4,Sherpa_lvlv_renorm025,Sherpa_lvlv_qsf4,Sherpa_lvlv_qsf025" -v "${var}" -r "ST2L_noEvp_SRw_ALL" -f "eps" -l 5000 -b -a -L;
+python make_plots.py -i "Powheg_ttbar,Powheg_ttbar_radHi,Powheg_ttbar_radLo,PowhegHpp_ttbar,aMCatNLO_ttbar" -v "${var}" -r "ST2L_noEvp_SRt_ALL" -f "eps" -l 5000 -b -a -L;
+
+#var="lepton_n"
 #var="${var},isDF"
 #var="${var},isSF"
 #var="${var},isOS"
@@ -36,39 +47,23 @@ var="lepton_n"
 #var="${var},r1"
 #var="${var},pbll"
 #var="${var},mT2ll"
+#var="${var},mDRll"
 #var="${var},mll"
-var="${var},mDRll"
-var="${var},RPT"
-var="${var},gamInvRp1"
-var="${var},DPB_vSS"
-var="${var},cosTheta_b"
+#var="${var},RPT"
+#var="${var},gamInvRp1"
+#var="${var},DPB_vSS"
+#var="${var},cosTheta_b"
 #var="${var},dphill"
 #var="${var},ptll"
 #var="${var},dphi_met_pbll"
 #var="${var},mcEventWeight"
-##var="${var},truth_wbmass[0]"
-##var="${var},truth_wbmass[1]"
-##var="${var},TMath::Cos(truth_thetal[0])"
-##var="${var},TMath::Cos(truth_thetal[1])"
+#var="${var},truth_wbmass[0]"
+#var="${var},truth_wbmass[1]"
+#var="${var},TMath::Cos(truth_thetal[0])"
+#var="${var},TMath::Cos(truth_thetal[1])"
 #var="${var},truth_wmass"
-
-
 #var="truth_wbmass"
 #var="${var},TMath::Cos(truth_thetal)"
-#var2="truth_wmass"
-#var2="${var2},truth_wpt"
-#var2="${var2},truth_wbpt"
-#var2="${var2},truth_stpt"
-#var2="${var2},truth_stmass"
-#var2="${var2},truth_ststpt"
-#var2="${var2},truth_ststmass"
-#var2="${var2},truth_n1pt"
-#var2="${var2},truth_n1mass"
-#var2="${var2},bjet_n"
-#var2="${var2},bjet_pt[0]"
-#var2="${var2},nonbjet_n"
-#var2="${var2},nonbjet_pt[0]"
-#var2="${var2},met_et"
 
 #var2="truth_ststpt"
 #var2="${var2},truth_ststphi"
@@ -84,10 +79,6 @@ var="${var},cosTheta_b"
 #var2="${var2},lepton_pt[0]"
 #var2="${var2},truth_wbmass"
 #var2="${var2},TMath::Cos(truth_thetal)"
-
-## Stop2L 3-body
-#python make_plots.py -i "Sherpa_lvlv,Sherpa_lvlv_fac4,Sherpa_lvlv_fac025,Sherpa_lvlv_renorm4,Sherpa_lvlv_renorm025,Sherpa_lvlv_qsf4,Sherpa_lvlv_qsf025" -v "${var}" -r "Stop2L_CR_VV_noMDR" -f "eps" -l 3210 -b -a -L;
-python make_plots.py -i "Powheg_ttbar,Powheg_ttbar_radHi,Powheg_ttbar_radLo,PowhegHpp_ttbar" -v "${var}" -r "Stop2L_CR_Top_noMDR" -f "eps" -l 3210 -b -a -L;
 
 ### Sleptons
 #var="${var},susyID"
