@@ -219,6 +219,8 @@ EL::StatusCode Stop2LTruthAnalysis :: histInitialize ()
     outputTree->Branch("lepton_mother_mass" /* "motherleptons" */, &m_br_lepton_mother_mass ); 
     outputTree->Branch("bjet_pt"       /* N/A             */, &m_br_bjet_pt          ); 
     outputTree->Branch("nonbjet_pt"    /* N/A             */, &m_br_nonbjet_pt       ); 
+    outputTree->Branch("c_bjet_pt"     /* N/A             */, &m_br_c_bjet_pt        ); 
+    outputTree->Branch("c_nonbjet_pt"  /* N/A             */, &m_br_c_nonbjet_pt     ); 
     outputTree->Branch("jet_pt"        /* "ptjets"        */, &m_br_jet_pt           ); 
     outputTree->Branch("jet_eta"       /* "etajets"       */, &m_br_jet_eta          ); 
     outputTree->Branch("jet_phi"       /* "phijets"       */, &m_br_jet_phi          ); 
@@ -356,7 +358,9 @@ EL::StatusCode Stop2LTruthAnalysis :: execute ()
     m_br_lepton_mother.clear();
     m_br_lepton_mother_mass.clear();
     m_br_bjet_pt.clear(); 
+    m_br_c_bjet_pt.clear(); 
     m_br_nonbjet_pt.clear(); 
+    m_br_c_nonbjet_pt.clear(); 
     m_br_jet_pt.clear(); 
     m_br_jet_eta.clear(); 
     m_br_jet_phi.clear(); 
@@ -712,14 +716,9 @@ EL::StatusCode Stop2LTruthAnalysis :: execute ()
     h_hists1D.at(m_nameToIndex1D["nLep"])->Fill(nLep,eventWeight);
   }
 
-  //// Only ==2 OS lepton events
-  //if(nLep != 2) return EL::StatusCode::SUCCESS;
-  //if((leptons->at(0)->pdgId()*leptons->at(1)->pdgId()) > 0) return EL::StatusCode::SUCCESS;
-  // At least two leptons
-  if(nLep<2) { 
-    //Info("execute()","Event %llu has %u leptons, rejecting...",eventInfo->eventNumber(),nLep);
-    return EL::StatusCode::SUCCESS;
-  }
+  // Only ==2 OS lepton events
+  if(nLep != 2) return EL::StatusCode::SUCCESS;
+  if((leptons->at(0)->pdgId()*leptons->at(1)->pdgId()) > 0) return EL::StatusCode::SUCCESS;
 
   // Build objects and fill histograms
   TLorentzVector lep0_tlv = leptons->at(0)->p4();
@@ -985,11 +984,17 @@ EL::StatusCode Stop2LTruthAnalysis :: execute ()
       m_br_jet_phi.push_back(ipar_tlv.Phi());
       m_br_jet_m.push_back(ipar_tlv.M()*MEVtoGEV);
       m_br_jet_flav.push_back(ipar->auxdata<int>("PartonTruthLabelID"));
+      // No eff. mistag
       if(ipar->auxdata<int>("PartonTruthLabelID")==5 && fabs(ipar_tlv.Eta()) < 2.5) { 
-      //if(isBJet(ipar_tlv.Eta(),ipar->auxdata<int>("PartonTruthLabelID"))) {
         m_br_bjet_pt.push_back(ipar_tlv.Pt()*MEVtoGEV);
       } else {
         m_br_nonbjet_pt.push_back(ipar_tlv.Pt()*MEVtoGEV);
+      }
+      // With eff. mistag
+      if(isBJet(ipar_tlv.Eta(),ipar->auxdata<int>("PartonTruthLabelID"))) {
+        m_br_c_bjet_pt.push_back(ipar_tlv.Pt()*MEVtoGEV);
+      } else {
+        m_br_c_nonbjet_pt.push_back(ipar_tlv.Pt()*MEVtoGEV);
       }
     }
     // Event variables

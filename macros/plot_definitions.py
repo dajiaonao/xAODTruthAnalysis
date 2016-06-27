@@ -3,20 +3,20 @@ import ROOT,math,array
 # Define the input ROOT files
 def getROOTFileName(filename):
     return {
-        "Sherpa_lvlv"          : "/data/uclhc/uci/user/amete/truth_analysis_run/combined_2/out_361068.root",
-        "Sherpa_lvlv_fac4"     : "/data/uclhc/uci/user/amete/truth_analysis_run/combined_2/out_363072.root",
-        "Sherpa_lvlv_fac025"   : "/data/uclhc/uci/user/amete/truth_analysis_run/combined_2/out_363073.root",
-        "Sherpa_lvlv_renorm4"  : "/data/uclhc/uci/user/amete/truth_analysis_run/combined_2/out_363074.root",
-        "Sherpa_lvlv_renorm025": "/data/uclhc/uci/user/amete/truth_analysis_run/combined_2/out_363075.root",
-        "Sherpa_lvlv_qsf4"     : "/data/uclhc/uci/user/amete/truth_analysis_run/combined_2/out_363076.root",
-        "Sherpa_lvlv_qsf025"   : "/data/uclhc/uci/user/amete/truth_analysis_run/combined_2/out_363077.root",
-        "Powheg_WWlvlv"        : "/data/uclhc/uci/user/amete/truth_analysis_run/combined_2/out_361600.root",
-        "Powheg_ZZllvv"        : "/data/uclhc/uci/user/amete/truth_analysis_run/combined_2/out_361604.root",
-        "Powheg_ttbar"         : "/data/uclhc/uci/user/amete/truth_analysis_run/combined_2/out_410000.root",
-        "Powheg_ttbar_radHi"   : "/data/uclhc/uci/user/amete/truth_analysis_run/combined_2/out_410001.root",
-        "Powheg_ttbar_radLo"   : "/data/uclhc/uci/user/amete/truth_analysis_run/combined_2/out_410002.root",
-        "aMCatNLO_ttbar"       : "/data/uclhc/uci/user/amete/truth_analysis_run/combined_2/out_410003.root",
-        "PowhegHpp_ttbar"      : "/data/uclhc/uci/user/amete/truth_analysis_run/combined_2/out_410004.root",
+        "Sherpa_lvlv"          : "/data/uclhc/uci/user/amete/truth_analysis_run/combined_3/out_361068.root",
+        "Sherpa_lvlv_fac4"     : "/data/uclhc/uci/user/amete/truth_analysis_run/combined_3/out_363072.root",
+        "Sherpa_lvlv_fac025"   : "/data/uclhc/uci/user/amete/truth_analysis_run/combined_3/out_363073.root",
+        "Sherpa_lvlv_renorm4"  : "/data/uclhc/uci/user/amete/truth_analysis_run/combined_3/out_363074.root",
+        "Sherpa_lvlv_renorm025": "/data/uclhc/uci/user/amete/truth_analysis_run/combined_3/out_363075.root",
+        "Sherpa_lvlv_qsf4"     : "/data/uclhc/uci/user/amete/truth_analysis_run/combined_3/out_363076.root",
+        "Sherpa_lvlv_qsf025"   : "/data/uclhc/uci/user/amete/truth_analysis_run/combined_3/out_363077.root",
+        "Powheg_WWlvlv"        : "/data/uclhc/uci/user/amete/truth_analysis_run/combined_3/out_361600.root",
+        "Powheg_ZZllvv"        : "/data/uclhc/uci/user/amete/truth_analysis_run/combined_3/out_361604.root",
+        "Powheg_ttbar"         : "/data/uclhc/uci/user/amete/truth_analysis_run/combined_3/out_410000.root",
+        "Powheg_ttbar_radHi"   : "/data/uclhc/uci/user/amete/truth_analysis_run/combined_3/out_410001.root",
+        "Powheg_ttbar_radLo"   : "/data/uclhc/uci/user/amete/truth_analysis_run/combined_3/out_410002.root",
+        "aMCatNLO_ttbar"       : "/data/uclhc/uci/user/amete/truth_analysis_run/combined_3/out_410003.root",
+        "PowhegHpp_ttbar"      : "/data/uclhc/uci/user/amete/truth_analysis_run/combined_3/out_410004.root",
         #"Herwigpp_300vs180"    : "/gdata/atlas/amete/StopPolarization/outputs/FlatNtuples/Herwigpp.300vs180.truth1_v3.root",
         #"Madgraph_300vs180"    : "/gdata/atlas/amete/StopPolarization/outputs/FlatNtuples/Madgraph.300vs180.truth1_v3.root",
         #"MadgraphR_300vs180"   : "/gdata/atlas/amete/StopPolarization/outputs/FlatNtuples/MadgraphR.300vs180.truth1_v3.root",
@@ -116,6 +116,12 @@ def getXtitle(variable):
         "bjet_pt[1]"      : "Subleading bjet p_{T} [GeV]",
         "nonbjet_pt[0]"   : "Leading nonbjet p_{T} [GeV]", 
         "nonbjet_pt[1]"   : "Subleading nonbjet p_{T} [GeV]",
+        "c_bjet_n"        : "Number of custom bjets", 
+        "c_nonbjet_n"     : "Number of custom nonbjets", 
+        "c_bjet_pt[0]"    : "Leading custom bjet p_{T} [GeV]", 
+        "c_bjet_pt[1]"    : "Subleading custom bjet p_{T} [GeV]",
+        "c_nonbjet_pt[0]" : "Leading custom nonbjet p_{T} [GeV]", 
+        "c_nonbjet_pt[1]" : "Subleading custom nonbjet p_{T} [GeV]",
         "jet_pt[0]"       : "Leading jet p_{T} [GeV]", 
         "jet_pt[1]"       : "Subleading jet p_{T} [GeV]",
         "jet_eta[0]"      : "Leading jet #eta", 
@@ -182,35 +188,39 @@ def getXtitle(variable):
 # Define region cuts
 def getRegionTCut(region):
     # Stop2L regions
-    isOSDF          = "(@lepton_pt.size()==2&&isDF&&isOS&&lepton_pt[0]>20.&&lepton_pt[1]>20.&&(lepton_type[0]==2||lepton_type[0]==6)&&(lepton_type[1]==2||lepton_type[1]==6))"
-    isOSSF          = "(@lepton_pt.size()==2&&isSF&&isOS&&lepton_pt[0]>20.&&lepton_pt[1]>20.&&(lepton_type[0]==2||lepton_type[0]==6)&&(lepton_type[1]==2||lepton_type[1]==6))"
-    zVeto           = "(TMath::Abs(mll-91.2)>10.)"
+    isOSDF          = "(@lepton_pt.size()==2&&isDF&&isOS&&lepton_pt[0]>20.&&lepton_pt[1]>20.&&(lepton_type[0]==2||lepton_type[0]==6)&&(lepton_type[1]==2||lepton_type[1]==6))&&mll>20."
+    isOSSF          = "(@lepton_pt.size()==2&&isSF&&isOS&&lepton_pt[0]>20.&&lepton_pt[1]>20.&&(lepton_type[0]==2||lepton_type[0]==6)&&(lepton_type[1]==2||lepton_type[1]==6))&&mll>20."
+    zVeto           = "((TMath::Abs(mll-91.2)>10.&&isSF)||(isDF))"
     bVeto           = "(@bjet_pt.size()==0)"
     bSelection      = "(@bjet_pt.size()>0)"
     commonSRCuts    = "(RPT>0.5&&gamInvRp1>0.8&&DPB_vSS>(0.85*TMath::Abs(cosTheta_b)+1.8))" 
     commonPreSRCuts = "(RPT>0.5&&gamInvRp1>0.8)" 
     return {
-        # Actual regions
-        "ST2L_SRw_SF"       : "(" + isOSSF + "&&" + commonSRCuts + "&&mDRll>95.&&"  + bVeto      + "&&" + zVeto + ")",
-        "ST2L_SRw_DF"       : "(" + isOSDF + "&&" + commonSRCuts + "&&mDRll>95.&&"  + bVeto      + ")",
-        "ST2L_SRt_SF"       : "(" + isOSSF + "&&" + commonSRCuts + "&&mDRll>110.&&" + bSelection + "&&" + zVeto + ")",
-        "ST2L_SRt_DF"       : "(" + isOSDF + "&&" + commonSRCuts + "&&mDRll>110.&&" + bSelection + ")",
-        "ST2L_CR_Top"       : "(" + isOSDF + "&&" + bSelection   + "&&mDRll>80.&&RPT>0.5&&DPB_vSS<(0.85*TMath::Abs(cosTheta_b)+1.8))",
-        "ST2L_CR_VV"        : "(" + isOSDF + "&&" + bVeto        + "&&mDRll>30.&&RPT>0.2&&RPT<0.5&&gamInvRp1>0.8&&DPB_vSS<(0.85*TMath::Abs(cosTheta_b)+1.8))",
+        # Actual regions # These guys don't have the mll>20 GeV cut!!!
+        "ST2L_SRw_SF"       : "("  + isOSSF + "&&" + commonSRCuts   + "&&mDRll>95.&&"  + bVeto      + "&&" + zVeto + ")",
+        "ST2L_SRw_DF"       : "("  + isOSDF + "&&" + commonSRCuts   + "&&mDRll>95.&&"  + bVeto      + ")",
+        "ST2L_SRt_SF"       : "("  + isOSSF + "&&" + commonSRCuts   + "&&mDRll>110.&&" + bSelection + "&&" + zVeto + ")",
+        "ST2L_SRt_DF"       : "("  + isOSDF + "&&" + commonSRCuts   + "&&mDRll>110.&&" + bSelection + ")",
+        "ST2L_SRt_ALL"      : "((" + isOSSF + "||" + isOSDF + ")&&" + commonSRCuts + "&&mDRll>110.&&" + bSelection + "&&" + zVeto + ")",
+        "ST2L_CR_Top"       : "("  + isOSDF + "&&" + bSelection     + "&&mDRll>80.&&RPT>0.5&&DPB_vSS<(0.85*TMath::Abs(cosTheta_b)+1.8))",
+        "ST2L_CR_VV"        : "("  + isOSDF + "&&" + bVeto          + "&&mDRll>30.&&RPT>0.2&&RPT<0.5&&gamInvRp1>0.8&&DPB_vSS<(0.85*TMath::Abs(cosTheta_b)+1.8))",
         # For modeling
-        "ST2L_preSRw_SF"    : "(" + isOSSF + "&&" + commonPreSRCuts + "&&mDRll>95.&&" + bVeto      + "&&" + zVeto + ")",
-        "ST2L_preSRw_DF"    : "(" + isOSDF + "&&" + commonPreSRCuts + "&&mDRll>95.&&" + bVeto      + ")",
-        "ST2L_preSRt_SF"    : "(" + isOSSF + "&&" + commonPreSRCuts + "&&mDRll>95.&&" + bSelection + "&&" + zVeto + ")",
-        "ST2L_preSRt_DF"    : "(" + isOSDF + "&&" + commonPreSRCuts + "&&mDRll>95.&&" + bSelection + ")",
+        "ST2L_preSRw_SF"    : "("  + isOSSF + "&&" + commonPreSRCuts + "&&mDRll>95.&&"  + bVeto      + "&&" + zVeto + ")",
+        "ST2L_preSRw_DF"    : "("  + isOSDF + "&&" + commonPreSRCuts + "&&mDRll>95.&&"  + bVeto      + ")",
+        "ST2L_preSRt_SF"    : "("  + isOSSF + "&&" + commonPreSRCuts + "&&mDRll>110.&&" + bSelection + "&&" + zVeto + ")",
+        "ST2L_preSRt_DF"    : "("  + isOSDF + "&&" + commonPreSRCuts + "&&mDRll>110.&&" + bSelection + ")",
+        "ST2L_preSRt_ALL"   : "((" + isOSDF + "||" + isOSDF + ")&&"  + commonPreSRCuts  + "&&mDRll>110.&&" + bSelection + "&&" + zVeto + ")",
         # For plotting
-        "ST2L_preCR_VV_DF"   : "(" + isOSDF + "&&" + bVeto        + ")",
-        "ST2L_preCR_VV_SF"   : "(" + isOSSF + "&&" + bVeto        + ")",
-        "ST2L_noEvp_SRw_ALL" : "((" + isOSSF + "||" + isOSDF + ")&&"  + commonPreSRCuts   + "&&" + bVeto      + "&&" + zVeto + ")",
-        "ST2L_noEvp_SRw_SF"  : "("  + isOSSF + "&&" + commonPreSRCuts + "&&" + bVeto      + "&&" + zVeto + ")",
-        "ST2L_noEvp_SRw_DF"  : "("  + isOSDF + "&&" + commonPreSRCuts + "&&" + bVeto      + ")",
-        "ST2L_noEvp_SRt_ALL" : "((" + isOSSF + "||" + isOSDF + ")&&"  + commonPreSRCuts   + "&&" + bSelection + "&&" + zVeto + ")",
-        "ST2L_noEvp_SRt_SF"  : "("  + isOSSF + "&&" + commonPreSRCuts + "&&" + bSelection + "&&" + zVeto + ")",
-        "ST2L_noEvp_SRt_DF"  : "("  + isOSDF + "&&" + commonPreSRCuts + "&&" + bSelection + ")",
+        "ST2L_incTT_SF"     : "("  + isOSSF + "&&mDRll>95.&&RPT>0.5&&gamInvRp1>0.8)",
+        "ST2L_incTT_DF"     : "("  + isOSDF + "&&mDRll>95.&&RPT>0.5&&gamInvRp1>0.8)",
+        "ST2L_incTT_ALL"    : "((" + isOSSF + "||" + isOSDF + ")&&mDRll>95.&&RPT>0.5&&gamInvRp1>0.8)",
+        "ST2L_incVV_SF"     : "("  + isOSSF + "&&mDRll>95.)",
+        "ST2L_incVV_DF"     : "("  + isOSDF + "&&mDRll>95.)",
+        "ST2L_incVV_ALL"    : "((" + isOSSF + "||" + isOSDF + ")&&mDRll>95.)",
+        "ST2L_looseSRw_SF"  : "("  + isOSSF + "&&" + bVeto      + "&&" + zVeto + ")",
+        "ST2L_looseSRw_DF"  : "("  + isOSDF + "&&" + bVeto      + ")",
+        "ST2L_looseSRt_SF"  : "("  + isOSSF + "&&" + bSelection + "&&" + zVeto + ")",
+        "ST2L_looseSRt_DF"  : "("  + isOSDF + "&&" + bSelection + ")",
         ###############
         "SR_ALL_TOP"    : "(isDF || (isSF && (mll<71.||mll>111.)) ) && mll > 20. && mT2ll>100.0 && r1>0.3 && (lepton_type[0]==2||lepton_type[0]==6) && (lepton_type[1]==2||lepton_type[1]==6)" ,
         "SR_ALL_NOMT2"  : "(isDF || (isSF && (mll<71.||mll>111.)) ) && mll > 20. && r1>0.3 && (lepton_type[0]==2||lepton_type[0]==6) && (lepton_type[1]==2||lepton_type[1]==6)" ,
@@ -238,11 +248,16 @@ def getBinInformation(variable):
     return {
         "lepton_n"      : [ 10, 0,  10],
         "jet_n"         : [ 20, 0,  20],
-        "bjet_n"        : [ 20, 0,  20],
+        "bjet_n"        : [ 10, 0,  10],
         "nonbjet_n"     : [ 20, 0,  20],
         "lepton_pt"     : [ 25, 0, 250], 
         "bjet_pt"       : [ 25, 0, 250], 
         "nonbjet_pt"    : [ 30, 0, 750], 
+        "c_bjet_n"      : [ 20, 0,  20],
+        "c_nonbjet_n"   : [ 20, 0,  20],
+        "c_lepton_pt"   : [ 25, 0, 250], 
+        "c_bjet_pt"     : [ 25, 0, 250], 
+        "c_nonbjet_pt"  : [ 30, 0, 750], 
         "jet_pt"        : [ 30, 0, 300], #[[0,20,40,60,80,100,120,140,160,180,200,225,250,300,400,500,1000]],
         "lepton_eta"    : [ 60,-3,3],
         "jet_eta"       : [ 10,-5,5],
@@ -250,12 +265,12 @@ def getBinInformation(variable):
         "jet_phi"       : [ 7,-3.5,3.5],
         "mT2ll"         : [ 20, 0, 200], #[[0,10,20,30,40,50,60,70,80,90,100,110,120,130,145,300]],
         "ptll"          : [ 50, 0, 500], 
-        "mll"           : [ 60, 0, 600], #[[0,20,40,60,80,100,120,140,160,180,200,220,240,260,280,300,320,340,360,400,500,1000]],
+        "mll"           : [ 8, 0, 400], #[[0,20,40,60,80,100,120,140,160,180,200,220,240,260,280,300,320,340,360,400,500,1000]],
         "mDRll"         : [[0,10,20,30,40,50,60,70,80,95,110,200]],
         "RPT"           : [ 10, 0, 1],
-        "gamInvRp1"     : [ 10, 0, 1],
-        "cosTheta_b"    : [ 10, -1, 1],
-        "DPB_vSS"       : [ 16, 0, 3.2],
+        "gamInvRp1"     : [ 5, 0, 1],
+        "cosTheta_b"    : [ 5, -1, 1],
+        "DPB_vSS"       : [ 8, 0, 3.2],
         "isDF"          : [  2, 0, 2],
         "isSF"          : [  2, 0, 2],
         "isOS"          : [  2, 0, 2],
@@ -356,10 +371,12 @@ def fillHistograms(files,options):
                 if(options.debug): 
                     print("INFO :: Retrieving information for variable %s" % variable)
                 # Fill the histograms
-                if variable == "lepton_n"    : variable = "@lepton_pt.size()"
-                elif variable == "jet_n"     : variable = "@jet_pt.size()"
-                elif variable == "bjet_n"    : variable = "@bjet_pt.size()"
-                elif variable == "nonbjet_n" : variable = "@nonbjet_pt.size()"
+                if variable == "lepton_n"      : variable = "@lepton_pt.size()"
+                elif variable == "jet_n"       : variable = "@jet_pt.size()"
+                elif variable == "bjet_n"      : variable = "@bjet_pt.size()"
+                elif variable == "nonbjet_n"   : variable = "@nonbjet_pt.size()"
+                elif variable == "c_bjet_n"    : variable = "@c_bjet_pt.size()"
+                elif variable == "c_nonbjet_n" : variable = "@c_nonbjet_pt.size()"
                 if(options.debug):
                     print("INFO :: Cross-section %.2f - Luminosity %.2f - Sumw %.2f"%(getCrossSection(inputFile),options.luminosity,sumw[ii]))
                 if "MadgraphM" in inputFile:

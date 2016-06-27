@@ -61,7 +61,9 @@ public:
   std::vector<int>   m_br_lepton_mother; //!
   std::vector<float> m_br_lepton_mother_mass; //!
   std::vector<float> m_br_bjet_pt; //!
+  std::vector<float> m_br_c_bjet_pt; //!
   std::vector<float> m_br_nonbjet_pt; //!
+  std::vector<float> m_br_c_nonbjet_pt; //!
   std::vector<float> m_br_jet_pt; //!
   std::vector<float> m_br_jet_eta; //!
   std::vector<float> m_br_jet_phi; //!
