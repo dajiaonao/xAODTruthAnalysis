@@ -17,6 +17,8 @@ def getROOTFileName(filename):
         "Powheg_ttbar_radLo"   : "/data/uclhc/uci/user/amete/truth_analysis_run/combined_3/out_410002.root",
         "aMCatNLO_ttbar"       : "/data/uclhc/uci/user/amete/truth_analysis_run/combined_3/out_410003.root",
         "PowhegHpp_ttbar"      : "/data/uclhc/uci/user/amete/truth_analysis_run/combined_3/out_410004.root",
+        "Sherpa_ttbar_410021"  : "/data/uclhc/uci/user/amete/truth_analysis_run/combined_3/out_410021.root",
+        "Sherpa_ttbar_410189"  : "/data/uclhc/uci/user/amete/truth_analysis_run/combined_3/out_410189.root",
         #"Herwigpp_300vs180"    : "/gdata/atlas/amete/StopPolarization/outputs/FlatNtuples/Herwigpp.300vs180.truth1_v3.root",
         #"Madgraph_300vs180"    : "/gdata/atlas/amete/StopPolarization/outputs/FlatNtuples/Madgraph.300vs180.truth1_v3.root",
         #"MadgraphR_300vs180"   : "/gdata/atlas/amete/StopPolarization/outputs/FlatNtuples/MadgraphR.300vs180.truth1_v3.root",
@@ -52,20 +54,22 @@ def getROOTFileName(filename):
 # Define cross-sections
 def getCrossSection(filename):
     return {
-        "Sherpa_lvlv"          : 14.022*0.91,  # 361068 https://twiki.cern.ch/twiki/bin/view/AtlasProtected/MC15SystematicUncertainties#VV_Diboson_V_W_Z 24/11/15
-        "Sherpa_lvlv_fac4"     : 14.022*0.91,  # 363072
-        "Sherpa_lvlv_fac025"   : 14.022*0.91,  # 363073
-        "Sherpa_lvlv_renorm4"  : 14.022*0.91,  # 363074
-        "Sherpa_lvlv_renorm025": 14.022*0.91,  # 363075
-        "Sherpa_lvlv_qsf4"     : 14.022*0.91,  # 363076
-        "Sherpa_lvlv_qsf025"   : 14.022*0.91,  # 363077
-        "Powheg_WWlvlv"        : 10.631,       # 361600
-        "Powheg_ZZllvv"        : 0.92498,      # 361604
-        "Powheg_ttbar"         : 831.76*0.543, # 410000
-        "Powheg_ttbar_radHi"   : 831.76*0.543, # 410001
-        "Powheg_ttbar_radLo"   : 831.76*0.543, # 410002
-        "aMCatNLO_ttbar"       : 831.76*0.543, # 410003
-        "PowhegHpp_ttbar"      : 831.76*0.543, # 410004
+        "Sherpa_lvlv"          : 14.022*0.91,   # 361068 https://twiki.cern.ch/twiki/bin/view/AtlasProtected/MC15SystematicUncertainties#VV_Diboson_V_W_Z 24/11/15
+        "Sherpa_lvlv_fac4"     : 14.022*0.91,   # 363072
+        "Sherpa_lvlv_fac025"   : 14.022*0.91,   # 363073
+        "Sherpa_lvlv_renorm4"  : 14.022*0.91,   # 363074
+        "Sherpa_lvlv_renorm025": 14.022*0.91,   # 363075
+        "Sherpa_lvlv_qsf4"     : 14.022*0.91,   # 363076
+        "Sherpa_lvlv_qsf025"   : 14.022*0.91,   # 363077
+        "Powheg_WWlvlv"        : 10.631,        # 361600
+        "Powheg_ZZllvv"        : 0.92498,       # 361604
+        "Powheg_ttbar"         : 831.76*0.543,  # 410000 => 696.11  1.1949  0.543
+        "Powheg_ttbar_radHi"   : 831.76*0.543,  # 410001 => 783.73  1.0613  0.543
+        "Powheg_ttbar_radLo"   : 831.76*0.543,  # 410002 => 611.1   1.3611  0.543
+        "aMCatNLO_ttbar"       : 831.76*0.543,  # 410003 => 694.59  1.1975  0.543
+        "PowhegHpp_ttbar"      : 831.76*0.543,  # 410004 => 696.32  1.1926  0.543 
+        "Sherpa_ttbar_410021"  : 78.73*1.17,    # 410021 => 78.73   1.17    1. 
+        "Sherpa_ttbar_410189"  : 76.333*1.1484, # 410021 => https://twiki.cern.ch/twiki/bin/view/AtlasProtected/MC15TTbarSamplesPMG 
         "Herwigpp_250vs160"    : 21.5949*0.040720, # Official 
         "Madgraph_250vs160"    : 21.5949*0.048089, # Official
         "MadgraphL_250vs160"   : 21.5949*0.048089, # Official
@@ -203,20 +207,20 @@ def getRegionTCut(region):
         "ST2L_SRt_DF"       : "("  + isOSDF + "&&" + commonSRCuts   + "&&mDRll>110.&&" + bSelection + ")",
         "ST2L_SRt_ALL"      : "((" + isOSSF + "||" + isOSDF + ")&&" + commonSRCuts + "&&mDRll>110.&&" + bSelection + "&&" + zVeto + ")",
         "ST2L_CR_Top"       : "("  + isOSDF + "&&" + bSelection     + "&&mDRll>80.&&RPT>0.5&&DPB_vSS<(0.85*TMath::Abs(cosTheta_b)+1.8))",
-        "ST2L_CR_VV"        : "("  + isOSDF + "&&" + bVeto          + "&&mDRll>30.&&RPT>0.2&&RPT<0.5&&gamInvRp1>0.8&&DPB_vSS<(0.85*TMath::Abs(cosTheta_b)+1.8))",
+        "ST2L_CR_VV_SF"     : "("  + isOSSF + "&&" + bVeto          + "&&" + zVeto + "&&mDRll>30.&&RPT<0.5&&gamInvRp1>0.8&&DPB_vSS<(0.85*TMath::Abs(cosTheta_b)+1.8)&&met_et>70.)",
+        "ST2L_CR_VV_DF"     : "("  + isOSDF + "&&" + bVeto          +                "&&mDRll>30.&&RPT<0.5&&gamInvRp1>0.8&&DPB_vSS<(0.85*TMath::Abs(cosTheta_b)+1.8))",
         # For modeling
         "ST2L_preSRw_SF"    : "("  + isOSSF + "&&" + commonPreSRCuts + "&&mDRll>95.&&"  + bVeto      + "&&" + zVeto + ")",
         "ST2L_preSRw_DF"    : "("  + isOSDF + "&&" + commonPreSRCuts + "&&mDRll>95.&&"  + bVeto      + ")",
         "ST2L_preSRt_SF"    : "("  + isOSSF + "&&" + commonPreSRCuts + "&&mDRll>110.&&" + bSelection + "&&" + zVeto + ")",
         "ST2L_preSRt_DF"    : "("  + isOSDF + "&&" + commonPreSRCuts + "&&mDRll>110.&&" + bSelection + ")",
-        "ST2L_preSRt_ALL"   : "((" + isOSDF + "||" + isOSDF + ")&&"  + commonPreSRCuts  + "&&mDRll>110.&&" + bSelection + "&&" + zVeto + ")",
+        "ST2L_preSRt_ALL"   : "((" + isOSSF + "||" + isOSDF + ")&&"  + commonPreSRCuts  + "&&mDRll>110.&&" + bSelection + "&&" + zVeto + ")",
         # For plotting
         "ST2L_incTT_SF"     : "("  + isOSSF + "&&mDRll>95.&&RPT>0.5&&gamInvRp1>0.8)",
         "ST2L_incTT_DF"     : "("  + isOSDF + "&&mDRll>95.&&RPT>0.5&&gamInvRp1>0.8)",
         "ST2L_incTT_ALL"    : "((" + isOSSF + "||" + isOSDF + ")&&mDRll>95.&&RPT>0.5&&gamInvRp1>0.8)",
-        "ST2L_incVV_SF"     : "("  + isOSSF + "&&mDRll>95.)",
-        "ST2L_incVV_DF"     : "("  + isOSDF + "&&mDRll>95.)",
-        "ST2L_incVV_ALL"    : "((" + isOSSF + "||" + isOSDF + ")&&mDRll>95.)",
+        "ST2L_incVV_SF"     : "("  + isOSSF + "&&" + zVeto  + "&&mDRll>95.&&gamInvRp1>0.8)", #&&RPT>0.5&&DPB_vSS>(0.85*TMath::Abs(cosTheta_b)+1.8))",
+        "ST2L_incVV_DF"     : "("  + isOSDF +                 "&&mDRll>95.&&gamInvRp1>0.8)", #&&RPT>0.5&&DPB_vSS>(0.85*TMath::Abs(cosTheta_b)+1.8))",
         "ST2L_looseSRw_SF"  : "("  + isOSSF + "&&" + bVeto      + "&&" + zVeto + ")",
         "ST2L_looseSRw_DF"  : "("  + isOSDF + "&&" + bVeto      + ")",
         "ST2L_looseSRt_SF"  : "("  + isOSSF + "&&" + bSelection + "&&" + zVeto + ")",

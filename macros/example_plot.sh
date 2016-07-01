@@ -1,6 +1,7 @@
 #!/bin/bash
 
 var="bjet_n"
+var="${var},c_bjet_n"
 var="${var},mDRll"
 var="${var},mll"
 var="${var},RPT"
@@ -9,9 +10,8 @@ var="${var},DPB_vSS"
 var="${var},cosTheta_b"
 
 ### ST2L 3-body
-#python make_plots.py -i "Sherpa_lvlv,Sherpa_lvlv_fac4,Sherpa_lvlv_fac025,Sherpa_lvlv_renorm4,Sherpa_lvlv_renorm025,Sherpa_lvlv_qsf4,Sherpa_lvlv_qsf025" -v "${var}" -r "ST2L_incVV_SF,ST2L_incVV_DF" -f "eps" -l 10000 -b -a -L;
-#python make_plots.py -i "Powheg_ttbar,Powheg_ttbar_radHi,Powheg_ttbar_radLo,PowhegHpp_ttbar,aMCatNLO_ttbar" -v "${var}" -r "ST2L_incTT_ALL" -f "eps" -l 10000 -b -a -L;
-python make_plots.py -i "Powheg_ttbar,Powheg_ttbar_radHi,Powheg_ttbar_radLo,PowhegHpp_ttbar,aMCatNLO_ttbar" -v "${var}" -r "ST2L_CR_Top" -f "eps" -l 3210 -b -a -L;
+python make_plots.py -i "Sherpa_lvlv,Sherpa_lvlv_fac4,Sherpa_lvlv_fac025,Sherpa_lvlv_renorm4,Sherpa_lvlv_renorm025,Sherpa_lvlv_qsf4,Sherpa_lvlv_qsf025" -v "${var}" -r "ST2L_incVV_SF,ST2L_incVV_DF" -f "eps" -l 10000 -b -a -L;
+python make_plots.py -i "Powheg_ttbar,Powheg_ttbar_radHi,Powheg_ttbar_radLo,PowhegHpp_ttbar,aMCatNLO_ttbar,Sherpa_ttbar_410021" -v "${var}" -r "ST2L_incTT_ALL" -f "eps" -l 10000 -b -a -L;
 
 #var="lepton_n"
 #var="${var},isDF"
