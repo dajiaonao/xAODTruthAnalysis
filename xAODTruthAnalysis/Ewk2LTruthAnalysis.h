@@ -30,6 +30,8 @@ public:
   bool saveHists;
   bool saveTree;
   bool isRecoSample; // truth content is a bit different
+  float CF_l0_pt;
+  float CF_l1_pt;
 
   // Output Tree
   std::string outputFileName;

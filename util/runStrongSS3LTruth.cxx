@@ -103,7 +103,7 @@ int main( int argc, char* argv[] ) {
   if(!submitToGrid) {
     SH::ScanDir().sampleDepth(sampleDepth).samplePattern(samplePattern).scan(sh, inputFilePath);
   } else {
-    SH::scanDQ2(sh, inputFilePath);
+    SH::scanRucio(sh, inputFilePath);
   }
 
   // Set the name of the input TTree. It's always "CollectionTree"

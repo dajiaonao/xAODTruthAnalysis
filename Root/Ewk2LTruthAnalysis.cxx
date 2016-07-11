@@ -58,7 +58,7 @@ ClassImp(Ewk2LTruthAnalysis)
 
 
 
-Ewk2LTruthAnalysis :: Ewk2LTruthAnalysis ()
+Ewk2LTruthAnalysis :: Ewk2LTruthAnalysis ():CF_l0_pt(10000.),CF_l1_pt(10000.)
 {
   // Here you put any code for the base initialization of variables,
   // e.g. initialize all pointers to 0.  Note that you should only put
@@ -267,7 +267,7 @@ EL::StatusCode Ewk2LTruthAnalysis :: execute ()
     m_br_mcEventWeights.clear();
   }
 
-  // Event counter
+//   // Event counter
   if( (m_eventCounter % 1000) ==0 ) Info("execute()", "Event number = %i", m_eventCounter );
   m_eventCounter++;
 
@@ -284,40 +284,42 @@ EL::StatusCode Ewk2LTruthAnalysis :: execute ()
   const xAOD::TruthParticleContainer* truthMuons = 0;
   EL_RETURN_CHECK("execute()",event->retrieve( truthMuons, "TruthMuons"));
 
-  // Find SUSY ID
   int pdgid1 = 0, pdgid2 = 0, susyID = -1;
-  if(!FindSusyHardProc(truthParticles,pdgid1,pdgid2,false)) {
-    Info("execute()", "Cannot find SUSY process id for event %i", m_eventCounter );  
-  } else {
-    if(abs(pdgid1) == abs(pdgid2)) {
-      if(abs(pdgid1) == 1000011)      { susyID = 1; }
-      else if(abs(pdgid1) == 2000011) { susyID = 2; }
-      else if(abs(pdgid1) == 1000013) { susyID = 3; }
-      else if(abs(pdgid1) == 2000013) { susyID = 4; }
-      else if(abs(pdgid1) == 1000015) { susyID = 5; }
-      else if(abs(pdgid1) == 2000015) { susyID = 6; }
-      else { susyID = 0; Info("execute()", "Unexpected pair production of |pdgid| %i", abs(pdgid1)); }
-    }
-    else { susyID = 0; Info("execute()", "Unexpected production of pdgid %ii - %i", pdgid1, pdgid2); }
-  }
-
-  // Loop over truth particles to find the sparticles
   const xAOD::TruthParticle *x1m = NULL, *x1p = NULL;
-  for(const auto& truthPar : *truthParticles) {
-    if( truthPar->absPdgId() == 1000024 ) {
-      if( truthPar->nChildren()!=2 ) continue;
-      //Info("execute()"," Found truth chargino in event %i with pdgId %i and mass %.2e and pt %.2e and %i children", m_eventCounter, truthPar->pdgId(), truthPar->m(), truthPar->pt(), truthPar->nChildren());
-      if(saveHists) {
-        h_hists1D.at(m_nameToIndex["mx1"])->Fill(truthPar->m()*MEVtoGEV);
+  if(isSignal){
+    // Find SUSY ID
+    if(!FindSusyHardProc(truthParticles,pdgid1,pdgid2,false)) {
+      Info("execute()", "Cannot find SUSY process id for event %i", m_eventCounter );  
+    } else {
+      if(abs(pdgid1) == abs(pdgid2)) {
+        if(abs(pdgid1) == 1000011)      { susyID = 1; }
+        else if(abs(pdgid1) == 2000011) { susyID = 2; }
+        else if(abs(pdgid1) == 1000013) { susyID = 3; }
+        else if(abs(pdgid1) == 2000013) { susyID = 4; }
+        else if(abs(pdgid1) == 1000015) { susyID = 5; }
+        else if(abs(pdgid1) == 2000015) { susyID = 6; }
+        else { susyID = 0; Info("execute()", "Unexpected pair production of |pdgid| %i", abs(pdgid1)); }
       }
-      if(truthPar->pdgId() > 0) { x1p = truthPar; }
-      else                      { x1m = truthPar; }
+      else { susyID = 0; Info("execute()", "Unexpected production of pdgid %ii - %i", pdgid1, pdgid2); }
     }
-    if( truthPar->absPdgId() == 1000022 ) {
-      if( truthPar->nChildren()!=0 ) continue;
-      //Info("execute()"," Found truth neutralino in event %i with pdgId %i and mass %.2e and pt %.2e and %i children", m_eventCounter, truthPar->pdgId(), truthPar->m(), truthPar->pt(), truthPar->nChildren());
-      if(saveHists) {
-        h_hists1D.at(m_nameToIndex["mn1"])->Fill(truthPar->m()*MEVtoGEV);
+
+    // Loop over truth particles to find the sparticles
+    for(const auto& truthPar : *truthParticles) {
+      if( truthPar->absPdgId() == 1000024 ) {
+        if( truthPar->nChildren()!=2 ) continue;
+        //Info("execute()"," Found truth chargino in event %i with pdgId %i and mass %.2e and pt %.2e and %i children", m_eventCounter, truthPar->pdgId(), truthPar->m(), truthPar->pt(), truthPar->nChildren());
+        if(saveHists) {
+          h_hists1D.at(m_nameToIndex["mx1"])->Fill(truthPar->m()*MEVtoGEV);
+        }
+        if(truthPar->pdgId() > 0) { x1p = truthPar; }
+        else                      { x1m = truthPar; }
+      }
+      if( truthPar->absPdgId() == 1000022 ) {
+        if( truthPar->nChildren()!=0 ) continue;
+        //Info("execute()"," Found truth neutralino in event %i with pdgId %i and mass %.2e and pt %.2e and %i children", m_eventCounter, truthPar->pdgId(), truthPar->m(), truthPar->pt(), truthPar->nChildren());
+        if(saveHists) {
+          h_hists1D.at(m_nameToIndex["mn1"])->Fill(truthPar->m()*MEVtoGEV);
+        }
       }
     }
   }
@@ -330,7 +332,7 @@ EL::StatusCode Ewk2LTruthAnalysis :: execute ()
     if( truthEl->absPdgId() != 11    ) continue; // only electrons
     if( truthEl->status() != 1       ) continue; // only final state objects
     if( truthEl->pt()*MEVtoGEV < 10. ) continue; // pT > 5 GeV 
-    if( fabs(truthEl->eta()) > 2.5   ) continue; // |eta| < 2.8 
+    if( fabs(truthEl->eta()) > 2.47   ) continue; // |eta| < 2.8 
    
     electrons->push_back(truthEl); // store if passed all
   } // end loop over truth electrons
@@ -339,7 +341,7 @@ EL::StatusCode Ewk2LTruthAnalysis :: execute ()
     if( truthMu->absPdgId() != 13    ) continue; // only muons
     if( truthMu->status() != 1       ) continue; // only final state objects
     if( truthMu->pt()*MEVtoGEV < 10. ) continue; // pT > 5 GeV 
-    if( fabs(truthMu->eta()) > 2.5   ) continue; // |eta| < 2.8 
+    if( fabs(truthMu->eta()) > 2.4   ) continue; // |eta| < 2.8 
    
     muons->push_back(truthMu); // store if passed all
   } // end loop over truth muons
@@ -390,6 +392,7 @@ EL::StatusCode Ewk2LTruthAnalysis :: execute ()
     h_hists1D.at(m_nameToIndex["nLep"])->Fill(nLep);
   }
   if(nLep < 2) return EL::StatusCode::SUCCESS;
+  if(leptons->at(0)->pt()<CF_l0_pt || leptons->at(1)->pt()<CF_l1_pt) return EL::StatusCode::SUCCESS;
   //if((leptons->at(0)->pdgId()*leptons->at(1)->pdgId()) > 0) return EL::StatusCode::SUCCESS;
 
   // Build objects and fill histograms

@@ -2,58 +2,73 @@ import ROOT,math,array
 
 # Define the input ROOT files
 def getROOTFileName(filename):
+    dir0 = '/net/ustc_home/dzhang/work/bsmSearch/ewSUSY/analysis/syst1/run/r3/fetch/data-myOutput/'
     return {
-        "Sherpa_lvlv"          : "/data/uclhc/uci/user/amete/truth_analysis_run/combined_3/out_361068.root",
-        "Sherpa_lvlv_fac4"     : "/data/uclhc/uci/user/amete/truth_analysis_run/combined_3/out_363072.root",
-        "Sherpa_lvlv_fac025"   : "/data/uclhc/uci/user/amete/truth_analysis_run/combined_3/out_363073.root",
-        "Sherpa_lvlv_renorm4"  : "/data/uclhc/uci/user/amete/truth_analysis_run/combined_3/out_363074.root",
-        "Sherpa_lvlv_renorm025": "/data/uclhc/uci/user/amete/truth_analysis_run/combined_3/out_363075.root",
-        "Sherpa_lvlv_qsf4"     : "/data/uclhc/uci/user/amete/truth_analysis_run/combined_3/out_363076.root",
-        "Sherpa_lvlv_qsf025"   : "/data/uclhc/uci/user/amete/truth_analysis_run/combined_3/out_363077.root",
-        "Powheg_WWlvlv"        : "/data/uclhc/uci/user/amete/truth_analysis_run/combined_3/out_361600.root",
-        "Powheg_ZZllvv"        : "/data/uclhc/uci/user/amete/truth_analysis_run/combined_3/out_361604.root",
-        "Powheg_ttbar"         : "/data/uclhc/uci/user/amete/truth_analysis_run/combined_3/out_410000.root",
-        "Powheg_ttbar_radHi"   : "/data/uclhc/uci/user/amete/truth_analysis_run/combined_3/out_410001.root",
-        "Powheg_ttbar_radLo"   : "/data/uclhc/uci/user/amete/truth_analysis_run/combined_3/out_410002.root",
-        "aMCatNLO_ttbar"       : "/data/uclhc/uci/user/amete/truth_analysis_run/combined_3/out_410003.root",
-        "PowhegHpp_ttbar"      : "/data/uclhc/uci/user/amete/truth_analysis_run/combined_3/out_410004.root",
-        "Sherpa_ttbar_410021"  : "/data/uclhc/uci/user/amete/truth_analysis_run/combined_3/out_410021.root",
-        "Sherpa_ttbar_410189"  : "/data/uclhc/uci/user/amete/truth_analysis_run/combined_3/out_410189.root",
-        #"Herwigpp_300vs180"    : "/gdata/atlas/amete/StopPolarization/outputs/FlatNtuples/Herwigpp.300vs180.truth1_v3.root",
-        #"Madgraph_300vs180"    : "/gdata/atlas/amete/StopPolarization/outputs/FlatNtuples/Madgraph.300vs180.truth1_v3.root",
-        #"MadgraphR_300vs180"   : "/gdata/atlas/amete/StopPolarization/outputs/FlatNtuples/MadgraphR.300vs180.truth1_v3.root",
-        #"MadgraphL_300vs180"   : "/gdata/atlas/amete/StopPolarization/outputs/FlatNtuples/MadgraphL.300vs180.truth1_v3.root",
-        "Herwigpp_250vs160"    : "/data/uclhc/uci/user/amete/stop_signal_flat/FLAT_406009.HppEG_UE5C6L1_Tt_bWN_t250_n160_2Lep18.root",
-        "HerwigppL_250vs160"   : "/data/uclhc/uci/user/amete/stop_signal_flat/FLAT_999999.HppEG_UE5C6L1_Tt_bWN_t250_n160_2Lep18.root",
-        "Madgraph_250vs160"    : "/data/uclhc/uci/user/amete/stop_signal_flat/FLAT_387943.MGPy8EG_A14N23LO_TT_bWN_250_160_2L15.root",
-        "MadgraphL_250vs160"   : "/data/uclhc/uci/user/amete/stop_signal_flat/FLAT_387943.MGPy8EG_A14N23LO_TT_bWN_250_160_2L15.root",
-        "MadgraphR_250vs160"   : "/data/uclhc/uci/user/amete/stop_signal_flat/FLAT_387943.MGPy8EG_A14N23LO_TT_bWN_250_160_2L15.root",
-        "Herwigpp_300vs150"    : "/data/uclhc/uci/user/amete/stop_signal_flat/FLAT_406010.HppEG_UE5C6L1_Tt_bWN_t300_n150_2Lep18.root",
-        "Madgraph_300vs150"    : "/data/uclhc/uci/user/amete/stop_signal_flat/FLAT_387947.MGPy8EG_A14N23LO_TT_bWN_300_150_2L15.root",
-        "MadgraphR_300vs150"   : "/data/uclhc/uci/user/amete/stop_signal_flat/FLAT_387947.MGPy8EG_A14N23LO_TT_bWN_300_150_2L15.root",
-        "HerwigppR_300vs180"   : "/data/uclhc/uci/user/amete/stop_signal_flat/FLAT_406011.HppEG_UE5C6L1_Tt_bWN_t300_n180_2Lep18.root",
-        "HerwigppL_300vs180"   : "/data/uclhc/uci/user/amete/stop_signal_flat/FLAT_999998.HppEG_UE5C6L1_Tt_bWN_t300_n180_2Lep18.root",
-        "Madgraph_300vs180"    : "/data/uclhc/uci/user/amete/stop_signal_flat/FLAT_387948.MGPy8EG_A14N23LO_TT_bWN_300_180_2L15.root",
-        "MadgraphM_300vs180"   : "/data/uclhc/uci/user/amete/stop_signal_flat/FLAT_387948.MGPy8EG_A14N23LO_TT_bWN_300_180_2L15.root",
-        "MadgraphR_300vs180"   : "/data/uclhc/uci/user/amete/stop_signal_flat/FLAT_387948.MGPy8EG_A14N23LO_TT_bWN_300_180_2L15.root",
-        "MadgraphL_300vs180"   : "/data/uclhc/uci/user/amete/stop_signal_flat/FLAT_387948.MGPy8EG_A14N23LO_TT_bWN_300_180_2L15.root",
-        "MadgraphFR_300vs180"   : "/data/uclhc/uci/user/amete/stop_signal_flat/FLAT_123457.MGPy8EG_A14N_TTright_bWN_300_180_2Lep18.root",
-        "MadgraphT_300vs180"   : "/data/uclhc/uci/user/amete/stop_signal_flat/FLAT_123458.MGPy8EG_A14N_TTright_bWN_300_180_2Lep18.root",
-        "MadgraphFL_250vs125"    : "/data/uclhc/uci/user/amete/stop_signal_flat/takashi/FLAT_999927.MGPy8EG_A14N23LO_TT_directBWNleft_250_125.root",
-        "MadgraphL_250vs125"    : "/data/uclhc/uci/user/amete/stop_signal_flat/takashi/FLAT_999929.MGPy8EG_A14N23LO_TT_directBWN_250_125.root",
-        "MadgraphM_250vs125"    : "/data/uclhc/uci/user/amete/stop_signal_flat/takashi/FLAT_999929.MGPy8EG_A14N23LO_TT_directBWN_250_125.root",
-        "MadgraphR_250vs125"    : "/data/uclhc/uci/user/amete/stop_signal_flat/takashi/FLAT_999929.MGPy8EG_A14N23LO_TT_directBWN_250_125.root",
-        "Madgraph_250vs125"     : "/data/uclhc/uci/user/amete/stop_signal_flat/takashi/FLAT_999929.MGPy8EG_A14N23LO_TT_directBWN_250_125.root",
-        "HerwigppL_250vs125"   : "/data/uclhc/uci/user/amete/stop_signal_flat/FLAT_999997.HppEG_UE5C6L1_Tt_bWN_t250_n125_2Lep18.root",
-        "SerhanFL_250vs125"    : "/data/uclhc/uci/user/amete/stop_signal_flat/FLAT_123460.MGPy8EG_A14N_TTleft_bWN_250_125_2Lep18.root",
-        "SerhanFR_250vs125"    : "/data/uclhc/uci/user/amete/stop_signal_flat/FLAT_123461.MGPy8EG_A14N_TTright_bWN_250_125_2Lep18.root",
-        #"MadgraphSlep_100vs1"  : "/gdata/atlas/amete/MC15_SleptonPairProduction/FLAT/DAOD_TRUTH1.MGPy8EG_A14N23LO_SlepSlep_direct_100p0_1p0_2L5_10k.pool.root",
-        "MadgraphSlep_100vs1"  : "/data/uclhc/uci/user/amete/slepton_signal_flat/DAOD_TRUTH1.MGPy8EG_A14N23LO_SlepSlep_direct_100p0_1p0_2L5_10k.pool.root",
+            "Sherpa_ggllll": dir0+"/Sherpa_CT10_ggllll-0.root",
+            "Sherpa_ggllll_fac025": dir0+"/Sherpa_CT10_ggllll_fac025-0.root",
+            "Sherpa_ggllll_fac4": dir0+"/Sherpa_CT10_ggllll_fac4-0.root",
+            "Sherpa_ggllll_qsf025": dir0+"/Sherpa_CT10_ggllll_qsf025-0.root",
+            "Sherpa_ggllll_qsf4": dir0+"/Sherpa_CT10_ggllll_qsf4-0.root",
+            "Sherpa_ggllll_renorm025": dir0+"/Sherpa_CT10_ggllll_renorm025-0.root",
+            "Sherpa_ggllll_renorm4": dir0+"/Sherpa_CT10_ggllll_renorm4-0.root",
+#         "Sherpa_lvlv"          : "/data/uclhc/uci/user/amete/truth_analysis_run/combined_3/out_361068.root",
+#         "Sherpa_lvlv_fac4"     : "/data/uclhc/uci/user/amete/truth_analysis_run/combined_3/out_363072.root",
+#         "Sherpa_lvlv_fac025"   : "/data/uclhc/uci/user/amete/truth_analysis_run/combined_3/out_363073.root",
+#         "Sherpa_lvlv_renorm4"  : "/data/uclhc/uci/user/amete/truth_analysis_run/combined_3/out_363074.root",
+#         "Sherpa_lvlv_renorm025": "/data/uclhc/uci/user/amete/truth_analysis_run/combined_3/out_363075.root",
+#         "Sherpa_lvlv_qsf4"     : "/data/uclhc/uci/user/amete/truth_analysis_run/combined_3/out_363076.root",
+#         "Sherpa_lvlv_qsf025"   : "/data/uclhc/uci/user/amete/truth_analysis_run/combined_3/out_363077.root",
+#         "Powheg_WWlvlv"        : "/data/uclhc/uci/user/amete/truth_analysis_run/combined_3/out_361600.root",
+#         "Powheg_ZZllvv"        : "/data/uclhc/uci/user/amete/truth_analysis_run/combined_3/out_361604.root",
+#         "Powheg_ttbar"         : "/data/uclhc/uci/user/amete/truth_analysis_run/combined_3/out_410000.root",
+#         "Powheg_ttbar_radHi"   : "/data/uclhc/uci/user/amete/truth_analysis_run/combined_3/out_410001.root",
+#         "Powheg_ttbar_radLo"   : "/data/uclhc/uci/user/amete/truth_analysis_run/combined_3/out_410002.root",
+#         "aMCatNLO_ttbar"       : "/data/uclhc/uci/user/amete/truth_analysis_run/combined_3/out_410003.root",
+#         "PowhegHpp_ttbar"      : "/data/uclhc/uci/user/amete/truth_analysis_run/combined_3/out_410004.root",
+#         "Sherpa_ttbar_410021"  : "/data/uclhc/uci/user/amete/truth_analysis_run/combined_3/out_410021.root",
+#         "Sherpa_ttbar_410189"  : "/data/uclhc/uci/user/amete/truth_analysis_run/combined_3/out_410189.root",
+#         #"Herwigpp_300vs180"    : "/gdata/atlas/amete/StopPolarization/outputs/FlatNtuples/Herwigpp.300vs180.truth1_v3.root",
+#         #"Madgraph_300vs180"    : "/gdata/atlas/amete/StopPolarization/outputs/FlatNtuples/Madgraph.300vs180.truth1_v3.root",
+#         #"MadgraphR_300vs180"   : "/gdata/atlas/amete/StopPolarization/outputs/FlatNtuples/MadgraphR.300vs180.truth1_v3.root",
+#         #"MadgraphL_300vs180"   : "/gdata/atlas/amete/StopPolarization/outputs/FlatNtuples/MadgraphL.300vs180.truth1_v3.root",
+#         "Herwigpp_250vs160"    : "/data/uclhc/uci/user/amete/stop_signal_flat/FLAT_406009.HppEG_UE5C6L1_Tt_bWN_t250_n160_2Lep18.root",
+#         "HerwigppL_250vs160"   : "/data/uclhc/uci/user/amete/stop_signal_flat/FLAT_999999.HppEG_UE5C6L1_Tt_bWN_t250_n160_2Lep18.root",
+#         "Madgraph_250vs160"    : "/data/uclhc/uci/user/amete/stop_signal_flat/FLAT_387943.MGPy8EG_A14N23LO_TT_bWN_250_160_2L15.root",
+#         "MadgraphL_250vs160"   : "/data/uclhc/uci/user/amete/stop_signal_flat/FLAT_387943.MGPy8EG_A14N23LO_TT_bWN_250_160_2L15.root",
+#         "MadgraphR_250vs160"   : "/data/uclhc/uci/user/amete/stop_signal_flat/FLAT_387943.MGPy8EG_A14N23LO_TT_bWN_250_160_2L15.root",
+#         "Herwigpp_300vs150"    : "/data/uclhc/uci/user/amete/stop_signal_flat/FLAT_406010.HppEG_UE5C6L1_Tt_bWN_t300_n150_2Lep18.root",
+#         "Madgraph_300vs150"    : "/data/uclhc/uci/user/amete/stop_signal_flat/FLAT_387947.MGPy8EG_A14N23LO_TT_bWN_300_150_2L15.root",
+#         "MadgraphR_300vs150"   : "/data/uclhc/uci/user/amete/stop_signal_flat/FLAT_387947.MGPy8EG_A14N23LO_TT_bWN_300_150_2L15.root",
+#         "HerwigppR_300vs180"   : "/data/uclhc/uci/user/amete/stop_signal_flat/FLAT_406011.HppEG_UE5C6L1_Tt_bWN_t300_n180_2Lep18.root",
+#         "HerwigppL_300vs180"   : "/data/uclhc/uci/user/amete/stop_signal_flat/FLAT_999998.HppEG_UE5C6L1_Tt_bWN_t300_n180_2Lep18.root",
+#         "Madgraph_300vs180"    : "/data/uclhc/uci/user/amete/stop_signal_flat/FLAT_387948.MGPy8EG_A14N23LO_TT_bWN_300_180_2L15.root",
+#         "MadgraphM_300vs180"   : "/data/uclhc/uci/user/amete/stop_signal_flat/FLAT_387948.MGPy8EG_A14N23LO_TT_bWN_300_180_2L15.root",
+#         "MadgraphR_300vs180"   : "/data/uclhc/uci/user/amete/stop_signal_flat/FLAT_387948.MGPy8EG_A14N23LO_TT_bWN_300_180_2L15.root",
+#         "MadgraphL_300vs180"   : "/data/uclhc/uci/user/amete/stop_signal_flat/FLAT_387948.MGPy8EG_A14N23LO_TT_bWN_300_180_2L15.root",
+#         "MadgraphFR_300vs180"   : "/data/uclhc/uci/user/amete/stop_signal_flat/FLAT_123457.MGPy8EG_A14N_TTright_bWN_300_180_2Lep18.root",
+#         "MadgraphT_300vs180"   : "/data/uclhc/uci/user/amete/stop_signal_flat/FLAT_123458.MGPy8EG_A14N_TTright_bWN_300_180_2Lep18.root",
+#         "MadgraphFL_250vs125"    : "/data/uclhc/uci/user/amete/stop_signal_flat/takashi/FLAT_999927.MGPy8EG_A14N23LO_TT_directBWNleft_250_125.root",
+#         "MadgraphL_250vs125"    : "/data/uclhc/uci/user/amete/stop_signal_flat/takashi/FLAT_999929.MGPy8EG_A14N23LO_TT_directBWN_250_125.root",
+#         "MadgraphM_250vs125"    : "/data/uclhc/uci/user/amete/stop_signal_flat/takashi/FLAT_999929.MGPy8EG_A14N23LO_TT_directBWN_250_125.root",
+#         "MadgraphR_250vs125"    : "/data/uclhc/uci/user/amete/stop_signal_flat/takashi/FLAT_999929.MGPy8EG_A14N23LO_TT_directBWN_250_125.root",
+#         "Madgraph_250vs125"     : "/data/uclhc/uci/user/amete/stop_signal_flat/takashi/FLAT_999929.MGPy8EG_A14N23LO_TT_directBWN_250_125.root",
+#         "HerwigppL_250vs125"   : "/data/uclhc/uci/user/amete/stop_signal_flat/FLAT_999997.HppEG_UE5C6L1_Tt_bWN_t250_n125_2Lep18.root",
+#         "SerhanFL_250vs125"    : "/data/uclhc/uci/user/amete/stop_signal_flat/FLAT_123460.MGPy8EG_A14N_TTleft_bWN_250_125_2Lep18.root",
+#         "SerhanFR_250vs125"    : "/data/uclhc/uci/user/amete/stop_signal_flat/FLAT_123461.MGPy8EG_A14N_TTright_bWN_250_125_2Lep18.root",
+#         #"MadgraphSlep_100vs1"  : "/gdata/atlas/amete/MC15_SleptonPairProduction/FLAT/DAOD_TRUTH1.MGPy8EG_A14N23LO_SlepSlep_direct_100p0_1p0_2L5_10k.pool.root",
+#         "MadgraphSlep_100vs1"  : "/data/uclhc/uci/user/amete/slepton_signal_flat/DAOD_TRUTH1.MGPy8EG_A14N23LO_SlepSlep_direct_100p0_1p0_2L5_10k.pool.root",
     }.get(filename,"")
 
 # Define cross-sections
 def getCrossSection(filename):
     return {
+        "Sherpa_ggllll"        : 14.022*0.91,   # 361068 https://twiki.cern.ch/twiki/bin/view/AtlasProtected/MC15SystematicUncertainties#VV_Diboson_V_W_Z 24/11/15
+        "Sherpa_ggllll_fac4"     : 14.022*0.91,   # 363072
+        "Sherpa_ggllll_fac025"   : 14.022*0.91,   # 363073
+        "Sherpa_ggllll_renorm4"  : 14.022*0.91,   # 363074
+        "Sherpa_ggllll_renorm025": 14.022*0.91,   # 363075
+        "Sherpa_ggllll_qsf4"     : 14.022*0.91,   # 363076
+        "Sherpa_ggllll_qsf025"   : 14.022*0.91,   # 363077
         "Sherpa_lvlv"          : 14.022*0.91,   # 361068 https://twiki.cern.ch/twiki/bin/view/AtlasProtected/MC15SystematicUncertainties#VV_Diboson_V_W_Z 24/11/15
         "Sherpa_lvlv_fac4"     : 14.022*0.91,   # 363072
         "Sherpa_lvlv_fac025"   : 14.022*0.91,   # 363073
@@ -192,8 +207,9 @@ def getXtitle(variable):
 # Define region cuts
 def getRegionTCut(region):
     # Stop2L regions
-    isOSDF          = "(@lepton_pt.size()==2&&isDF&&isOS&&lepton_pt[0]>20.&&lepton_pt[1]>20.&&(lepton_type[0]==2||lepton_type[0]==6)&&(lepton_type[1]==2||lepton_type[1]==6))&&mll>20."
-    isOSSF          = "(@lepton_pt.size()==2&&isSF&&isOS&&lepton_pt[0]>20.&&lepton_pt[1]>20.&&(lepton_type[0]==2||lepton_type[0]==6)&&(lepton_type[1]==2||lepton_type[1]==6))&&mll>20."
+
+    isOSDF          = "(@lepton_pt.size()==2&&isDF&&isOS&&lepton_pt[0]>25.&&lepton_pt[1]>20.&&(lepton_type[0]==2||lepton_type[0]==6)&&(lepton_type[1]==2||lepton_type[1]==6))&&mll>20."
+    isOSSF          = "(@lepton_pt.size()==2&&isSF&&isOS&&lepton_pt[0]>25.&&lepton_pt[1]>20.&&(lepton_type[0]==2||lepton_type[0]==6)&&(lepton_type[1]==2||lepton_type[1]==6))&&mll>20."
     zVeto           = "((TMath::Abs(mll-91.2)>10.&&isSF)||(isDF))"
     bVeto           = "(@bjet_pt.size()==0)"
     bSelection      = "(@bjet_pt.size()>0)"
@@ -201,50 +217,14 @@ def getRegionTCut(region):
     commonPreSRCuts = "(RPT>0.5&&gamInvRp1>0.8)" 
     return {
         # Actual regions # These guys don't have the mll>20 GeV cut!!!
-        "ST2L_SRw_SF"       : "("  + isOSSF + "&&" + commonSRCuts   + "&&mDRll>95.&&"  + bVeto      + "&&" + zVeto + ")",
-        "ST2L_SRw_DF"       : "("  + isOSDF + "&&" + commonSRCuts   + "&&mDRll>95.&&"  + bVeto      + ")",
-        "ST2L_SRt_SF"       : "("  + isOSSF + "&&" + commonSRCuts   + "&&mDRll>110.&&" + bSelection + "&&" + zVeto + ")",
-        "ST2L_SRt_DF"       : "("  + isOSDF + "&&" + commonSRCuts   + "&&mDRll>110.&&" + bSelection + ")",
-        "ST2L_SRt_ALL"      : "((" + isOSSF + "||" + isOSDF + ")&&" + commonSRCuts + "&&mDRll>110.&&" + bSelection + "&&" + zVeto + ")",
-        "ST2L_CR_Top"       : "("  + isOSDF + "&&" + bSelection     + "&&mDRll>80.&&RPT>0.5&&DPB_vSS<(0.85*TMath::Abs(cosTheta_b)+1.8))",
-        "ST2L_CR_VV_SF"     : "("  + isOSSF + "&&" + bVeto          + "&&" + zVeto + "&&mDRll>30.&&RPT<0.5&&gamInvRp1>0.8&&DPB_vSS<(0.85*TMath::Abs(cosTheta_b)+1.8)&&met_et>70.)",
-        "ST2L_CR_VV_DF"     : "("  + isOSDF + "&&" + bVeto          +                "&&mDRll>30.&&RPT<0.5&&gamInvRp1>0.8&&DPB_vSS<(0.85*TMath::Abs(cosTheta_b)+1.8))",
-        # For modeling
-        "ST2L_preSRw_SF"    : "("  + isOSSF + "&&" + commonPreSRCuts + "&&mDRll>95.&&"  + bVeto      + "&&" + zVeto + ")",
-        "ST2L_preSRw_DF"    : "("  + isOSDF + "&&" + commonPreSRCuts + "&&mDRll>95.&&"  + bVeto      + ")",
-        "ST2L_preSRt_SF"    : "("  + isOSSF + "&&" + commonPreSRCuts + "&&mDRll>110.&&" + bSelection + "&&" + zVeto + ")",
-        "ST2L_preSRt_DF"    : "("  + isOSDF + "&&" + commonPreSRCuts + "&&mDRll>110.&&" + bSelection + ")",
-        "ST2L_preSRt_ALL"   : "((" + isOSSF + "||" + isOSDF + ")&&"  + commonPreSRCuts  + "&&mDRll>110.&&" + bSelection + "&&" + zVeto + ")",
-        # For plotting
-        "ST2L_incTT_SF"     : "("  + isOSSF + "&&mDRll>95.&&RPT>0.5&&gamInvRp1>0.8)",
-        "ST2L_incTT_DF"     : "("  + isOSDF + "&&mDRll>95.&&RPT>0.5&&gamInvRp1>0.8)",
-        "ST2L_incTT_ALL"    : "((" + isOSSF + "||" + isOSDF + ")&&mDRll>95.&&RPT>0.5&&gamInvRp1>0.8)",
-        "ST2L_incVV_SF"     : "("  + isOSSF + "&&" + zVeto  + "&&mDRll>95.&&gamInvRp1>0.8)", #&&RPT>0.5&&DPB_vSS>(0.85*TMath::Abs(cosTheta_b)+1.8))",
-        "ST2L_incVV_DF"     : "("  + isOSDF +                 "&&mDRll>95.&&gamInvRp1>0.8)", #&&RPT>0.5&&DPB_vSS>(0.85*TMath::Abs(cosTheta_b)+1.8))",
-        "ST2L_looseSRw_SF"  : "("  + isOSSF + "&&" + bVeto      + "&&" + zVeto + ")",
-        "ST2L_looseSRw_DF"  : "("  + isOSDF + "&&" + bVeto      + ")",
-        "ST2L_looseSRt_SF"  : "("  + isOSSF + "&&" + bSelection + "&&" + zVeto + ")",
-        "ST2L_looseSRt_DF"  : "("  + isOSDF + "&&" + bSelection + ")",
-        ###############
-        "SR_ALL_TOP"    : "(isDF || (isSF && (mll<71.||mll>111.)) ) && mll > 20. && mT2ll>100.0 && r1>0.3 && (lepton_type[0]==2||lepton_type[0]==6) && (lepton_type[1]==2||lepton_type[1]==6)" ,
-        "SR_ALL_NOMT2"  : "(isDF || (isSF && (mll<71.||mll>111.)) ) && mll > 20. && r1>0.3 && (lepton_type[0]==2||lepton_type[0]==6) && (lepton_type[1]==2||lepton_type[1]==6)" ,
-        "SR_SF_NOMT2"   : "(isSF && (mll<71.||mll>111.)) && mll > 20. && r1>0.3 && (lepton_type[0]==2||lepton_type[0]==6) && (lepton_type[1]==2||lepton_type[1]==6)" ,
-        "SR_DF_NOMT2"   : "isDF && mll > 20. && r1>0.3 && (lepton_type[0]==2||lepton_type[0]==6) && (lepton_type[1]==2||lepton_type[1]==6)" ,
-        "SR_ALL"        : "(isDF || (isSF && (mll<71.||mll>111.)) ) && mll > 20. && mT2ll>145.0 && r1>0.3 && (lepton_type[0]==2||lepton_type[0]==6) && (lepton_type[1]==2||lepton_type[1]==6)" ,
-        "SR_SF"         : "isSF && mll > 20. && (mll<71.||mll>111.) && mT2ll>145.0 && r1>0.3 && (lepton_type[0]==2||lepton_type[0]==6) && (lepton_type[1]==2||lepton_type[1]==6)" ,
-        "CR_SF"         : "isSF && mll > 20. && (mT2ll>60.  && mT2ll<110.) && pbll<20. && r1>0.4 && TMath::Abs(dphi_met_pbll)<1.5 && (lepton_type[0]==2||lepton_type[0]==6) && (lepton_type[1]==2||lepton_type[1]==6)",
-        "VR_SF"         : "isSF && (mll>71.&&mll<111.) && mT2ll>110. && r1>0.3 && (lepton_type[0]==2||lepton_type[0]==6) && (lepton_type[1]==2||lepton_type[1]==6)",
-        "SR_DF"         : "isDF && mll > 20. && mT2ll>145.0 && r1>0.3 && (lepton_type[0]==2||lepton_type[0]==6) && (lepton_type[1]==2||lepton_type[1]==6)" ,
-        "CR_DF"         : "isDF && mll > 20. && (mT2ll>60.  && mT2ll<110.) && pbll<20. && r1>0.4 && (lepton_type[0]==2||lepton_type[0]==6) && (lepton_type[1]==2||lepton_type[1]==6)",
-        "VR_DF"         : "isDF && mll > 20. && (mT2ll>110. && mT2ll<145.) && r1>0.3 && (lepton_type[0]==2||lepton_type[0]==6) && (lepton_type[1]==2||lepton_type[1]==6)",
-        "VR_DF_2"       : "isDF && mll > 20. && (mT2ll>40.  && mT2ll<60. ) && pbll<20. && r1>0.4 && (lepton_type[0]==2||lepton_type[0]==6) && (lepton_type[1]==2||lepton_type[1]==6)",
-        "CR_TOP"        : "isDF && mll > 20. && (mT2ll>60.  && mT2ll<110.) && pbll>30. && r1<0.4 && (lepton_type[0]==2||lepton_type[0]==6) && (lepton_type[1]==2||lepton_type[1]==6)",
-        "VR_DF_INC"     : "isDF && lepton_pt[0]>20. && lepton_pt[1]>20. && mll>20. && (lepton_type[0]==2||lepton_type[0]==6) && (lepton_type[1]==2||lepton_type[1]==6)",
-        "VR_SF_INC"     : "isSF && lepton_pt[0]>20. && lepton_pt[1]>20. && mll>20. && (lepton_type[0]==2||lepton_type[0]==6) && (lepton_type[1]==2||lepton_type[1]==6)",
-        #"VR_STOP_INC"  : "(@nonbjet_pt.size()==0 || (@nonbjet_pt.size()==1 && nonbjet_pt[0] < 200. && nonbjet_pt[0] > 50.)) && lepton_pt[0]>20. && lepton_pt[1]>20. && (lepton_type[0]==2||lepton_type[0]==6) && (lepton_type[1]==2||lepton_type[1]==6) ",
-        "VR_STOP_NOHISR": "isNOHISR && (lepton_type[0]==2||lepton_type[0]==6) && (lepton_type[1]==2||lepton_type[1]==6) ",
-        "VR_STOP2L_INC" : "isOS && lepton_pt[0]>20. && lepton_pt[1]>20. && (lepton_type[0]==2||lepton_type[0]==6) && (lepton_type[1]==2||lepton_type[1]==6)",
-        "VR_SUSY_LEP"   : "@lepton_pt.size()==3"
+        "EW2L_SR_SF_mT2_90"       : "("  + isOSSF + "&&mT2ll>90" + ")",
+        "EW2L_SR_SF_mT2_120"      : "("  + isOSSF + "&&mT2ll>120" + ")",
+        "EW2L_SR_SF_mT2_150"      : "("  + isOSSF + "&&mT2ll>150" + ")",
+        "EW2L_CR_SF"              : "("  + isOSSF + "&&mT2ll>90&&TMath::Abs(mll-91.2)<10." + ")",
+        "EW2L_SR_DF_mT2_90"       : "("  + isOSDF + "&&mT2ll>90" + ")",
+        "EW2L_SR_DF_mT2_120"      : "("  + isOSDF + "&&mT2ll>120" + ")",
+        "EW2L_SR_DF_mT2_150"      : "("  + isOSDF + "&&mT2ll>150" + ")",
+        "EW2L_CR_DF"              : "("  + isOSDF + "&&mT2ll>50&&&mT2ll<75" + ")",
     }.get(region,"1") # 1 is default if region is not found
 
 # Define histogram bins

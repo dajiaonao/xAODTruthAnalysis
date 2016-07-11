@@ -47,7 +47,7 @@ def main():
     histograms=fillHistograms(files,options)
 
     # SetAtlasStyle
-    setATLASStyle()
+    setATLASStyle('/net/ustc_home/dzhang/Install/atlasstyle-00-03-04')
 
     # Convert inputs into lists
     inputFileList=options.inputname.split(",")

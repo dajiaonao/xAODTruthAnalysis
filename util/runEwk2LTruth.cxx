@@ -54,6 +54,7 @@ int main( int argc, char* argv[] ) {
 
   // Read inputs to program 
   for(int i = 1; i < argc; i++) {
+    std::cout << i << " " << argv[i] << std::endl;
     if (strcmp(argv[i], "-n"                 ) == 0)
       nEvents = atoi(argv[++i]);
     else if (strcmp(argv[i], "-i"            ) == 0)
@@ -78,6 +79,7 @@ int main( int argc, char* argv[] ) {
       isRecoSample = true;
     else
     {
+       std::cout << i << " bring here " << argv[i] << std::endl;
        help();
        return 0;
      }
@@ -118,7 +120,7 @@ int main( int argc, char* argv[] ) {
   if(!submitToGrid) {
     SH::ScanDir().sampleDepth(sampleDepth).samplePattern(samplePattern).scan(sh, inputFilePath);
   } else {
-    SH::scanDQ2(sh, inputFilePath);
+    SH::scanRucio(sh, inputFilePath);
   }
 
   // Set the name of the input TTree. It's always "CollectionTree"

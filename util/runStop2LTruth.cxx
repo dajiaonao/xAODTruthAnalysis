@@ -119,7 +119,7 @@ int main( int argc, char* argv[] ) {
   if(!submitToGrid && !submitToCondor) {
     SH::ScanDir().sampleDepth(sampleDepth).samplePattern(samplePattern).scan(sh, inputFilePath);
   } else if (submitToGrid) {
-    SH::scanDQ2(sh, inputFilePath);
+    SH::scanRucio(sh, inputFilePath);
   } else {
     SH::readFileList(sh, "sample", inputFilePath);
   }

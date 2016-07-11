@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 import sys,ROOT,math
 
 from plot_definitions import *
@@ -23,7 +24,7 @@ def main():
     if options.process == "DB_DF":
         #options.inputname  = "Sherpa_lvlv,Powheg_WWlvlv,Powheg_ZZllvv"  # Samples to be used
         #options.grouping   = "0,1+2"                                    # Combination : first one is nominal
-        options.inputname  = "Sherpa_lvlv,Sherpa_lvlv_fac4,Sherpa_lvlv_fac025,Sherpa_lvlv_renorm4,Sherpa_lvlv_renorm025,Sherpa_lvlv_qsf4,Sherpa_lvlv_qsf025"  # Samples to be used
+        options.inputname  = "Sherpa_ggllll,Sherpa_ggllll_fac4,Sherpa_ggllll_fac025,Sherpa_ggllll_renorm4,Sherpa_ggllll_renorm025,Sherpa_ggllll_qsf4,Sherpa_ggllll_qsf025"  # Samples to be used
         options.grouping   = "NONE"                                     # Combination : first one is nominal
         options.varname    = "r1"                                       # Dummy variable
         options.regionname = "SR_DF,CR_DF"                              # 0 is SR 1 is CR
