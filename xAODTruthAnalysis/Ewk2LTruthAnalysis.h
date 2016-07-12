@@ -12,6 +12,10 @@
 // EDM include(s):
 #include "xAODTruth/TruthParticleContainer.h"
 
+namespace LHAPDF{
+  class PDF;
+}
+
 class Ewk2LTruthAnalysis : public EL::Algorithm
 {
   // put your configuration variables here as public variables.
@@ -40,6 +44,7 @@ public:
   unsigned long long m_br_runNumber; //!
   unsigned long long m_br_eventNumber; //!
   float m_br_eventWeight; //! mcEventWeights[0]
+  std::vector<float> m_br_pdfWeights; //!
   std::vector<float> m_br_mcEventWeights; //!
   std::vector<float> m_br_lepton_pt; //!
   std::vector<float> m_br_lepton_eta; //!
@@ -52,6 +57,7 @@ public:
   std::vector<float> m_br_lepton_mother_mass; //!
   std::vector<float> m_br_bjet_pt; //!
   std::vector<float> m_br_nonbjet_pt; //!
+  std::vector<float> m_br_forwardjet_pt; //!
   std::vector<float> m_br_jet_pt; //!
   std::vector<float> m_br_jet_eta; //!
   std::vector<float> m_br_jet_phi; //!
@@ -93,6 +99,7 @@ public:
   // Event variables
   private:
   unsigned int m_eventCounter; //!
+  std::vector<LHAPDF::PDF*> m_pdfs; //!
 
   // Histograms
   private:

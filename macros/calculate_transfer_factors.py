@@ -27,16 +27,75 @@ def main():
         options.inputname  = "Sherpa_ggllll,Sherpa_ggllll_fac4,Sherpa_ggllll_fac025,Sherpa_ggllll_renorm4,Sherpa_ggllll_renorm025,Sherpa_ggllll_qsf4,Sherpa_ggllll_qsf025"  # Samples to be used
         options.grouping   = "NONE"                                     # Combination : first one is nominal
         options.varname    = "r1"                                       # Dummy variable
-        options.regionname = "SR_DF,CR_DF"                              # 0 is SR 1 is CR
+        options.regionname = "EW2L_SR_SF_mT2_90,EW2L_CR_SF"                              # 0 is SR 1 is CR
         options.luminosity = 3210.000                                   # Luminosity should cancel in the calculation
+    elif options.process == "DB_SF90":
+        options.inputname  = "Sherpa_llvv,Sherpa_llvv_fac4,Sherpa_llvv_fac025,Sherpa_llvv_renorm4,Sherpa_llvv_renorm025,Sherpa_llvv_qsf4,Sherpa_llvv_qsf025,Sherpa_llvv_ckkw15,Sherpa_llvv_ckkw30"
+        options.grouping   = "NONE"                                     # Combination : first one is nominal
+        options.varname    = "r1"                                       # Dummy variable
+        options.regionname = "EW2L_SR_SF_mT2_90,EW2L_CR_SF" #               # 0 is SR 1 is CR
+        options.luminosity = 3210.000                                   # Luminosity should cancel in the calculation
+    elif options.process == "DB_SF120":
+        options.inputname  = "Sherpa_llvv,Sherpa_llvv_fac4,Sherpa_llvv_fac025,Sherpa_llvv_renorm4,Sherpa_llvv_renorm025,Sherpa_llvv_qsf4,Sherpa_llvv_qsf025,Sherpa_llvv_ckkw15,Sherpa_llvv_ckkw30"
+        options.grouping   = "NONE"                                     # Combination : first one is nominal
+        options.varname    = "r1"                                       # Dummy variable
+        options.regionname = "EW2L_SR_SF_mT2_120,EW2L_CR_SF" #               # 0 is SR 1 is CR
+        options.luminosity = 3210.000                                   # Luminosity should cancel in the calculation
+    elif options.process == "DB_SF150":
+        options.inputname  = "Sherpa_llvv,Sherpa_llvv_fac4,Sherpa_llvv_fac025,Sherpa_llvv_renorm4,Sherpa_llvv_renorm025,Sherpa_llvv_qsf4,Sherpa_llvv_qsf025,Sherpa_llvv_ckkw15,Sherpa_llvv_ckkw30"
+        options.grouping   = "NONE"                                     # Combination : first one is nominal
+        options.varname    = "r1"                                       # Dummy variable
+        options.regionname = "EW2L_SR_SF_mT2_150,EW2L_CR_SF" #               # 0 is SR 1 is CR
+        options.luminosity = 3210.000                                   # Luminosity should cancel in the calculation
+    elif options.process == "DB_DF90":
+        options.inputname  = "Sherpa_llvv,Sherpa_llvv_fac4,Sherpa_llvv_fac025,Sherpa_llvv_renorm4,Sherpa_llvv_renorm025,Sherpa_llvv_qsf4,Sherpa_llvv_qsf025,Sherpa_llvv_ckkw15,Sherpa_llvv_ckkw30"
+        options.grouping   = "NONE"                                     # Combination : first one is nominal
+        options.varname    = "r1"                                       # Dummy variable
+        options.regionname = "EW2L_SR_DF_mT2_90,EW2L_CR_DF" #               # 0 is SR 1 is CR
+        options.luminosity = 3210.000                                   # Luminosity should cancel in the calculation
+    elif options.process == "DB_DF120":
+        options.inputname  = "Sherpa_llvv,Sherpa_llvv_fac4,Sherpa_llvv_fac025,Sherpa_llvv_renorm4,Sherpa_llvv_renorm025,Sherpa_llvv_qsf4,Sherpa_llvv_qsf025,Sherpa_llvv_ckkw15,Sherpa_llvv_ckkw30"
+        options.grouping   = "NONE"                                     # Combination : first one is nominal
+        options.varname    = "r1"                                       # Dummy variable
+        options.regionname = "EW2L_SR_DF_mT2_120,EW2L_CR_DF" #               # 0 is SR 1 is CR
+        options.luminosity = 3210.000                                   # Luminosity should cancel in the calculation
+    elif options.process == "DB_DF150":
+        options.inputname  = "Sherpa_llvv,Sherpa_llvv_fac4,Sherpa_llvv_fac025,Sherpa_llvv_renorm4,Sherpa_llvv_renorm025,Sherpa_llvv_qsf4,Sherpa_llvv_qsf025,Sherpa_llvv_ckkw15,Sherpa_llvv_ckkw30"
+        options.grouping   = "NONE"                                     # Combination : first one is nominal
+        options.varname    = "r1"                                       # Dummy variable
+        options.regionname = "EW2L_SR_DF_mT2_150,EW2L_CR_DF" #               # 0 is SR 1 is CR
+        options.luminosity = 3210.000                                   # Luminosity should cancel in the calculation
+    elif options.process == "TOP_DF90":
+        options.inputname  = "aMcAtNloHerwigpp_Wt,PowhegHerwigpp_Wt,PowhegHerwigpp_Wtbar"
+        options.grouping   = "0,1+2"                                     # Combination : first one is nominal
+        options.varname    = "r1"                                       # Dummy variable
+        options.regionname = "EW2L_SR_DF_mT2_90,EW2L_TopVR_DF" #               # 0 is SR 1 is CR
+        options.luminosity = 3210.000                                   # Luminosity should cancel in the calculation
+    elif options.process == "TOP_DF120":
+        options.inputname  = "aMcAtNloHerwigpp_Wt,PowhegHerwigpp_Wt,PowhegHerwigpp_Wtbar"
+        options.grouping   = "0,1+2"                                     # Combination : first one is nominal
+        options.varname    = "r1"                                       # Dummy variable
+        options.regionname = "EW2L_SR_DF_mT2_120,EW2L_TopVR_DF" #               # 0 is SR 1 is CR
+        options.luminosity = 3210.000                                   # Luminosity should cancel in the calculation
+    elif options.process == "TOP_DF150":
+        options.inputname  = "aMcAtNloHerwigpp_Wt,PowhegHerwigpp_Wt,PowhegHerwigpp_Wtbar"
+        options.grouping   = "0,1+2"                                     # Combination : first one is nominal
+        options.varname    = "r1"                                       # Dummy variable
+        options.regionname = "EW2L_SR_DF_mT2_150,EW2L_TopVR_DF" #               # 0 is SR 1 is CR
+        options.luminosity = 3210.000                                   # Luminosity should cancel in the calculation
+
+
+
+
     elif options.process == "DB_SF":
         #options.inputname  = "Sherpa_lvlv,Powheg_WWlvlv,Powheg_ZZllvv"  # Samples to be used
         #options.grouping   = "0,1+2"                                    # Combination : first one is nominal
-        options.inputname  = "Sherpa_lvlv,Sherpa_lvlv_fac4,Sherpa_lvlv_fac025,Sherpa_lvlv_renorm4,Sherpa_lvlv_renorm025,Sherpa_lvlv_qsf4,Sherpa_lvlv_qsf025"  # Samples to be used
+        options.inputname  = "Sherpa_llvv,Sherpa_llvv_fac4,Sherpa_llvv_fac025,Sherpa_llvv_renorm4,Sherpa_llvv_renorm025,Sherpa_llvv_qsf4,Sherpa_llvv_qsf025"  # Samples to be used
         options.grouping   = "NONE"                                     # Combination : first one is nominal
         options.varname    = "r1"                                       # Dummy variable
-        options.regionname = "SR_SF,VR_SF" # not a typo!                # 0 is SR 1 is CR
-        options.luminosity = 3210.000                                   # Luminosity should cancel in the calculation
+        options.regionname = "EW2L_SR_SF_mT2_90,EW2L_CR_SF" # not a typo!                # 0 is SR 1 is CR
+#         options.luminosity = 3210.000                                   # Luminosity should cancel in the calculation
+        options.luminosity = 3210000                                   # Luminosity should cancel in the calculation
     elif options.process == "TOP_ALL":
         options.inputname  = "Powheg_ttbar,Powheg_ttbar_radHi,Powheg_ttbar_radLo,PowhegHpp_ttbar,aMCatNLO_ttbar"              # Samples to be used, first one is nominal
         options.grouping   = "NONE"                                     # Combination : first one is nominal
@@ -73,6 +132,7 @@ def main():
  
     # Get ROOT files
     files=getROOTFiles(options)
+#     print files
 
     # Read the sum of weights
     sumw=getSumOfWeights(files) 

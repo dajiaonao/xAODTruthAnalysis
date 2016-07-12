@@ -1,6 +1,11 @@
 import os,sys,ROOT,math
 
 from plot_definitions import *
+from rootUtil import waitRootCmd, get_default_fig_dir
+
+sTag = 'v1_'
+sDir = get_default_fig_dir()
+saveDirectly = True
 
 # Main function
 def main():
@@ -152,7 +157,10 @@ def main():
             # Save canvas
             if not os.path.exists(options.outdir):
                 os.mkdir(options.outdir)
-            canvas.SaveAs(("%s/%s_%s.%s"%(options.outdir,region,variable.replace("[","").replace("]","").replace("TMath::","").replace("(","").replace(")",""),options.plotformat)))
+            canvas.cd()
+            figname = ("%s_%s"%(region,variable.replace("[","").replace("]","").replace("TMath::","").replace("(","").replace(")","")))
+            waitRootCmd(sDir+sTag+figname, saveDirectly)
+#             canvas.SaveAs(("%s/%s_%s.%s"%(options.outdir,region,variable.replace("[","").replace("]","").replace("TMath::","").replace("(","").replace(")",""),options.plotformat)))
 
 
 # Print user input

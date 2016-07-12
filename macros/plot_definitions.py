@@ -1,16 +1,31 @@
 import ROOT,math,array
+import glob
 
 # Define the input ROOT files
 def getROOTFileName(filename):
-    dir0 = '/net/ustc_home/dzhang/work/bsmSearch/ewSUSY/analysis/syst1/run/r3/fetch/data-myOutput/'
+#     dir0 = '/net/ustc_home/dzhang/work/bsmSearch/ewSUSY/analysis/syst1/run/r3/fetch/data-myOutput/'
+#     dir0 = '/net/s3_datac/dzhang/outSpace/susyEW_out/sys1_Jul11a/fetch/data-myOutput/'
+    dir0 = '/net/s3_datac/dzhang/outSpace/susyEW_out/sys1_Jul12b/fetch/data-myOutput/'
     return {
-            "Sherpa_ggllll": dir0+"/Sherpa_CT10_ggllll-0.root",
-            "Sherpa_ggllll_fac025": dir0+"/Sherpa_CT10_ggllll_fac025-0.root",
-            "Sherpa_ggllll_fac4": dir0+"/Sherpa_CT10_ggllll_fac4-0.root",
-            "Sherpa_ggllll_qsf025": dir0+"/Sherpa_CT10_ggllll_qsf025-0.root",
-            "Sherpa_ggllll_qsf4": dir0+"/Sherpa_CT10_ggllll_qsf4-0.root",
-            "Sherpa_ggllll_renorm025": dir0+"/Sherpa_CT10_ggllll_renorm025-0.root",
-            "Sherpa_ggllll_renorm4": dir0+"/Sherpa_CT10_ggllll_renorm4-0.root",
+            "Sherpa_ggllll"          : dir0+"Sherpa_CT10_ggllll-*.root",
+            "Sherpa_ggllll_fac025"   : dir0+"Sherpa_CT10_ggllll_fac025-*.root",
+            "Sherpa_ggllll_fac4"     : dir0+"Sherpa_CT10_ggllll_fac4-*.root",
+            "Sherpa_ggllll_qsf025"   : dir0+"Sherpa_CT10_ggllll_qsf025-*.root",
+            "Sherpa_ggllll_qsf4"     : dir0+"Sherpa_CT10_ggllll_qsf4-*.root",
+            "Sherpa_ggllll_renorm025": dir0+"Sherpa_CT10_ggllll_renorm025-*.root",
+            "Sherpa_ggllll_renorm4"  : dir0+"Sherpa_CT10_ggllll_renorm4-*.root",
+            "Sherpa_llvv"            : dir0+"Sherpa_CT10_llvv-*.root",
+            "Sherpa_llvv_fac025"     : dir0+"Sherpa_CT10_llvv_fac025-*.root",
+            "Sherpa_llvv_fac4"       : dir0+"Sherpa_CT10_llvv_fac4-*.root",
+            "Sherpa_llvv_qsf025"     : dir0+"Sherpa_CT10_llvv_qsf025-*.root",
+            "Sherpa_llvv_qsf4"       : dir0+"Sherpa_CT10_llvv_qsf4-*.root",
+            "Sherpa_llvv_renorm025"  : dir0+"Sherpa_CT10_llvv_renorm025-*.root",
+            "Sherpa_llvv_renorm4"    : dir0+"Sherpa_CT10_llvv_renorm4-*.root",
+            "Sherpa_llvv_ckkw15"     : dir0+"Sherpa_CT10_llvv_ckkw15-*.root",
+            "Sherpa_llvv_ckkw30"     : dir0+"Sherpa_CT10_llvv_ckkw30-*.root",
+            "aMcAtNloHerwigpp_Wt"    : dir0+"aMcAtNloHerwigppEvtGen_UEEE5_CTEQ6L1_CT10ME_Wt_dilepton-0.root",
+            "PowhegHerwigpp_Wt"      : dir0+"PowhegHerwigppEvtGen_UEEE5_Wt_dilepton_top-0.root",
+            "PowhegHerwigpp_Wtbar"   : dir0+"PowhegHerwigppEvtGen_UEEE5_Wt_dilepton_antitop-0.root",
 #         "Sherpa_lvlv"          : "/data/uclhc/uci/user/amete/truth_analysis_run/combined_3/out_361068.root",
 #         "Sherpa_lvlv_fac4"     : "/data/uclhc/uci/user/amete/truth_analysis_run/combined_3/out_363072.root",
 #         "Sherpa_lvlv_fac025"   : "/data/uclhc/uci/user/amete/truth_analysis_run/combined_3/out_363073.root",
@@ -62,13 +77,27 @@ def getROOTFileName(filename):
 # Define cross-sections
 def getCrossSection(filename):
     return {
-        "Sherpa_ggllll"        : 14.022*0.91,   # 361068 https://twiki.cern.ch/twiki/bin/view/AtlasProtected/MC15SystematicUncertainties#VV_Diboson_V_W_Z 24/11/15
+        "Sherpa_ggllll"          : 14.022*0.91,   # 361068 https://twiki.cern.ch/twiki/bin/view/AtlasProtected/MC15SystematicUncertainties#VV_Diboson_V_W_Z 24/11/15
         "Sherpa_ggllll_fac4"     : 14.022*0.91,   # 363072
         "Sherpa_ggllll_fac025"   : 14.022*0.91,   # 363073
         "Sherpa_ggllll_renorm4"  : 14.022*0.91,   # 363074
         "Sherpa_ggllll_renorm025": 14.022*0.91,   # 363075
         "Sherpa_ggllll_qsf4"     : 14.022*0.91,   # 363076
         "Sherpa_ggllll_qsf025"   : 14.022*0.91,   # 363077
+        "Sherpa_ggllll_ckkw15"   : 14.022*0.91,   # 363076  
+        "Sherpa_ggllll_ckkw30"   : 14.022*0.91,   # 363077
+        "Sherpa_llvv"          : 14.022*0.91,
+        "Sherpa_llvv_fac4"     : 14.022*0.91,
+        "Sherpa_llvv_fac025"   : 14.022*0.91,
+        "Sherpa_llvv_renorm4"  : 14.022*0.91,
+        "Sherpa_llvv_renorm025": 14.022*0.91,
+        "Sherpa_llvv_qsf4"     : 14.022*0.91,
+        "Sherpa_llvv_qsf025"   : 14.022*0.91,
+        "Sherpa_llvv_ckkw15"   : 14.022*0.91,
+        "Sherpa_llvv_ckkw30"   : 14.022*0.91,
+        "aMcAtNloHerwigpp_Wt"  : 7.165,
+        "PowhegHerwigpp_Wt"    : 3.584,
+        "PowhegHerwigpp_Wtbar" : 3.581,
         "Sherpa_lvlv"          : 14.022*0.91,   # 361068 https://twiki.cern.ch/twiki/bin/view/AtlasProtected/MC15SystematicUncertainties#VV_Diboson_V_W_Z 24/11/15
         "Sherpa_lvlv_fac4"     : 14.022*0.91,   # 363072
         "Sherpa_lvlv_fac025"   : 14.022*0.91,   # 363073
@@ -208,23 +237,39 @@ def getXtitle(variable):
 def getRegionTCut(region):
     # Stop2L regions
 
-    isOSDF          = "(@lepton_pt.size()==2&&isDF&&isOS&&lepton_pt[0]>25.&&lepton_pt[1]>20.&&(lepton_type[0]==2||lepton_type[0]==6)&&(lepton_type[1]==2||lepton_type[1]==6))&&mll>20."
-    isOSSF          = "(@lepton_pt.size()==2&&isSF&&isOS&&lepton_pt[0]>25.&&lepton_pt[1]>20.&&(lepton_type[0]==2||lepton_type[0]==6)&&(lepton_type[1]==2||lepton_type[1]==6))&&mll>20."
-    zVeto           = "((TMath::Abs(mll-91.2)>10.&&isSF)||(isDF))"
-    bVeto           = "(@bjet_pt.size()==0)"
-    bSelection      = "(@bjet_pt.size()>0)"
-    commonSRCuts    = "(RPT>0.5&&gamInvRp1>0.8&&DPB_vSS>(0.85*TMath::Abs(cosTheta_b)+1.8))" 
-    commonPreSRCuts = "(RPT>0.5&&gamInvRp1>0.8)" 
+    diLep           = "(@lepton_pt.size()==2&&isOS&&lepton_pt[0]>25.&&lepton_pt[1]>20.&&(lepton_type[0]==2||lepton_type[0]==6)&&(lepton_type[1]==2||lepton_type[1]==6))&&mll>20."
+    isOSDF          = diLep+"&&isDF"
+    isOSSF          = diLep+"&&isSF"
+
+    zVeto           = "&&TMath::Abs(mll-91.2)>10."
+    zSel            = "&&TMath::Abs(mll-91.2)<10."
+    bVeto           = "&&(@bjet_pt.size()==0)"
+    bSelection      = "&&(@bjet_pt.size()>0)"
+
+    centralJetVeto20  = "&&Sum$(nonbjet_pt>20)==0"
+    centralJetVeto30  = "&&Sum$(nonbjet_pt>30)==0"
+    forwardJetVeto    = "&&Sum$(forwardjet_pt>30)==0"
+    forwardJetVeto    = "&&Sum$(jet_pt>30)==0"
+
+    DFSel = isOSDF + bVeto + centralJetVeto30 + forwardJetVeto
+    SFSel = isOSSF + bVeto + centralJetVeto20 + forwardJetVeto
+
     return {
         # Actual regions # These guys don't have the mll>20 GeV cut!!!
-        "EW2L_SR_SF_mT2_90"       : "("  + isOSSF + "&&mT2ll>90" + ")",
-        "EW2L_SR_SF_mT2_120"      : "("  + isOSSF + "&&mT2ll>120" + ")",
-        "EW2L_SR_SF_mT2_150"      : "("  + isOSSF + "&&mT2ll>150" + ")",
-        "EW2L_CR_SF"              : "("  + isOSSF + "&&mT2ll>90&&TMath::Abs(mll-91.2)<10." + ")",
-        "EW2L_SR_DF_mT2_90"       : "("  + isOSDF + "&&mT2ll>90" + ")",
-        "EW2L_SR_DF_mT2_120"      : "("  + isOSDF + "&&mT2ll>120" + ")",
-        "EW2L_SR_DF_mT2_150"      : "("  + isOSDF + "&&mT2ll>150" + ")",
-        "EW2L_CR_DF"              : "("  + isOSDF + "&&mT2ll>50&&&mT2ll<75" + ")",
+        "EW2L_SR_SF_mT2_90"       : "("  + SFSel + zVeto + "&&mT2ll>90)",
+        "EW2L_SR_SF_mT2_120"      : "("  + SFSel + zVeto + "&&mT2ll>120)",
+        "EW2L_SR_SF_mT2_150"      : "("  + SFSel + zVeto + "&&mT2ll>150)",
+        "EW2L_CR_SF"              : "("  + SFSel + zSel  + "&&mT2ll>90)",
+
+        "EW2L_SR_DF_mT2_90"       : "("  + DFSel + "&&mT2ll>90)",
+        "EW2L_SR_DF_mT2_120"      : "("  + DFSel + "&&mT2ll>120)",
+        "EW2L_SR_DF_mT2_150"      : "("  + DFSel + "&&mT2ll>150)",
+        "EW2L_CR_DF"              : "("  + DFSel + "&&mT2ll>50&&mT2ll<75)",
+        "EW2L_TopVR_DF"           : "("  + isOSDF + bSelection + centralJetVeto30 + forwardJetVeto + "&&mT2ll>70&&mT2ll<120)",
+        "EW2L_TopVR0_DF"           : "(" + isOSDF + centralJetVeto30 + forwardJetVeto + "&&mT2ll>70&&mT2ll<120)",
+
+        "EW2L_NOmT2_DF"           : "("  + DFSel + ")",
+        "EW2L_NOmT2NOmll_SF"      : "("  + SFSel + ")",
     }.get(region,"1") # 1 is default if region is not found
 
 # Define histogram bins
@@ -289,17 +334,22 @@ def getBinInformation(variable):
 
 # Get files
 def getROOTFiles(options):
-    inputFileList=options.inputname.split(",")
-    files=[0 for x in range(len(inputFileList))]
-    for ii,inputFile in enumerate(inputFileList):
-        files[ii] = ROOT.TFile(getROOTFileName(inputFile),"READ")
-    return files
+    return [getROOTFileName(x) for x in options.inputname.split(",")]
+#     inputFileList=options.inputname.split(",")
+#     files=[0 for x in range(len(inputFileList))]
+#     for ii,inputFile in enumerate(inputFileList):
+#         files[ii] = ROOT.TFile(getROOTFileName(inputFile),"READ")
+#     return files
 
 # Get sum of weights
 def getSumOfWeights(files):
     sumw=[0 for x in range(len(files))]
     for ii,iiFile in enumerate(files):
-        sumw[ii] = iiFile.Get("CutflowWeighted").GetBinContent(1)
+        for f in glob.glob(iiFile):
+#             print f
+            f1 = ROOT.TFile(f,'read')
+            sumw[ii] += f1.Get("CutflowWeighted").GetBinContent(1)
+#             sumw[ii] = ROOT.TFile(f,'read').Get("CutflowWeighted").GetBinContent(1)
     return sumw
 
 # Set colors
@@ -330,10 +380,13 @@ def fillHistograms(files,options):
 
     for ii,inputFile in enumerate(inputFileList):
         # Find the tree 
-        currentROOTTree = files[ii].Get("SuperTruth")
-        if not currentROOTTree:
-            print("WARNING :: Cannot find ROOT tree in the file %s"%inputFile)
-            continue
+        currentROOTTree = ROOT.TChain('SuperTruth')
+        currentROOTTree.Add(files[ii])
+
+#         currentROOTTree = files[ii].Get("SuperTruth")
+#         if not currentROOTTree:
+#             print("WARNING :: Cannot find ROOT tree in the file %s"%inputFile)
+#             continue
         # Loop over regions 
         for jj,region in enumerate(regionList):
             # Get the TCut for the region 

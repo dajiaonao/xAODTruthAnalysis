@@ -1,16 +1,21 @@
 #!/bin/bash
 
 var="bjet_n"
+# var="mT2ll"
 # var="${var},c_bjet_n"
 # var="${var},mDRll"
-var="${var},mll"
+# var="${var},mll"
 # var="${var},RPT"
 # var="${var},gamInvRp1"
 # var="${var},DPB_vSS"
 # var="${var},cosTheta_b"
 
 ### ST2L 3-body
-python make_plots.py -i "Sherpa_ggllll,Sherpa_ggllll_fac4,Sherpa_ggllll_fac025,Sherpa_ggllll_renorm4,Sherpa_ggllll_renorm025,Sherpa_ggllll_qsf4,Sherpa_ggllll_qsf025" -v "${var}" -r "EW2L_SR_SF, EW2L_CR_SF" -f "eps" -l 10000 -b -a -L;
+# python make_plots.py -i "Sherpa_ggllll,Sherpa_ggllll_fac4,Sherpa_ggllll_fac025,Sherpa_ggllll_renorm4,Sherpa_ggllll_renorm025,Sherpa_ggllll_qsf4,Sherpa_ggllll_qsf025" -v "${var}" -r "EW2L_SR_SF, EW2L_CR_SF" -f "eps" -l 10000 -b -a -L;
+# python make_plots.py -i "Sherpa_llvv,Sherpa_llvv_fac4,Sherpa_llvv_fac025,Sherpa_llvv_renorm4,Sherpa_llvv_renorm025,Sherpa_llvv_qsf4,Sherpa_llvv_qsf025" -v "${var}" -r "EW2L_NOmT2_DF" -f "eps" -l 10000 -b -a -L;
+
+# python make_plots.py -i "Sherpa_llvv,Sherpa_llvv_fac4,Sherpa_llvv_fac025,Sherpa_llvv_renorm4,Sherpa_llvv_renorm025,Sherpa_llvv_qsf4,Sherpa_llvv_qsf025" -v "${var}" -r "EW2L_NOmT2NOmll_SF" -f "eps" -l 10000 -b -a -L;
+python make_plots.py -i "aMcAtNloHerwigpp_Wt,PowhegHerwigpp_Wt,PowhegHerwigpp_Wtbar" -v "${var}" -r "EW2L_TopVR0_DF" -f "eps" -l 10000 -b -a -L;
 # python make_plots.py -i "Sherpa_lvlv,Sherpa_lvlv_fac4,Sherpa_lvlv_fac025,Sherpa_lvlv_renorm4,Sherpa_lvlv_renorm025,Sherpa_lvlv_qsf4,Sherpa_lvlv_qsf025" -v "${var}" -r "ST2L_incVV_SF,ST2L_incVV_DF" -f "eps" -l 10000 -b -a -L;
 # python make_plots.py -i "Powheg_ttbar,Powheg_ttbar_radHi,Powheg_ttbar_radLo,PowhegHpp_ttbar,aMCatNLO_ttbar,Sherpa_ttbar_410021" -v "${var}" -r "ST2L_incTT_ALL" -f "eps" -l 10000 -b -a -L;
 

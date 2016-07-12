@@ -16,6 +16,7 @@
 #include "xAODEventInfo/EventInfo.h"
 #include "xAODTruth/TruthVertex.h"
 #include "xAODTruth/TruthParticle.h"
+#include "xAODTruth/TruthEventContainer.h"
 //#include "xAODTruth/TruthParticleContainer.h"
 #include "xAODMissingET/MissingETContainer.h"
 #include "xAODJet/Jet.h"
@@ -25,6 +26,8 @@
 #include <xAODTruthAnalysis/MT2_ROOT.h>
 #include <xAODTruthAnalysis/PhysicsTools.h>
 
+#include <LHAPDF/LHAPDF.h>
+#include <LHAPDF/Reweighting.h>
 // ROOT include(s):
 #include <TFile.h>
 
@@ -156,6 +159,7 @@ EL::StatusCode Ewk2LTruthAnalysis :: histInitialize ()
     outputTree->SetDirectory(outputFile);
     outputTree->Branch("runNumber"     /* "RunNumber"     */, &m_br_runNumber     ); 
     outputTree->Branch("eventNumber"   /* "EventNumber"   */, &m_br_eventNumber   ); 
+    outputTree->Branch("pdfWeights"    /* "pdfWeights"    */, &m_br_pdfWeights     ); 
     outputTree->Branch("mcEventWeight" /* "EventWeight"   */, &m_br_eventWeight   ); 
     outputTree->Branch("mcEventWeights"/* "mcEventWeights"*/, &m_br_mcEventWeights); 
     outputTree->Branch("susyID"        /* "susyID"        */, &m_br_susyID        ); 
@@ -175,6 +179,7 @@ EL::StatusCode Ewk2LTruthAnalysis :: histInitialize ()
     outputTree->Branch("lepton_mother_mass" /* "motherleptons" */, &m_br_lepton_mother_mass ); 
     outputTree->Branch("bjet_pt"       /* N/A             */, &m_br_bjet_pt       ); 
     outputTree->Branch("nonbjet_pt"    /* N/A             */, &m_br_nonbjet_pt    ); 
+    outputTree->Branch("forwardjet_pt" /* N/A             */, &m_br_forwardjet_pt ); 
     outputTree->Branch("jet_pt"        /* "ptjets"        */, &m_br_jet_pt        ); 
     outputTree->Branch("jet_eta"       /* "etajets"       */, &m_br_jet_eta       ); 
     outputTree->Branch("jet_phi"       /* "phijets"       */, &m_br_jet_phi       ); 
@@ -190,6 +195,9 @@ EL::StatusCode Ewk2LTruthAnalysis :: histInitialize ()
     outputTree->Branch("r1"            /* "R1"            */, &m_br_r1            ); 
     outputTree->Branch("dphi_met_pbll" /* "DPhib"         */, &m_br_dphi_met_pbll ); 
   }
+
+
+  m_pdfs = LHAPDF::mkPDFs("CT10nlo");
 
   return EL::StatusCode::SUCCESS;
 }
@@ -259,11 +267,13 @@ EL::StatusCode Ewk2LTruthAnalysis :: execute ()
     m_br_lepton_mother_mass.clear();
     m_br_bjet_pt.clear(); 
     m_br_nonbjet_pt.clear(); 
+    m_br_forwardjet_pt.clear();
     m_br_jet_pt.clear(); 
     m_br_jet_eta.clear(); 
     m_br_jet_phi.clear(); 
     m_br_jet_m.clear(); 
     m_br_jet_flav.clear();
+    m_br_pdfWeights.clear();
     m_br_mcEventWeights.clear();
   }
 
@@ -395,6 +405,7 @@ EL::StatusCode Ewk2LTruthAnalysis :: execute ()
   if(leptons->at(0)->pt()<CF_l0_pt || leptons->at(1)->pt()<CF_l1_pt) return EL::StatusCode::SUCCESS;
   //if((leptons->at(0)->pdgId()*leptons->at(1)->pdgId()) > 0) return EL::StatusCode::SUCCESS;
 
+
   // Build objects and fill histograms
   TLorentzVector lep0 = leptons->at(0)->p4();
   TLorentzVector lep1 = leptons->at(1)->p4();
@@ -480,6 +491,19 @@ EL::StatusCode Ewk2LTruthAnalysis :: execute ()
     m_br_eventWeight    = eventInfo->mcEventWeight();
     h_cutflow_weighted->Fill(0.,m_br_eventWeight);
     m_br_mcEventWeights = eventInfo->mcEventWeights();
+
+    /// pdf reweighting
+    const xAOD::TruthEventContainer* truthEvents = 0;
+    EL_RETURN_CHECK("execute()",event->retrieve( truthEvents, "TruthEvents"));
+    if(truthEvents->size()>0){
+      auto pf = (*truthEvents)[0]->pdfInfo();
+
+      for (size_t imem = 0; imem < m_pdfs.size(); imem++) {
+        m_br_pdfWeights.push_back( LHAPDF::weightxxQ( pf.pdgId1, pf.pdgId2, pf.x1, pf.x2, pf.Q, m_pdfs[0], m_pdfs[imem]));
+//         Info("test", "the weight %lu is %.2f", imem, m_br_pdfWeights[imem]);
+       }
+    }
+
     // Leptons
     for(const auto& ipar : *leptons) {
       TLorentzVector ipar_tlv = ipar->p4(); 
@@ -513,10 +537,14 @@ EL::StatusCode Ewk2LTruthAnalysis :: execute ()
       m_br_jet_phi.push_back(ipar_tlv.Phi());
       m_br_jet_m.push_back(ipar_tlv.M()*MEVtoGEV);
       m_br_jet_flav.push_back(ipar->auxdata<int>("PartonTruthLabelID"));
-      if(ipar->auxdata<int>("PartonTruthLabelID")==5) {
-        m_br_bjet_pt.push_back(ipar_tlv.Pt()*MEVtoGEV);
-      } else {
-        m_br_nonbjet_pt.push_back(ipar_tlv.Pt()*MEVtoGEV);
+      if(fabs(ipar_tlv.Eta()<2.4)){
+        if(ipar->auxdata<int>("PartonTruthLabelID")==5) {
+          m_br_bjet_pt.push_back(ipar_tlv.Pt()*MEVtoGEV);
+        } else {
+          m_br_nonbjet_pt.push_back(ipar_tlv.Pt()*MEVtoGEV);
+        }
+      }else{
+        m_br_forwardjet_pt.push_back(ipar_tlv.Pt()*MEVtoGEV);
       }
     }
     // Event variables
