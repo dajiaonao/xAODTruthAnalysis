@@ -259,11 +259,13 @@ def getRegionTCut(region):
         "EW2L_SR_SF_mT2_90"       : "("  + SFSel + zVeto + "&&mT2ll>90)",
         "EW2L_SR_SF_mT2_120"      : "("  + SFSel + zVeto + "&&mT2ll>120)",
         "EW2L_SR_SF_mT2_150"      : "("  + SFSel + zVeto + "&&mT2ll>150)",
+        "EW2L_SR_SF"              : "("  + SFSel + zVeto + ")",
         "EW2L_CR_SF"              : "("  + SFSel + zSel  + "&&mT2ll>90)",
 
         "EW2L_SR_DF_mT2_90"       : "("  + DFSel + "&&mT2ll>90)",
         "EW2L_SR_DF_mT2_120"      : "("  + DFSel + "&&mT2ll>120)",
         "EW2L_SR_DF_mT2_150"      : "("  + DFSel + "&&mT2ll>150)",
+        "EW2L_SR_DF"              : "("  + DFSel + ")",
         "EW2L_CR_DF"              : "("  + DFSel + "&&mT2ll>50&&mT2ll<75)",
         "EW2L_TopVR_DF"           : "("  + isOSDF + bSelection + centralJetVeto30 + forwardJetVeto + "&&mT2ll>70&&mT2ll<120)",
         "EW2L_TopVR0_DF"           : "(" + isOSDF + centralJetVeto30 + forwardJetVeto + "&&mT2ll>70&&mT2ll<120)",
