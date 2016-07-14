@@ -229,6 +229,179 @@ def test1():
 
     waitRootCmd()
 
+def tag2Hitos(sTag, regions, wt='', luminosity=10000.):
+    files = getROOTFileName(sTag)
+    sumw = getSumWeight(files)
+
+    ch1 = TChain('SuperTruth')
+    ch1.Add(files)
+    var1 = 'mT2ll'
+
+    histoName = 'h_'+sTag+'_'+wt
+    histoName.replace('[','_').replace(']','')
+    histoName0 = histoName+regions[0]
+    histoName1 = histoName+regions[1]
+
+    histogram0 = TH1D(histoName0, histoName+';mT_{2}(ll) [GeV];Events / 5 GeV',40,0,200)
+    histogram1 = histogram0.Clone(histoName1) 
+
+    cut0=getRegionTCut(regions[0])
+    cut1=getRegionTCut(regions[1])
+
+    print sTag 
+    selection0=("(mcEventWeight"+wt+"*%f*%f/%f)*(%s)"%(getCrossSection(sTag),luminosity,sumw,cut0))
+    ch1.Draw(var1+">>"+histoName0, selection0, 'goff')
+
+    selection1=("(mcEventWeight"+wt+"*%f*%f/%f)*(%s)"%(getCrossSection(sTag),luminosity,sumw,cut1))
+    ch1.Draw(var1+">>"+histoName1, selection1, 'goff')
+
+    return (histogram0, histogram1)
+
+def get_DF_SF_More(options, mT2CutList=[90, 120, 150], showPlot=False):
+    sTag = options.inputname
+    regions = options.regionname.split(',') 
+
+    th = None
+    for s in options.inputname.split(','):
+#         print s
+        kk = tag2Hitos(s, regions)
+        if not th: th = kk
+        else:
+            for i in range(len(kk)):
+                th[i].Add(kk[i])
+    (histogram0, histogram1) = th
+
+    control_region_unc      = ROOT.Double(0.)
+    control_region_count    = histogram0.IntegralAndError(0,-1,control_region_unc)
+    control_region_unc_perc = (control_region_unc/control_region_count)*100 if control_region_count !=0 else 0.
+
+    results = [(control_region_count, control_region_unc_perc)]
+    for slow in mT2CutList:
+        bin0 = histogram1.GetXaxis().FindBin(slow)
+#         print slow, bin0, histogram1.GetXaxis().GetBinLowEdge(bin0)
+        signal_region_unc       = ROOT.Double(0.) 
+        signal_region_count     = histogram1.IntegralAndError(bin0,-1,signal_region_unc)
+        signal_region_unc_perc  = (signal_region_unc/signal_region_count)*100 if signal_region_unc !=0 else 0. 
+
+        transfer_factors = signal_region_count/control_region_count 
+        tf_unc = math.sqrt(signal_region_unc_perc*signal_region_unc_perc+control_region_unc_perc*control_region_unc_perc)
+        print("Sample %s \t (%.2f fb-1) SR count %.2f +/- %.2f (%3.2f%%) CR count %.2f +/- %.2f (%3.2f%%) TF is %.2e (%3.2f%%)" 
+            %(sTag         ,options.luminosity*1.e-3,
+                  signal_region_count   ,signal_region_unc, signal_region_unc_perc, 
+                  control_region_count  ,control_region_unc, control_region_unc_perc,
+                  transfer_factors, tf_unc))
+        results.append((signal_region_count, signal_region_unc_perc, transfer_factors, tf_unc))
+
+    if showPlot:
+        histogram0.Draw()
+        histogram1.SetLineColor(2)
+        histogram1.SetLineStyle(2)
+        histogram1.Draw("histsame")
+        waitRootCmd()
+    return results,th
+
+def get_DF_SF_More_wt(options, mT2CutList=[90, 120, 150], showPlot=False, wt=''):
+    sTag = options.inputname
+    regions = options.regionname.split(',') 
+
+    th = None
+    for s in options.inputname.split(','):
+#         print s
+        kk = tag2Hitos(s, regions, wt)
+        if not th: th = kk
+        else:
+            for i in range(len(kk)):
+                th[i].Add(kk[i])
+    (histogram0, histogram1) = th
+
+    control_region_unc      = ROOT.Double(0.)
+    control_region_count    = histogram0.IntegralAndError(0,-1,control_region_unc)
+    control_region_unc_perc = (control_region_unc/control_region_count)*100 if control_region_count !=0 else 0.
+
+    results = [(control_region_count, control_region_unc_perc)]
+    for slow in mT2CutList:
+        bin0 = histogram1.GetXaxis().FindBin(slow)
+#         print slow, bin0, histogram1.GetXaxis().GetBinLowEdge(bin0)
+        signal_region_unc       = ROOT.Double(0.) 
+        signal_region_count     = histogram1.IntegralAndError(bin0,-1,signal_region_unc)
+        signal_region_unc_perc  = (signal_region_unc/signal_region_count)*100 if signal_region_unc !=0 else 0. 
+
+        transfer_factors = signal_region_count/control_region_count 
+        tf_unc = math.sqrt(signal_region_unc_perc*signal_region_unc_perc+control_region_unc_perc*control_region_unc_perc)
+        print("Sample %s \t (%.2f fb-1) SR count %.2f +/- %.2f (%3.2f%%) CR count %.2f +/- %.2f (%3.2f%%) TF is %.2e (%3.2f%%)" 
+            %(sTag         ,options.luminosity*1.e-3,
+                  signal_region_count   ,signal_region_unc, signal_region_unc_perc, 
+                  control_region_count  ,control_region_unc, control_region_unc_perc,
+                  transfer_factors, tf_unc))
+        results.append((signal_region_count, signal_region_unc_perc, transfer_factors, tf_unc))
+
+    if showPlot:
+        histogram0.Draw()
+        histogram1.SetLineColor(2)
+        histogram1.SetLineStyle(2)
+        histogram1.Draw("histsame")
+        waitRootCmd()
+    return results,th
+
+
+def get_DF_SF_wt(options, mT2CutList=[90, 120, 150], showPlot=False, wt=''):
+    sTag = options.inputname
+    regions = options.regionname.split(',') 
+
+    files = getROOTFileName(sTag)
+    sumw = getSumWeight(files)
+
+    ch1 = TChain('SuperTruth')
+    ch1.Add(files)
+    var1 = 'mT2ll'
+
+    histoName = 'h1'
+    histoName0 = histoName+regions[0]
+    histoName1 = histoName+regions[1]
+
+    histogram0 = TH1D(histoName0, histoName+';mT_{2}(ll) [GeV];Events / 5 GeV',40,0,200)
+    histogram1 = histogram0.Clone(histoName1) 
+
+    cut0=getRegionTCut(regions[0])
+    cut1=getRegionTCut(regions[1])
+
+    
+    selection0=("(mcEventWeight*"+wt+"%f*%f/%f)*(%s)"%(getCrossSection(sTag),options.luminosity,sumw,cut0))
+    ch1.Draw(var1+">>"+histoName0, selection0, 'goff')
+
+    selection1=("(mcEventWeight*"+wt+"%f*%f/%f)*(%s)"%(getCrossSection(sTag),options.luminosity,sumw,cut1))
+    ch1.Draw(var1+">>"+histoName1, selection1, 'goff')
+
+
+    control_region_unc      = ROOT.Double(0.)
+    control_region_count    = histogram0.IntegralAndError(0,-1,control_region_unc)
+    control_region_unc_perc = (control_region_unc/control_region_count)*100 if control_region_count !=0 else 0.
+
+    results = [(control_region_count, control_region_unc_perc)]
+    for slow in mT2CutList:
+        bin0 = histogram1.GetXaxis().FindBin(slow)
+#         print slow, bin0, histogram1.GetXaxis().GetBinLowEdge(bin0)
+        signal_region_unc       = ROOT.Double(0.) 
+        signal_region_count     = histogram1.IntegralAndError(bin0,-1,signal_region_unc)
+        signal_region_unc_perc  = (signal_region_unc/signal_region_count)*100 if signal_region_unc !=0 else 0. 
+
+        transfer_factors = signal_region_count/control_region_count 
+        tf_unc = math.sqrt(signal_region_unc_perc*signal_region_unc_perc+control_region_unc_perc*control_region_unc_perc)
+        print("Sample %s \t (%.2f fb-1) SR count %.2f +/- %.2f (%3.2f%%) CR count %.2f +/- %.2f (%3.2f%%) TF is %.2e (%3.2f%%)" 
+            %(sTag         ,options.luminosity*1.e-3,
+                  signal_region_count   ,signal_region_unc, signal_region_unc_perc, 
+                  control_region_count  ,control_region_unc, control_region_unc_perc,
+                  transfer_factors, tf_unc))
+        results.append((signal_region_count, signal_region_unc_perc, transfer_factors, tf_unc))
+
+    if showPlot:
+        histogram0.Draw()
+        histogram1.SetLineColor(2)
+        histogram1.SetLineStyle(2)
+        histogram1.Draw("histsame")
+        waitRootCmd()
+    return results
+
 
 def get_DF_SF(options, mT2CutList=[90, 120, 150], showPlot=False):
     sTag = options.inputname
@@ -262,7 +435,6 @@ def get_DF_SF(options, mT2CutList=[90, 120, 150], showPlot=False):
     control_region_unc      = ROOT.Double(0.)
     control_region_count    = histogram0.IntegralAndError(0,-1,control_region_unc)
     control_region_unc_perc = (control_region_unc/control_region_count)*100 if control_region_count !=0 else 0.
-
 
     results = [(control_region_count, control_region_unc_perc)]
     for slow in mT2CutList:
@@ -452,8 +624,238 @@ def checkFit(fr1):
     if fr1.Prob()<0.05:
         print 'bad fit', fr1.Prob()
 
+def compare3(options, samples, tag):
+    options.inputname = samples[0][2]
+    r0_df,h0s = get_DF_SF_More(options, options.mT2Cuts, False)
+
+    options.inputname = samples[1][2]
+    r1_df,h1s = get_DF_SF_More(options, options.mT2Cuts, False)
+
+    options.inputname = samples[2][2]
+    r2_df,h2s = get_DF_SF_More(options, options.mT2Cuts, False)
+
+    for i in range(len(r0_df)):
+        print r0_df[i], r1_df[i]
+#         res.append()
+    res = []
+    for i in range(1,len(r0_df)):
+        res.append(max(pow(r0_df[i][2]-r1_df[i][2],2), pow(r0_df[i][2]-r2_df[i][2],2)))
+
+#     h0s[0].SetMarkerColor(2)
+#     h0s[0].SetLineColor(2)
+    h0s[0].Draw()
+#     h0s[1].SetLineColor(2)
+#     h0s[1].SetLineStyle(2)
+    h0s[1].Draw('histsame')
+    h1s[0].SetMarkerColor(4)
+    h1s[0].SetLineColor(4)
+    h1s[0].SetMarkerStyle(24)
+    h1s[0].Draw('sameE')
+    h1s[1].SetLineColor(4)
+    h1s[1].SetLineStyle(0)
+    h1s[1].Draw('histsame')
+    h2s[0].SetMarkerColor(2)
+    h2s[0].SetLineColor(2)
+    h2s[0].SetMarkerStyle(25)
+    h2s[0].Draw('sameE')
+    h2s[1].SetLineColor(2)
+    h2s[1].SetLineStyle(2)
+    h2s[1].Draw('histsame')
+
+    lg = TLegend(0.6, 0.7, 0.9, 0.92)
+    lg.SetFillStyle(0)
+    lg.AddEntry(h0s[0], samples[0][1]+'CR', 'p')
+    lg.AddEntry(h0s[1], samples[0][1]+'SR', 'l')
+    lg.AddEntry(h1s[0], samples[1][1]+'CR', 'p')
+    lg.AddEntry(h1s[1], samples[1][1]+'SR', 'l')
+    lg.AddEntry(h2s[0], samples[2][1]+'CR', 'p')
+    lg.AddEntry(h2s[1], samples[2][1]+'SR', 'l')
+    lg.Draw()
+
+    gPad.Update()
+    waitRootCmd(sDir+sTag+tag)
+
+    return res 
+
+
+def compare2(options, samples, tag):
+    options.inputname = samples[0][2]
+    r0_df,h0s = get_DF_SF_More(options, options.mT2Cuts, False)
+
+    options.inputname = samples[1][2]
+    r1_df,h1s = get_DF_SF_More(options, options.mT2Cuts, False)
+
+    for i in range(len(r0_df)):
+        print r0_df[i], r1_df[i]
+#         res.append()
+    res = []
+    for i in range(1,len(r0_df)):
+        res.append(pow(r0_df[i][2]-r1_df[i][2],2))
+
+    h0s[0].SetMarkerColor(2)
+    h0s[0].SetLineColor(2)
+    h0s[0].Draw()
+    h0s[1].SetLineColor(2)
+    h0s[1].SetLineStyle(2)
+    h0s[1].Draw('histsame')
+    h1s[0].SetMarkerColor(4)
+    h1s[0].SetLineColor(4)
+    h1s[0].SetMarkerStyle(24)
+    h1s[0].Draw('sameE')
+    h1s[1].SetLineColor(4)
+    h1s[1].SetLineStyle(0)
+    h1s[1].Draw('histsame')
+
+    lg = TLegend(0.6, 0.7, 0.9, 0.92)
+    lg.SetFillStyle(0)
+    lg.AddEntry(h0s[0], samples[0][1]+'CR', 'p')
+    lg.AddEntry(h0s[1], samples[0][1]+'SR', 'l')
+    lg.AddEntry(h1s[0], samples[1][1]+'CR', 'p')
+    lg.AddEntry(h1s[1], samples[1][1]+'SR', 'l')
+    lg.Draw()
+
+    gPad.Update()
+    waitRootCmd(sDir+sTag+tag)
+
+    return res 
+
+
+def checkPDF(options, tag='pdf'):
+    r0_df,h0s = get_DF_SF_More_wt(options, options.mT2Cuts, False, '*pdfWeights[0]')
+
+    gU = TGraphErrors()
+    gD = TGraphErrors()
+    ic = 1
+    shift = 0.1
+    xT = []
+    for i in range(26):
+        r1_df,h1s = get_DF_SF_More_wt(options, options.mT2Cuts, False, '*pdfWeights['+str(2*i+1)+']')
+        r2_df,h2s = get_DF_SF_More_wt(options, options.mT2Cuts, False, '*pdfWeights['+str(2*i+2)+']')
+        gU.SetPoint(i, i+shift, (r1_df[ic][2]-r0_df[ic][2])/r0_df[ic][2]*100.)
+        gU.SetPointError(i, 0, r1_df[ic][2])
+        gD.SetPoint(i, i+shift, (r2_df[ic][2]-r0_df[ic][2])/r0_df[ic][2]*100.)
+        gD.SetPointError(i, 0, r2_df[ic][2])
+        xT.append(((r1_df[ic][2]-r0_df[ic][2])/r0_df[ic][2]*100., (r2_df[ic][2]-r0_df[ic][2])/r0_df[ic][2]*100.))
+
+    gU.SetMarkerStyle(23)
+    gD.SetMarkerStyle(26)
+    gU.SetMarkerColor(2)
+    gD.SetMarkerColor(4)
+    gU.Draw("AP")
+    gU.GetXaxis().SetTitle('PDF variation index')
+    gU.GetXaxis().SetTitle('Shift [%]')
+    gD.Draw("Psame")
+    lg = TLegend(0.6, 0.7, 0.9, 0.92)
+    lg.SetFillStyle(0)
+    lg.AddEntry(gU, "UP", 'p')
+    lg.AddEntry(gD, "DOWN", 'p')
+    lg.Draw()
+
+    tt1 = 0
+    for x in xT:
+        tt1 += max(x[0]*x[0],x[1]*x[1])
+    print math.sqrt(tt1)
+
+    gPad.Update()
+    waitRootCmd(sDir+sTag+tag)
+
+
+
+def runTopSF():
+    # region: EW2L_TopVR_XF,EW2L_SR_XF
+    options = oo1()
+    options.varname    = "mT2ll"                                       # Dummy variable
+    options.regionname = "EW2L_TopVR_XF,EW2L_SR_XF"        #               # 0 is SR 1 is CR
+    options.luminosity = 10000.
+    options.mT2Cuts = [90, 120, 150]
+
+#     tag = 'generator'
+#     samples = []
+#     samples.append(('aMcAtNlo', 'aMc@Nlo Top ', 'aMcAtNloHerwigppEvtGen_ttbar_nonallhad,aMcAtNloHerwigppEvtGen_UEEE5_CTEQ6L1_CT10ME_Wt_dilepton'))
+#     samples.append(('Powheg', 'Powheg Top ', 'PowhegHerwigppEvtGen_UEEE5_ttbar_hdamp172p5_nonallhad,PowhegHerwigppEvtGen_UEEE5_Wt_dilepton_antitop,PowhegHerwigppEvtGen_UEEE5_Wt_dilepton_top'))
+#     uncert = compare2(options, samples, tag)
+# 
+#     print uncert
+# 
+#     tag = 'PS'
+#     samples = []
+#     samples.append(('aMcAtNlo', 'aMc@Nlo Top ', 'aMcAtNloHerwigppEvtGen_ttbar_nonallhad,aMcAtNloHerwigppEvtGen_UEEE5_CTEQ6L1_CT10ME_Wt_dilepton'))
+#     samples.append(('Powheg', 'Powheg Top ', 'PowhegHerwigppEvtGen_UEEE5_ttbar_hdamp172p5_nonallhad,PowhegHerwigppEvtGen_UEEE5_Wt_dilepton_antitop,PowhegHerwigppEvtGen_UEEE5_Wt_dilepton_top'))
+#     uncert = compare2(options, samples, tag)
+# 
+#     print uncert
+
+    tag = 'DS'
+    samples = []
+    samples.append(('norm', 'Wt DR Top ', 'PowhegPythiaEvtGen_P2012_ttbar_hdamp172p5_dil,PowhegPythiaEvtGen_P2012_Wt_dilepton_antitop,PowhegPythiaEvtGen_P2012_Wt_dilepton_top'))
+    samples.append(('DS',   'Wt DS Top ', 'PowhegPythiaEvtGen_P2012_ttbar_hdamp172p5_dil,PowhegPythiaEvtGen_P2012_Wt_DS_dilepton_antitop,PowhegPythiaEvtGen_P2012_Wt_DS_dilepton_top'))
+    uncert = compare2(options, samples, tag)
+
+    print uncert
+
+#     tag = 'rad'
+#     samples = []
+#     samples.append(('norm', 'Nominal Top ', ',PowhegPythiaEvtGen_P2012_Wt_dilepton_antitop,PowhegPythiaEvtGen_P2012_Wt_dilepton_top'))
+#     samples.append(('up',   'Rad-up Top ', 'PowhegPythiaEvtGen_P2012radLo_ttbar_hdamp172_up_nonallhad,PowhegPythiaEvtGen_P2012radLo_Wt_dilepton_antitop,PowhegPythiaEvtGen_P2012radLo_Wt_dilepton_top'))
+#     samples.append(('down',   'Rad-down Top ', 'PowhegPythiaEvtGen_P2012radHi_ttbar_hdamp345_down_nonallhad,PowhegPythiaEvtGen_P2012radHi_Wt_dilepton_antitop,PowhegPythiaEvtGen_P2012radHi_Wt_dilepton_top'))
+#     uncert = compare3(options, samples, tag)
+
+#     print uncert
+
+#     options.inputname = 'PowhegPythiaEvtGen_P2012_ttbar_hdamp172p5_dil,PowhegPythiaEvtGen_P2012_Wt_dilepton_antitop,PowhegPythiaEvtGen_P2012_Wt_dilepton_top'
+#     checkPDF(options)
+
+
+#     tag = 'pdf'
+#     options.inputname = 'PowhegPythiaEvtGen_P2012_ttbar_hdamp172p5_dil,PowhegPythiaEvtGen_P2012_Wt_dilepton_antitop,PowhegPythiaEvtGen_P2012_Wt_dilepton_top'
+#     r0_df,h0s = get_DF_SF_More_wt(options, options.mT2Cuts, False, '*pdfWeights[0]')
+#     r1_df,h1s = get_DF_SF_More_wt(options, options.mT2Cuts, False, '*pdfWeights[1]')
+#     r2_df,h2s = get_DF_SF_More_wt(options, options.mT2Cuts, False, '*pdfWeights[2]')
+#     samples = [('', 'v0 Top '), ('', 'v1 Top '), ('', 'v2 Top ')]
+#     for i in range(len(r0_df)):
+#         print r0_df[i], r1_df[i], r2_df[i]
+# #         res.append()
+#     res = []
+#     for i in range(1,len(r0_df)):
+#         res.append(max(pow(r0_df[i][2]-r1_df[i][2],2), pow(r0_df[i][2]-r2_df[i][2],2)))
+# 
+#     h0s[0].Draw()
+#     h0s[1].Draw('histsame')
+#     h1s[0].SetMarkerColor(4)
+#     h1s[0].SetLineColor(4)
+#     h1s[0].SetMarkerStyle(24)
+#     h1s[0].Draw('sameE')
+#     h1s[1].SetLineColor(4)
+#     h1s[1].SetLineStyle(0)
+#     h1s[1].Draw('histsame')
+#     h2s[0].SetMarkerColor(2)
+#     h2s[0].SetLineColor(2)
+#     h2s[0].SetMarkerStyle(25)
+#     h2s[0].Draw('sameE')
+#     h2s[1].SetLineColor(2)
+#     h2s[1].SetLineStyle(2)
+#     h2s[1].Draw('histsame')
+# 
+#     lg = TLegend(0.6, 0.7, 0.9, 0.92)
+#     lg.SetFillStyle(0)
+#     lg.AddEntry(h0s[0], samples[0][1]+'CR', 'p')
+#     lg.AddEntry(h0s[1], samples[0][1]+'SR', 'l')
+#     lg.AddEntry(h1s[0], samples[1][1]+'CR', 'p')
+#     lg.AddEntry(h1s[1], samples[1][1]+'SR', 'l')
+#     lg.AddEntry(h2s[0], samples[2][1]+'CR', 'p')
+#     lg.AddEntry(h2s[1], samples[2][1]+'SR', 'l')
+#     lg.Draw()
+# 
+#     gPad.Update()
+#     waitRootCmd(sDir+sTag+tag)
+# 
+#     print res
+#     return res 
+
+
 if __name__ == '__main__':
     useAtlasStyle()
     gStyle.SetOptFit(0)
-    test3()
+    runTopSF()
+#     test3()
 

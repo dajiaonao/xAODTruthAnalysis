@@ -7,75 +7,311 @@ def getROOTFileName(filename):
 #     dir0 = '/net/s3_datac/dzhang/outSpace/susyEW_out/sys1_Jul11a/fetch/data-myOutput/'
     dir0 = '/net/s3_datac/dzhang/outSpace/susyEW_out/sys1_Jul12b/fetch/data-myOutput/'
     return {
-            "Sherpa_ggllll"          : dir0+"Sherpa_CT10_ggllll-*.root",
-            "Sherpa_ggllll_fac025"   : dir0+"Sherpa_CT10_ggllll_fac025-*.root",
-            "Sherpa_ggllll_fac4"     : dir0+"Sherpa_CT10_ggllll_fac4-*.root",
-            "Sherpa_ggllll_qsf025"   : dir0+"Sherpa_CT10_ggllll_qsf025-*.root",
-            "Sherpa_ggllll_qsf4"     : dir0+"Sherpa_CT10_ggllll_qsf4-*.root",
-            "Sherpa_ggllll_renorm025": dir0+"Sherpa_CT10_ggllll_renorm025-*.root",
-            "Sherpa_ggllll_renorm4"  : dir0+"Sherpa_CT10_ggllll_renorm4-*.root",
-            "Sherpa_llvv"            : dir0+"Sherpa_CT10_llvv-*.root",
-            "Sherpa_llvv_fac025"     : dir0+"Sherpa_CT10_llvv_fac025-*.root",
-            "Sherpa_llvv_fac4"       : dir0+"Sherpa_CT10_llvv_fac4-*.root",
-            "Sherpa_llvv_qsf025"     : dir0+"Sherpa_CT10_llvv_qsf025-*.root",
-            "Sherpa_llvv_qsf4"       : dir0+"Sherpa_CT10_llvv_qsf4-*.root",
-            "Sherpa_llvv_renorm025"  : dir0+"Sherpa_CT10_llvv_renorm025-*.root",
-            "Sherpa_llvv_renorm4"    : dir0+"Sherpa_CT10_llvv_renorm4-*.root",
-            "Sherpa_llvv_ckkw15"     : dir0+"Sherpa_CT10_llvv_ckkw15-*.root",
-            "Sherpa_llvv_ckkw30"     : dir0+"Sherpa_CT10_llvv_ckkw30-*.root",
-            "aMcAtNloHerwigpp_Wt"    : dir0+"aMcAtNloHerwigppEvtGen_UEEE5_CTEQ6L1_CT10ME_Wt_dilepton-0.root",
-            "PowhegHerwigpp_Wt"      : dir0+"PowhegHerwigppEvtGen_UEEE5_Wt_dilepton_top-0.root",
-            "PowhegHerwigpp_Wtbar"   : dir0+"PowhegHerwigppEvtGen_UEEE5_Wt_dilepton_antitop-0.root",
-#         "Sherpa_lvlv"          : "/data/uclhc/uci/user/amete/truth_analysis_run/combined_3/out_361068.root",
-#         "Sherpa_lvlv_fac4"     : "/data/uclhc/uci/user/amete/truth_analysis_run/combined_3/out_363072.root",
-#         "Sherpa_lvlv_fac025"   : "/data/uclhc/uci/user/amete/truth_analysis_run/combined_3/out_363073.root",
-#         "Sherpa_lvlv_renorm4"  : "/data/uclhc/uci/user/amete/truth_analysis_run/combined_3/out_363074.root",
-#         "Sherpa_lvlv_renorm025": "/data/uclhc/uci/user/amete/truth_analysis_run/combined_3/out_363075.root",
-#         "Sherpa_lvlv_qsf4"     : "/data/uclhc/uci/user/amete/truth_analysis_run/combined_3/out_363076.root",
-#         "Sherpa_lvlv_qsf025"   : "/data/uclhc/uci/user/amete/truth_analysis_run/combined_3/out_363077.root",
-#         "Powheg_WWlvlv"        : "/data/uclhc/uci/user/amete/truth_analysis_run/combined_3/out_361600.root",
-#         "Powheg_ZZllvv"        : "/data/uclhc/uci/user/amete/truth_analysis_run/combined_3/out_361604.root",
-#         "Powheg_ttbar"         : "/data/uclhc/uci/user/amete/truth_analysis_run/combined_3/out_410000.root",
-#         "Powheg_ttbar_radHi"   : "/data/uclhc/uci/user/amete/truth_analysis_run/combined_3/out_410001.root",
-#         "Powheg_ttbar_radLo"   : "/data/uclhc/uci/user/amete/truth_analysis_run/combined_3/out_410002.root",
-#         "aMCatNLO_ttbar"       : "/data/uclhc/uci/user/amete/truth_analysis_run/combined_3/out_410003.root",
-#         "PowhegHpp_ttbar"      : "/data/uclhc/uci/user/amete/truth_analysis_run/combined_3/out_410004.root",
-#         "Sherpa_ttbar_410021"  : "/data/uclhc/uci/user/amete/truth_analysis_run/combined_3/out_410021.root",
-#         "Sherpa_ttbar_410189"  : "/data/uclhc/uci/user/amete/truth_analysis_run/combined_3/out_410189.root",
-#         #"Herwigpp_300vs180"    : "/gdata/atlas/amete/StopPolarization/outputs/FlatNtuples/Herwigpp.300vs180.truth1_v3.root",
-#         #"Madgraph_300vs180"    : "/gdata/atlas/amete/StopPolarization/outputs/FlatNtuples/Madgraph.300vs180.truth1_v3.root",
-#         #"MadgraphR_300vs180"   : "/gdata/atlas/amete/StopPolarization/outputs/FlatNtuples/MadgraphR.300vs180.truth1_v3.root",
-#         #"MadgraphL_300vs180"   : "/gdata/atlas/amete/StopPolarization/outputs/FlatNtuples/MadgraphL.300vs180.truth1_v3.root",
-#         "Herwigpp_250vs160"    : "/data/uclhc/uci/user/amete/stop_signal_flat/FLAT_406009.HppEG_UE5C6L1_Tt_bWN_t250_n160_2Lep18.root",
-#         "HerwigppL_250vs160"   : "/data/uclhc/uci/user/amete/stop_signal_flat/FLAT_999999.HppEG_UE5C6L1_Tt_bWN_t250_n160_2Lep18.root",
-#         "Madgraph_250vs160"    : "/data/uclhc/uci/user/amete/stop_signal_flat/FLAT_387943.MGPy8EG_A14N23LO_TT_bWN_250_160_2L15.root",
-#         "MadgraphL_250vs160"   : "/data/uclhc/uci/user/amete/stop_signal_flat/FLAT_387943.MGPy8EG_A14N23LO_TT_bWN_250_160_2L15.root",
-#         "MadgraphR_250vs160"   : "/data/uclhc/uci/user/amete/stop_signal_flat/FLAT_387943.MGPy8EG_A14N23LO_TT_bWN_250_160_2L15.root",
-#         "Herwigpp_300vs150"    : "/data/uclhc/uci/user/amete/stop_signal_flat/FLAT_406010.HppEG_UE5C6L1_Tt_bWN_t300_n150_2Lep18.root",
-#         "Madgraph_300vs150"    : "/data/uclhc/uci/user/amete/stop_signal_flat/FLAT_387947.MGPy8EG_A14N23LO_TT_bWN_300_150_2L15.root",
-#         "MadgraphR_300vs150"   : "/data/uclhc/uci/user/amete/stop_signal_flat/FLAT_387947.MGPy8EG_A14N23LO_TT_bWN_300_150_2L15.root",
-#         "HerwigppR_300vs180"   : "/data/uclhc/uci/user/amete/stop_signal_flat/FLAT_406011.HppEG_UE5C6L1_Tt_bWN_t300_n180_2Lep18.root",
-#         "HerwigppL_300vs180"   : "/data/uclhc/uci/user/amete/stop_signal_flat/FLAT_999998.HppEG_UE5C6L1_Tt_bWN_t300_n180_2Lep18.root",
-#         "Madgraph_300vs180"    : "/data/uclhc/uci/user/amete/stop_signal_flat/FLAT_387948.MGPy8EG_A14N23LO_TT_bWN_300_180_2L15.root",
-#         "MadgraphM_300vs180"   : "/data/uclhc/uci/user/amete/stop_signal_flat/FLAT_387948.MGPy8EG_A14N23LO_TT_bWN_300_180_2L15.root",
-#         "MadgraphR_300vs180"   : "/data/uclhc/uci/user/amete/stop_signal_flat/FLAT_387948.MGPy8EG_A14N23LO_TT_bWN_300_180_2L15.root",
-#         "MadgraphL_300vs180"   : "/data/uclhc/uci/user/amete/stop_signal_flat/FLAT_387948.MGPy8EG_A14N23LO_TT_bWN_300_180_2L15.root",
-#         "MadgraphFR_300vs180"   : "/data/uclhc/uci/user/amete/stop_signal_flat/FLAT_123457.MGPy8EG_A14N_TTright_bWN_300_180_2Lep18.root",
-#         "MadgraphT_300vs180"   : "/data/uclhc/uci/user/amete/stop_signal_flat/FLAT_123458.MGPy8EG_A14N_TTright_bWN_300_180_2Lep18.root",
-#         "MadgraphFL_250vs125"    : "/data/uclhc/uci/user/amete/stop_signal_flat/takashi/FLAT_999927.MGPy8EG_A14N23LO_TT_directBWNleft_250_125.root",
-#         "MadgraphL_250vs125"    : "/data/uclhc/uci/user/amete/stop_signal_flat/takashi/FLAT_999929.MGPy8EG_A14N23LO_TT_directBWN_250_125.root",
-#         "MadgraphM_250vs125"    : "/data/uclhc/uci/user/amete/stop_signal_flat/takashi/FLAT_999929.MGPy8EG_A14N23LO_TT_directBWN_250_125.root",
-#         "MadgraphR_250vs125"    : "/data/uclhc/uci/user/amete/stop_signal_flat/takashi/FLAT_999929.MGPy8EG_A14N23LO_TT_directBWN_250_125.root",
-#         "Madgraph_250vs125"     : "/data/uclhc/uci/user/amete/stop_signal_flat/takashi/FLAT_999929.MGPy8EG_A14N23LO_TT_directBWN_250_125.root",
-#         "HerwigppL_250vs125"   : "/data/uclhc/uci/user/amete/stop_signal_flat/FLAT_999997.HppEG_UE5C6L1_Tt_bWN_t250_n125_2Lep18.root",
-#         "SerhanFL_250vs125"    : "/data/uclhc/uci/user/amete/stop_signal_flat/FLAT_123460.MGPy8EG_A14N_TTleft_bWN_250_125_2Lep18.root",
-#         "SerhanFR_250vs125"    : "/data/uclhc/uci/user/amete/stop_signal_flat/FLAT_123461.MGPy8EG_A14N_TTright_bWN_250_125_2Lep18.root",
-#         #"MadgraphSlep_100vs1"  : "/gdata/atlas/amete/MC15_SleptonPairProduction/FLAT/DAOD_TRUTH1.MGPy8EG_A14N23LO_SlepSlep_direct_100p0_1p0_2L5_10k.pool.root",
-#         "MadgraphSlep_100vs1"  : "/data/uclhc/uci/user/amete/slepton_signal_flat/DAOD_TRUTH1.MGPy8EG_A14N23LO_SlepSlep_direct_100p0_1p0_2L5_10k.pool.root",
+            "Sherpa_CT10_ggllll"          : dir0+"Sherpa_CT10_ggllll-*.root",
+            "Sherpa_CT10_ggllll_fac025"   : dir0+"Sherpa_CT10_ggllll_fac025-*.root",
+            "Sherpa_CT10_ggllll_fac4"     : dir0+"Sherpa_CT10_ggllll_fac4-*.root",
+            "Sherpa_CT10_ggllll_qsf025"   : dir0+"Sherpa_CT10_ggllll_qsf025-*.root",
+            "Sherpa_CT10_ggllll_qsf4"     : dir0+"Sherpa_CT10_ggllll_qsf4-*.root",
+            "Sherpa_CT10_ggllll_renorm025": dir0+"Sherpa_CT10_ggllll_renorm025-*.root",
+            "Sherpa_CT10_ggllll_renorm4"  : dir0+"Sherpa_CT10_ggllll_renorm4-*.root",
+            "Sherpa_CT10_llvv"            : dir0+"Sherpa_CT10_llvv-*.root",
+            "Sherpa_CT10_llvv_fac025"     : dir0+"Sherpa_CT10_llvv_fac025-*.root",
+            "Sherpa_CT10_llvv_fac4"       : dir0+"Sherpa_CT10_llvv_fac4-*.root",
+            "Sherpa_CT10_llvv_qsf025"     : dir0+"Sherpa_CT10_llvv_qsf025-*.root",
+            "Sherpa_CT10_llvv_qsf4"       : dir0+"Sherpa_CT10_llvv_qsf4-*.root",
+            "Sherpa_CT10_llvv_renorm025"  : dir0+"Sherpa_CT10_llvv_renorm025-*.root",
+            "Sherpa_CT10_llvv_renorm4"    : dir0+"Sherpa_CT10_llvv_renorm4-*.root",
+            "Sherpa_CT10_llvv_ckkw15"     : dir0+"Sherpa_CT10_llvv_ckkw15-*.root",
+            "Sherpa_CT10_llvv_ckkw30"     : dir0+"Sherpa_CT10_llvv_ckkw30-*.root",
+
+            "aMcAtNloHerwigppEvtGen_ttbar_nonallhad"    : dir0+"aMcAtNloHerwigppEvtGen_ttbar_nonallhad-*.root",
+            "aMcAtNloHerwigppEvtGen_UEEE5_CTEQ6L1_CT10ME_Wt_dilepton"    : dir0+"aMcAtNloHerwigppEvtGen_UEEE5_CTEQ6L1_CT10ME_Wt_dilepton-*.root",
+            "PhHppEG_AU2CT10_WlnuWlnu"    : dir0+"PhHppEG_AU2CT10_WlnuWlnu-*.root",
+            "PowhegHerwigppEvtGen_UEEE5_ttbar_hdamp172p5_nonallhad"    : dir0+"PowhegHerwigppEvtGen_UEEE5_ttbar_hdamp172p5_nonallhad-*.root",
+            "PowhegHerwigppEvtGen_UEEE5_Wt_dilepton_antitop"    : dir0+"PowhegHerwigppEvtGen_UEEE5_Wt_dilepton_antitop-*.root",
+            "PowhegHerwigppEvtGen_UEEE5_Wt_dilepton_top"    : dir0+"PowhegHerwigppEvtGen_UEEE5_Wt_dilepton_top-*.root",
+            "PowhegPy8EG_CT10nloME_AZNLOCTEQ6L1_WWlvlv"    : dir0+"PowhegPy8EG_CT10nloME_AZNLOCTEQ6L1_WWlvlv-*.root",
+            "PowhegPythiaEvtGen_P2012radHi_ttbar_hdamp345_down_nonallhad"    : dir0+"PowhegPythiaEvtGen_P2012radHi_ttbar_hdamp345_down_nonallhad-*.root",
+            "PowhegPythiaEvtGen_P2012radHi_Wt_dilepton_antitop"    : dir0+"PowhegPythiaEvtGen_P2012radHi_Wt_dilepton_antitop-*.root",
+            "PowhegPythiaEvtGen_P2012radHi_Wt_dilepton_top"    : dir0+"PowhegPythiaEvtGen_P2012radHi_Wt_dilepton_top-*.root",
+            "PowhegPythiaEvtGen_P2012radLo_ttbar_hdamp172_up_nonallhad"    : dir0+"PowhegPythiaEvtGen_P2012radLo_ttbar_hdamp172_up_nonallhad-*.root",
+            "PowhegPythiaEvtGen_P2012radLo_Wt_dilepton_antitop"    : dir0+"PowhegPythiaEvtGen_P2012radLo_Wt_dilepton_antitop-*.root",
+            "PowhegPythiaEvtGen_P2012radLo_Wt_dilepton_top"    : dir0+"PowhegPythiaEvtGen_P2012radLo_Wt_dilepton_top-*.root",
+            "PowhegPythiaEvtGen_P2012_ttbar_hdamp172p5_dil"    : dir0+"PowhegPythiaEvtGen_P2012_ttbar_hdamp172p5_dil-*.root", ## nominal
+            "PowhegPythiaEvtGen_P2012_Wt_dilepton_antitop"    : dir0+"PowhegPythiaEvtGen_P2012_Wt_dilepton_antitop-*.root", ## nominal
+            "PowhegPythiaEvtGen_P2012_Wt_dilepton_top"    : dir0+"PowhegPythiaEvtGen_P2012_Wt_dilepton_top-*.root", ## nominal
+            "PowhegPythiaEvtGen_P2012_Wt_DS_dilepton_antitop"    : dir0+"PowhegPythiaEvtGen_P2012_Wt_DS_dilepton_antitop-*.root",
+            "PowhegPythiaEvtGen_P2012_Wt_DS_dilepton_top"    : dir0+"PowhegPythiaEvtGen_P2012_Wt_DS_dilepton_top-*.root",
+            "Sherpa_CT10_ggllll"    : dir0+"Sherpa_CT10_ggllll-*.root",
+            "Sherpa_CT10_ggllll_fac025"    : dir0+"Sherpa_CT10_ggllll_fac025-*.root",
+            "Sherpa_CT10_ggllll_fac4"    : dir0+"Sherpa_CT10_ggllll_fac4-*.root",
+            "Sherpa_CT10_ggllll_qsf025"    : dir0+"Sherpa_CT10_ggllll_qsf025-*.root",
+            "Sherpa_CT10_ggllll_qsf4"    : dir0+"Sherpa_CT10_ggllll_qsf4-*.root",
+            "Sherpa_CT10_ggllll_renorm025"    : dir0+"Sherpa_CT10_ggllll_renorm025-*.root",
+            "Sherpa_CT10_ggllll_renorm4"    : dir0+"Sherpa_CT10_ggllll_renorm4-*.root",
+            "Sherpa_CT10_ggllvv"    : dir0+"Sherpa_CT10_ggllvv-*.root",
+            "Sherpa_CT10_ggllvv_fac025"    : dir0+"Sherpa_CT10_ggllvv_fac025-*.root",
+            "Sherpa_CT10_ggllvv_fac4"    : dir0+"Sherpa_CT10_ggllvv_fac4-*.root",
+            "Sherpa_CT10_ggllvv_qsf025"    : dir0+"Sherpa_CT10_ggllvv_qsf025-*.root",
+            "Sherpa_CT10_ggllvv_qsf4"    : dir0+"Sherpa_CT10_ggllvv_qsf4-*.root",
+            "Sherpa_CT10_ggllvv_renorm025"    : dir0+"Sherpa_CT10_ggllvv_renorm025-*.root",
+            "Sherpa_CT10_ggllvv_renorm4"    : dir0+"Sherpa_CT10_ggllvv_renorm4-*.root",
+            "Sherpa_CT10_llll"    : dir0+"Sherpa_CT10_llll-*.root",
+            "Sherpa_CT10_llll_ckkw15"    : dir0+"Sherpa_CT10_llll_ckkw15-*.root",
+            "Sherpa_CT10_llll_ckkw30"    : dir0+"Sherpa_CT10_llll_ckkw30-*.root",
+            "Sherpa_CT10_llll_fac025"    : dir0+"Sherpa_CT10_llll_fac025-*.root",
+            "Sherpa_CT10_llll_fac4"    : dir0+"Sherpa_CT10_llll_fac4-*.root",
+            "Sherpa_CT10_lllljj_EW6"    : dir0+"Sherpa_CT10_lllljj_EW6-*.root",
+            "Sherpa_CT10_llll_qsf025"    : dir0+"Sherpa_CT10_llll_qsf025-*.root",
+            "Sherpa_CT10_llll_qsf4"    : dir0+"Sherpa_CT10_llll_qsf4-*.root",
+            "Sherpa_CT10_llll_renorm025"    : dir0+"Sherpa_CT10_llll_renorm025-*.root",
+            "Sherpa_CT10_llll_renorm4"    : dir0+"Sherpa_CT10_llll_renorm4-*.root",
+            "Sherpa_CT10_lllvjj_EW6"    : dir0+"Sherpa_CT10_lllvjj_EW6-*.root",
+            "Sherpa_CT10_lllvOFMinus"    : dir0+"Sherpa_CT10_lllvOFMinus-*.root",
+            "Sherpa_CT10_lllvOFMinus_ckkw15"    : dir0+"Sherpa_CT10_lllvOFMinus_ckkw15-*.root",
+            "Sherpa_CT10_lllvOFMinus_ckkw30"    : dir0+"Sherpa_CT10_lllvOFMinus_ckkw30-*.root",
+            "Sherpa_CT10_lllvOFMinus_fac025"    : dir0+"Sherpa_CT10_lllvOFMinus_fac025-*.root",
+            "Sherpa_CT10_lllvOFMinus_fac4"    : dir0+"Sherpa_CT10_lllvOFMinus_fac4-*.root",
+            "Sherpa_CT10_lllvOFMinus_qsf025"    : dir0+"Sherpa_CT10_lllvOFMinus_qsf025-*.root",
+            "Sherpa_CT10_lllvOFMinus_qsf4"    : dir0+"Sherpa_CT10_lllvOFMinus_qsf4-*.root",
+            "Sherpa_CT10_lllvOFMinus_renorm025"    : dir0+"Sherpa_CT10_lllvOFMinus_renorm025-*.root",
+            "Sherpa_CT10_lllvOFMinus_renorm4"    : dir0+"Sherpa_CT10_lllvOFMinus_renorm4-*.root",
+            "Sherpa_CT10_lllvOFPlus"    : dir0+"Sherpa_CT10_lllvOFPlus-*.root",
+            "Sherpa_CT10_lllvOFPlus_ckkw15"    : dir0+"Sherpa_CT10_lllvOFPlus_ckkw15-*.root",
+            "Sherpa_CT10_lllvOFPlus_ckkw30"    : dir0+"Sherpa_CT10_lllvOFPlus_ckkw30-*.root",
+            "Sherpa_CT10_lllvOFPlus_fac025"    : dir0+"Sherpa_CT10_lllvOFPlus_fac025-*.root",
+            "Sherpa_CT10_lllvOFPlus_fac4"    : dir0+"Sherpa_CT10_lllvOFPlus_fac4-*.root",
+            "Sherpa_CT10_lllvOFPlus_qsf025"    : dir0+"Sherpa_CT10_lllvOFPlus_qsf025-*.root",
+            "Sherpa_CT10_lllvOFPlus_qsf4"    : dir0+"Sherpa_CT10_lllvOFPlus_qsf4-*.root",
+            "Sherpa_CT10_lllvOFPlus_renorm025"    : dir0+"Sherpa_CT10_lllvOFPlus_renorm025-*.root",
+            "Sherpa_CT10_lllvOFPlus_renorm4"    : dir0+"Sherpa_CT10_lllvOFPlus_renorm4-*.root",
+            "Sherpa_CT10_lllvSFMinus"    : dir0+"Sherpa_CT10_lllvSFMinus-*.root",
+            "Sherpa_CT10_lllvSFMinus_ckkw15"    : dir0+"Sherpa_CT10_lllvSFMinus_ckkw15-*.root",
+            "Sherpa_CT10_lllvSFMinus_ckkw30"    : dir0+"Sherpa_CT10_lllvSFMinus_ckkw30-*.root",
+            "Sherpa_CT10_lllvSFMinus_fac025"    : dir0+"Sherpa_CT10_lllvSFMinus_fac025-*.root",
+            "Sherpa_CT10_lllvSFMinus_fac4"    : dir0+"Sherpa_CT10_lllvSFMinus_fac4-*.root",
+            "Sherpa_CT10_lllvSFMinus_qsf025"    : dir0+"Sherpa_CT10_lllvSFMinus_qsf025-*.root",
+            "Sherpa_CT10_lllvSFMinus_qsf4"    : dir0+"Sherpa_CT10_lllvSFMinus_qsf4-*.root",
+            "Sherpa_CT10_lllvSFMinus_renorm025"    : dir0+"Sherpa_CT10_lllvSFMinus_renorm025-*.root",
+            "Sherpa_CT10_lllvSFMinus_renorm4"    : dir0+"Sherpa_CT10_lllvSFMinus_renorm4-*.root",
+            "Sherpa_CT10_lllvSFPlus"    : dir0+"Sherpa_CT10_lllvSFPlus-*.root",
+            "Sherpa_CT10_lllvSFPlus_ckkw15"    : dir0+"Sherpa_CT10_lllvSFPlus_ckkw15-*.root",
+            "Sherpa_CT10_lllvSFPlus_ckkw30"    : dir0+"Sherpa_CT10_lllvSFPlus_ckkw30-*.root",
+            "Sherpa_CT10_lllvSFPlus_fac025"    : dir0+"Sherpa_CT10_lllvSFPlus_fac025-*.root",
+            "Sherpa_CT10_lllvSFPlus_fac4"    : dir0+"Sherpa_CT10_lllvSFPlus_fac4-*.root",
+            "Sherpa_CT10_lllvSFPlus_qsf025"    : dir0+"Sherpa_CT10_lllvSFPlus_qsf025-*.root",
+            "Sherpa_CT10_lllvSFPlus_qsf4"    : dir0+"Sherpa_CT10_lllvSFPlus_qsf4-*.root",
+            "Sherpa_CT10_lllvSFPlus_renorm025"    : dir0+"Sherpa_CT10_lllvSFPlus_renorm025-*.root",
+            "Sherpa_CT10_lllvSFPlus_renorm4"    : dir0+"Sherpa_CT10_lllvSFPlus_renorm4-*.root",
+            "Sherpa_CT10_llvv"    : dir0+"Sherpa_CT10_llvv-*.root",
+            "Sherpa_CT10_llvv_ckkw15"    : dir0+"Sherpa_CT10_llvv_ckkw15-*.root",
+            "Sherpa_CT10_llvv_ckkw30"    : dir0+"Sherpa_CT10_llvv_ckkw30-*.root",
+            "Sherpa_CT10_llvv_fac025"    : dir0+"Sherpa_CT10_llvv_fac025-*.root",
+            "Sherpa_CT10_llvv_fac4"    : dir0+"Sherpa_CT10_llvv_fac4-*.root",
+            "Sherpa_CT10_llvv_qsf025"    : dir0+"Sherpa_CT10_llvv_qsf025-*.root",
+            "Sherpa_CT10_llvv_qsf4"    : dir0+"Sherpa_CT10_llvv_qsf4-*.root",
+            "Sherpa_CT10_llvv_renorm025"    : dir0+"Sherpa_CT10_llvv_renorm025-*.root",
+            "Sherpa_CT10_llvv_renorm4"    : dir0+"Sherpa_CT10_llvv_renorm4-*.root",
+            "Sherpa_CT10_WqqZll_SHv21_improved"    : dir0+"Sherpa_CT10_WqqZll_SHv21_improved-*.root",
+            "Sherpa_CT10_WqqZll_SHv21_improved_fac025"    : dir0+"Sherpa_CT10_WqqZll_SHv21_improved_fac025-*.root",
+            "Sherpa_CT10_WqqZll_SHv21_improved_fac4"    : dir0+"Sherpa_CT10_WqqZll_SHv21_improved_fac4-*.root",
+            "Sherpa_CT10_WqqZll_SHv21_improved_qsf025"    : dir0+"Sherpa_CT10_WqqZll_SHv21_improved_qsf025-*.root",
+            "Sherpa_CT10_WqqZll_SHv21_improved_qsf4"    : dir0+"Sherpa_CT10_WqqZll_SHv21_improved_qsf4-*.root",
+            "Sherpa_CT10_WqqZll_SHv21_improved_renorm025"    : dir0+"Sherpa_CT10_WqqZll_SHv21_improved_renorm025-*.root",
+            "Sherpa_CT10_WqqZll_SHv21_improved_renorm4"    : dir0+"Sherpa_CT10_WqqZll_SHv21_improved_renorm4-*.root",
+            "Sherpa_CT10_ZqqZll_SHv21_improved"    : dir0+"Sherpa_CT10_ZqqZll_SHv21_improved-*.root",
+            "Sherpa_CT10_ZqqZll_SHv21_improved_fac025"    : dir0+"Sherpa_CT10_ZqqZll_SHv21_improved_fac025-*.root",
+            "Sherpa_CT10_ZqqZll_SHv21_improved_fac4"    : dir0+"Sherpa_CT10_ZqqZll_SHv21_improved_fac4-*.root",
+            "Sherpa_CT10_ZqqZll_SHv21_improved_qsf025"    : dir0+"Sherpa_CT10_ZqqZll_SHv21_improved_qsf025-*.root",
+            "Sherpa_CT10_ZqqZll_SHv21_improved_qsf4"    : dir0+"Sherpa_CT10_ZqqZll_SHv21_improved_qsf4-*.root",
+            "Sherpa_CT10_ZqqZll_SHv21_improved_renorm025"    : dir0+"Sherpa_CT10_ZqqZll_SHv21_improved_renorm025-*.root",
+            "Sherpa_CT10_ZqqZll_SHv21_improved_renorm4"    : dir0+"Sherpa_CT10_ZqqZll_SHv21_improved_renorm4-*.root",
     }.get(filename,"")
 
 # Define cross-sections
 def getCrossSection(filename):
+    return {
+    "Sherpa_CT10_llll"                 : 12.849*0.91,        # 361063
+    "Sherpa_CT10_llll_fac4"             : 12.849*0.91,        # 363042
+    "Sherpa_CT10_llll_fac025"             : 12.849*0.91,        # 363043
+    "Sherpa_CT10_llll_renorm4"             : 12.849*0.91,        # 363044
+    "Sherpa_CT10_llll_renorm025"         : 12.849*0.91,        # 363045
+    "Sherpa_CT10_llll_qsf4"             : 12.849*0.91,        # 363046
+    "Sherpa_CT10_llll_qsf025"             : 12.849*0.91,        # 363047
+    "Sherpa_CT10_llll_ckkw15"             : 12.849*0.91,        # 363484
+    "Sherpa_CT10_llll_ckkw30"             : 12.849*0.91,        # 363485
+    "Sherpa_CT10_lllvSFMinus"             : 1.8446*0.91,       # 361064
+    "Sherpa_CT10_lllvSFMinus_fac4"         : 1.8446*0.91,       # 363048
+    "Sherpa_CT10_lllvSFMinus_fac025"       : 1.8446*0.91,       # 363049
+    "Sherpa_CT10_lllvSFMinus_renorm4"     : 1.8446*0.91,       # 363050
+    "Sherpa_CT10_lllvSFMinus_renorm025"     : 1.8446*0.91,       # 363051
+    "Sherpa_CT10_lllvSFMinus_qsf4"         : 1.8446*0.91,       # 363052
+    "Sherpa_CT10_lllvSFMinus_qsf025"      : 1.8446*0.91,       # 363053
+    "Sherpa_CT10_lllvSFMinus_ckkw15"     : 1.8446*0.91,       # 363291
+    "Sherpa_CT10_lllvSFMinus_ckkw30"     : 1.8446*0.91,       # 363292
+    "Sherpa_CT10_lllvOFMinus"             : 3.6235*0.91,       # 361065
+    "Sherpa_CT10_lllvOFMinus_fac4"         : 3.6235*0.91,       # 363054
+    "Sherpa_CT10_lllvOFMinus_fac025"         : 3.6235*0.91,       # 363055
+    "Sherpa_CT10_lllvOFMinus_renorm4"     : 3.6235*0.91,       # 363056
+    "Sherpa_CT10_lllvOFMinus_renorm025"     : 3.6235*0.91,       # 363057
+    "Sherpa_CT10_lllvOFMinus_qsf4"         : 3.6235*0.91,       # 363058
+    "Sherpa_CT10_lllvOFMinus_qsf025"     : 3.6235*0.91,       # 363059
+    "Sherpa_CT10_lllvOFMinus_ckkw15"     : 3.6235*0.91,       # 363293
+    "Sherpa_CT10_lllvOFMinus_ckkw30"     : 3.6235*0.91,       # 363294
+    "Sherpa_CT10_lllvSFPlus"             : 2.5656*0.91,       # 361066
+    "Sherpa_CT10_lllvSFPlus_fac4"         : 2.5656*0.91,       # 363060
+    "Sherpa_CT10_lllvSFPlus_fac025"         : 2.5656*0.91,       # 363061
+    "Sherpa_CT10_lllvSFPlus_renorm4"     : 2.5656*0.91,       # 363062
+    "Sherpa_CT10_lllvSFPlus_renorm025"     : 2.5656*0.91,       # 363063
+    "Sherpa_CT10_lllvSFPlus_qsf4"         : 2.5656*0.91,       # 363064
+    "Sherpa_CT10_lllvSFPlus_qsf025"         : 2.5656*0.91,       # 363065
+    "Sherpa_CT10_lllvSFPlus_ckkw15"         : 2.5656*0.91,       # 363295
+    "Sherpa_CT10_lllvSFPlus_ckkw30"         : 2.5656*0.91,       # 363296
+    "Sherpa_CT10_lllvOFPlus"             : 5.0169*0.91,       # 361067
+    "Sherpa_CT10_lllvOFPlus_fac4"         : 5.0169*0.91,       # 363066
+    "Sherpa_CT10_lllvOFPlus_fac025"         : 5.0169*0.91,       # 363067
+    "Sherpa_CT10_lllvOFPlus_renorm4"     : 5.0169*0.91,       # 363068
+    "Sherpa_CT10_lllvOFPlus_renorm025"     : 5.0169*0.91,       # 363069
+    "Sherpa_CT10_lllvOFPlus_qsf4"         : 5.0169*0.91,       # 363070
+    "Sherpa_CT10_lllvOFPlus_qsf025"         : 5.0169*0.91,       # 363071
+    "Sherpa_CT10_lllvOFPlus_ckkw15"         : 5.0169*0.91,       # 363297
+    "Sherpa_CT10_lllvOFPlus_ckkw30"         : 5.0169*0.91,       # 363298
+    "Sherpa_CT10_llvv"                 : 14.022*0.91,       # 361068
+    "Sherpa_CT10_llvv_fac4"             : 14.022*0.91,       # 363072
+    "Sherpa_CT10_llvv_fac025"             : 14.022*0.91,       # 363073
+    "Sherpa_CT10_llvv_renorm4"         : 14.022*0.91,       # 363074
+    "Sherpa_CT10_llvv_renorm025"         : 14.022*0.91,       # 363075
+    "Sherpa_CT10_llvv_qsf4"             : 14.022*0.91,       # 363076
+    "Sherpa_CT10_llvv_qsf025"             : 14.022*0.91,       # 363077
+    "Sherpa_CT10_llvv_ckkw15"         : 14.022*0.91,       # 363299
+    "Sherpa_CT10_llvv_ckkw30"         : 14.022*0.91,       # 363300
+
+    "Sherpa_CT10_lllvjj_EW6"             : 0.042017*0.91,       # 361071
+    "Sherpa_CT10_lllljj_EW6"             : 0.031496*0.91,       # 361072
+
+    "Sherpa_CT10_ggllll"                 : 0.02095*0.91,       # 361073
+    "Sherpa_CT10_ggllll_fac4"             : 0.02095*0.91,       # 363078
+    "Sherpa_CT10_ggllll_fac025"         : 0.02095*0.91,       # 363079
+    "Sherpa_CT10_ggllll_renorm4"         : 0.02095*0.91,       # 363080
+    "Sherpa_CT10_ggllll_renorm025"         : 0.02095*0.91,       # 363081
+    "Sherpa_CT10_ggllll_qsf4"             : 0.02095*0.91,       # 363082
+    "Sherpa_CT10_ggllll_qsf025"         : 0.02095*0.91,       # 363083
+
+    "Sherpa_CT10_ggllvv"             : 0.85492*0.91,       # 361077
+    "Sherpa_CT10_ggllvv_fac4"             : 0.85492*0.91,       # 363084
+    "Sherpa_CT10_ggllvv_fac025"         : 0.85492*0.91,       # 363085
+    "Sherpa_CT10_ggllvv_renorm4"         : 0.85492*0.91,       # 363086
+    "Sherpa_CT10_ggllvv_renorm025"         : 0.85492*0.91,       # 363087
+    "Sherpa_CT10_ggllvv_qsf4"             : 0.85492*0.91,       # 363088
+    "Sherpa_CT10_ggllvv_qsf025"         : 0.85492*0.91,       # 363089
+
+    "Sherpa_CT10_WqqZll_SHv21_improved"     : 3.4234*0.91*1.0000E+00,       # 361094
+    "Sherpa_CT10_ZqqZll_SHv21_improved"     : 16.445*0.91*1.4307E-01,       # 361096
+
+    "PhHppEG_AU2CT10_WlnuWlnu"                 : 10.628,       # 361591
+    "PowhegPy8EG_CT10nloME_AZNLOCTEQ6L1_WWlvlv"     : 10.631,       # 361600
+
+    "Sherpa_CT10_WqqZll_SHv21_improved_fac4"         : 3.4675*0.91,    # 363018
+    "Sherpa_CT10_WqqZll_SHv21_improved_fac025"         : 3.385*0.91,       # 363019
+    "Sherpa_CT10_WqqZll_SHv21_improved_renorm4"     : 3.04*0.91,       # 363020
+    "Sherpa_CT10_WqqZll_SHv21_improved_renorm025"     : 4.012*0.91,       # 363021
+    "Sherpa_CT10_WqqZll_SHv21_improved_qsf4"         : 3.3616*0.91,    # 363022
+    "Sherpa_CT10_WqqZll_SHv21_improved_qsf025"         : 3.4638*0.91,    # 363023
+
+    "Sherpa_CT10_ZqqZll_SHv21_improved_fac4"         : 16.662*0.91*1.4317E-01,    # 363030
+    "Sherpa_CT10_ZqqZll_SHv21_improved_fac025"         : 16.135*0.91*1.4355E-01,    # 363031
+    "Sherpa_CT10_ZqqZll_SHv21_improved_renorm4"     : 15.331*0.91*1.4296E-01,    # 363032
+    "Sherpa_CT10_ZqqZll_SHv21_improved_renorm025"     : 17.843*0.91*1.4321E-01,    # 363033
+    "Sherpa_CT10_ZqqZll_SHv21_improved_qsf4"         : 16.071*0.91*1.4353E-01,    # 363034
+    "Sherpa_CT10_ZqqZll_SHv21_improved_qsf025"         : 16.858*0.91*1.4331E-01,    # 363035
+
+    "PowhegPythiaEvtGen_P2012radHi_ttbar_hdamp345_down_nonallhad"     : 783.73*1.0613*0.543,    # 410001
+    "PowhegPythiaEvtGen_P2012radLo_ttbar_hdamp172_up_nonallhad"     : 611.1*1.3611*0.543,        # 410002
+    "aMcAtNloHerwigppEvtGen_ttbar_nonallhad"                 : 694.59*1.1975*0.543,    # 410003
+    "PowhegHerwigppEvtGen_UEEE5_ttbar_hdamp172p5_nonallhad"     : 696.32*1.1926*0.543,    # 410004
+
+    "PowhegPythiaEvtGen_P2012_ttbar_hdamp172p5_dil"             : 696.12*1.1949*0.1053,    # 410009
+    "PowhegPythiaEvtGen_P2012_Wt_dilepton_top"                 : 3.5835*1.054,        # 410015
+    "PowhegPythiaEvtGen_P2012radHi_Wt_dilepton_top"             : 3.5835*1.054,        # 410103
+    "PowhegPythiaEvtGen_P2012radLo_Wt_dilepton_top"             : 3.5835*1.054,        # 410104
+    "PowhegHerwigppEvtGen_UEEE5_Wt_dilepton_top"             : 3.5835*1.054,        # 410145
+
+    "PowhegPythiaEvtGen_P2012_Wt_dilepton_antitop"             : 3.5814*1.054,        # 410016
+    "PowhegPythiaEvtGen_P2012radHi_Wt_dilepton_antitop"             : 3.5814*1.054,        # 410105
+    "PowhegPythiaEvtGen_P2012radLo_Wt_dilepton_antitop"             : 3.5814*1.054,        # 410106
+    "PowhegHerwigppEvtGen_UEEE5_Wt_dilepton_antitop"             : 3.5814*1.054,        # 410146
+
+    "PowhegPythiaEvtGen_P2012_Wt_DS_dilepton_top"             : 3.4133*1.054,        # 410064
+    "PowhegPythiaEvtGen_P2012_Wt_DS_dilepton_antitop"             : 3.409*1.054,            # 410065
+
+    "aMcAtNloHerwigppEvtGen_UEEE5_CTEQ6L1_CT10ME_Wt_dilepton"     : 7.871,            # 410164
+
+        "Sherpa_ggllll"          : 14.022*0.91,   # 361068 https://twiki.cern.ch/twiki/bin/view/AtlasProtected/MC15SystematicUncertainties#VV_Diboson_V_W_Z 24/11/15
+        "Sherpa_ggllll_fac4"     : 14.022*0.91,   # 363072
+        "Sherpa_ggllll_fac025"   : 14.022*0.91,   # 363073
+        "Sherpa_ggllll_renorm4"  : 14.022*0.91,   # 363074
+        "Sherpa_ggllll_renorm025": 14.022*0.91,   # 363075
+        "Sherpa_ggllll_qsf4"     : 14.022*0.91,   # 363076
+        "Sherpa_ggllll_qsf025"   : 14.022*0.91,   # 363077
+        "Sherpa_ggllll_ckkw15"   : 14.022*0.91,   # 363076  
+        "Sherpa_ggllll_ckkw30"   : 14.022*0.91,   # 363077
+        "Sherpa_llvv"          : 14.022*0.91,
+        "Sherpa_llvv_fac4"     : 14.022*0.91,
+        "Sherpa_llvv_fac025"   : 14.022*0.91,
+        "Sherpa_llvv_renorm4"  : 14.022*0.91,
+        "Sherpa_llvv_renorm025": 14.022*0.91,
+        "Sherpa_llvv_qsf4"     : 14.022*0.91,
+        "Sherpa_llvv_qsf025"   : 14.022*0.91,
+        "Sherpa_llvv_ckkw15"   : 14.022*0.91,
+        "Sherpa_llvv_ckkw30"   : 14.022*0.91,
+        "aMcAtNloHerwigpp_Wt"  : 7.165,
+        "PowhegHerwigpp_Wt"    : 3.584,
+        "PowhegHerwigpp_Wtbar" : 3.581,
+        "Sherpa_lvlv"          : 14.022*0.91,   # 361068 https://twiki.cern.ch/twiki/bin/view/AtlasProtected/MC15SystematicUncertainties#VV_Diboson_V_W_Z 24/11/15
+        "Sherpa_lvlv_fac4"     : 14.022*0.91,   # 363072
+        "Sherpa_lvlv_fac025"   : 14.022*0.91,   # 363073
+        "Sherpa_lvlv_renorm4"  : 14.022*0.91,   # 363074
+        "Sherpa_lvlv_renorm025": 14.022*0.91,   # 363075
+        "Sherpa_lvlv_qsf4"     : 14.022*0.91,   # 363076
+        "Sherpa_lvlv_qsf025"   : 14.022*0.91,   # 363077
+        "Powheg_WWlvlv"        : 10.631,        # 361600
+        "Powheg_ZZllvv"        : 0.92498,       # 361604
+        "Powheg_ttbar"         : 831.76*0.543,  # 410000 => 696.11  1.1949  0.543
+        "Powheg_ttbar_radHi"   : 831.76*0.543,  # 410001 => 783.73  1.0613  0.543
+        "Powheg_ttbar_radLo"   : 831.76*0.543,  # 410002 => 611.1   1.3611  0.543
+        "aMCatNLO_ttbar"       : 831.76*0.543,  # 410003 => 694.59  1.1975  0.543
+        "PowhegHpp_ttbar"      : 831.76*0.543,  # 410004 => 696.32  1.1926  0.543
+        "Sherpa_ttbar_410021"  : 78.73*1.17,    # 410021 => 78.73   1.17    1.
+        "Sherpa_ttbar_410189"  : 76.333*1.1484, # 410021 => https://twiki.cern.ch/twiki/bin/view/AtlasProtected/MC15TTbarSamplesPMG
+        "Herwigpp_250vs160"    : 21.5949*0.040720, # Official
+        "Madgraph_250vs160"    : 21.5949*0.048089, # Official
+        "MadgraphL_250vs160"   : 21.5949*0.048089, # Official
+        "MadgraphR_250vs160"   : 21.5949*0.048089, # Official
+        "Herwigpp_300vs150"    : 8.51615*0.061771, # Official
+        "Madgraph_300vs150"    : 8.51615*0.078449, # Official
+        "MadgraphR_300vs150"   : 8.51615*0.078449, # Official
+        "HerwigppR_300vs180"   : 8.51615*0.047643, # Official
+        "Madgraph_300vs180"    : 8.51615*0.060136, # Official
+        "MadgraphM_300vs180"   : 8.51615*0.060136, # Official
+        "MadgraphR_300vs180"   : 8.51615*0.060136, # Official
+        "MadgraphL_300vs180"   : 8.51615*0.060136, # Official
+        "MadgraphFR_300vs180"  : 8.51615*0.216*0.216*0.7123521869, # Private
+        "MadgraphT_300vs180"   : 8.51615*0.216*0.216*0.7150234369, # Private
+        "HerwigppL_250vs160"   : 21.5949*0.04002850029, # Private
+        "HerwigppL_300vs180"   : 8.51615*0.04516371848, # Private
+        "Madgraph_250vs125"    : 1,  # Dummy
+        "MadgraphM_250vs125"   : 1,  # Dummy
+        "MadgraphL_250vs125"   : 1,  # Dummy
+        "MadgraphR_250vs125"   : 1,  # Dummy
+        "MadgraphFL_250vs125"  : 1,  # Dummy
+        "HerwigppL_250vs125"   : 1,  # Dummy
+        "SerhanFL_250vs125"    : 1,  # Dummy
+        "SerhanFR_250vs125"    : 1,  # Dummy
+        "MadgraphSlep_100vs1"  : 1,  # Dummy
+    }.get(filename,"")
+
+
+def getCrossSection1(filename):
     return {
         "Sherpa_ggllll"          : 14.022*0.91,   # 361068 https://twiki.cern.ch/twiki/bin/view/AtlasProtected/MC15SystematicUncertainties#VV_Diboson_V_W_Z 24/11/15
         "Sherpa_ggllll_fac4"     : 14.022*0.91,   # 363072
@@ -249,7 +485,7 @@ def getRegionTCut(region):
     centralJetVeto20  = "&&Sum$(nonbjet_pt>20)==0"
     centralJetVeto30  = "&&Sum$(nonbjet_pt>30)==0"
     forwardJetVeto    = "&&Sum$(forwardjet_pt>30)==0"
-    forwardJetVeto    = "&&Sum$(jet_pt>30)==0"
+#     forwardJetVeto    = "&&Sum$(jet_pt>30)==0"
 
     DFSel = isOSDF + bVeto + centralJetVeto30 + forwardJetVeto
     SFSel = isOSSF + bVeto + centralJetVeto20 + forwardJetVeto
@@ -269,6 +505,9 @@ def getRegionTCut(region):
         "EW2L_CR_DF"              : "("  + DFSel + "&&mT2ll>50&&mT2ll<75)",
         "EW2L_TopVR_DF"           : "("  + isOSDF + bSelection + centralJetVeto30 + forwardJetVeto + "&&mT2ll>70&&mT2ll<120)",
         "EW2L_TopVR0_DF"           : "(" + isOSDF + centralJetVeto30 + forwardJetVeto + "&&mT2ll>70&&mT2ll<120)",
+
+        "EW2L_SR_XF"              : "("  + diLep + bVeto + centralJetVeto30 + forwardJetVeto + ")",
+        "EW2L_TopVR_XF"           : "("  + diLep + bSelection + centralJetVeto30 + forwardJetVeto + "&&mT2ll>70&&mT2ll<120)",
 
         "EW2L_NOmT2_DF"           : "("  + DFSel + ")",
         "EW2L_NOmT2NOmll_SF"      : "("  + SFSel + ")",
