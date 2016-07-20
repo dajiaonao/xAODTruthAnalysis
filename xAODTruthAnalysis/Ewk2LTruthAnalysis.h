@@ -36,6 +36,7 @@ public:
   bool isRecoSample; // truth content is a bit different
   float CF_l0_pt;
   float CF_l1_pt;
+  bool CF_doPDFweight;
 
   // Output Tree
   std::string outputFileName;

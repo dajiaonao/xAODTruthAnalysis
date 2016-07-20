@@ -61,7 +61,7 @@ ClassImp(Ewk2LTruthAnalysis)
 
 
 
-Ewk2LTruthAnalysis :: Ewk2LTruthAnalysis ():CF_l0_pt(10000.),CF_l1_pt(10000.)
+Ewk2LTruthAnalysis :: Ewk2LTruthAnalysis ():CF_l0_pt(10000.),CF_l1_pt(10000.),CF_doPDFweight(true)
 {
   // Here you put any code for the base initialization of variables,
   // e.g. initialize all pointers to 0.  Note that you should only put
@@ -495,7 +495,7 @@ EL::StatusCode Ewk2LTruthAnalysis :: execute ()
     /// pdf reweighting
     const xAOD::TruthEventContainer* truthEvents = 0;
     EL_RETURN_CHECK("execute()",event->retrieve( truthEvents, "TruthEvents"));
-    if(truthEvents->size()>0){
+    if(CF_doPDFweight && truthEvents->size()>0){
       auto pf = (*truthEvents)[0]->pdfInfo();
 
       for (size_t imem = 0; imem < m_pdfs.size(); imem++) {

@@ -532,7 +532,7 @@ def checkVary(r0_df, vary, opoints):
     return uncert
 
 
-def test3():
+def runVVSF():
     sf1 = None
     opoints=[90, 120, 150]
     vv1 = []
@@ -856,6 +856,6 @@ def runTopSF():
 if __name__ == '__main__':
     useAtlasStyle()
     gStyle.SetOptFit(0)
-    runTopSF()
-#     test3()
+#     runTopSF()
+    runVVSF()
 
