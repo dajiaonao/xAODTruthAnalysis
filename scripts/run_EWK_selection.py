@@ -145,6 +145,8 @@ alg.isRecoSample = options.isRecoSample;
 alg.CF_l0_pt = 25000.
 alg.CF_l1_pt = 20000.
 
+alg.CF_doPDFweight = False
+
 #output -- done inside the alg
 output = ROOT.EL.OutputStream("myOutput")
 job.outputAdd(output)

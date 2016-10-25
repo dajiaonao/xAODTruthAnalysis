@@ -6,6 +6,16 @@ def getROOTFileName(filename):
 #     dir0 = '/net/ustc_home/dzhang/work/bsmSearch/ewSUSY/analysis/syst1/run/r3/fetch/data-myOutput/'
 #     dir0 = '/net/s3_datac/dzhang/outSpace/susyEW_out/sys1_Jul11a/fetch/data-myOutput/'
     dir0 = '/net/s3_datac/dzhang/outSpace/susyEW_out/sys1_Jul12b/fetch/data-myOutput/'
+    dirb = '/net/s3_datac/dzhang/outSpace/susyEW_out/sys1_Aug15b/fetch/data-myOutput/mc_*.'
+    dirc = '/net/s3_datac/dzhang/outSpace/susyEW_out/sys1_Aug15c/fetch/data-myOutput/mc_*.'
+    dird = '/net/s3_datac/dzhang/outSpace/susyEW_out/sys1_Aug15d/fetch/data-myOutput/mc_*.'
+    dire = '/net/s3_datac/dzhang/outSpace/susyEW_out/sys1_Aug15e/fetch/data-myOutput/mc_*.'
+    dirf = '/net/s3_datac/dzhang/outSpace/susyEW_out/sys1_Aug15f/fetch/data-myOutput/mc_*.'
+    dirg = '/net/s3_datac/dzhang/outSpace/susyEW_out/sys1_Aug15g/fetch/data-myOutput/mc_*.'
+    dirh = '/net/s3_datac/dzhang/outSpace/susyEW_out/sys1_Aug15h/fetch/data-myOutput/mc_*.'
+    diri = '/net/s3_datac/dzhang/outSpace/susyEW_out/sys1_Aug15i/fetch/data-myOutput/mc_*.'
+    dirj = '/net/s3_datac/dzhang/outSpace/susyEW_out/sys1_Aug15j/fetch/data-myOutput/mc_*.'
+
     return {
             "Sherpa_CT10_ggllll"          : dir0+"Sherpa_CT10_ggllll-*.root",
             "Sherpa_CT10_ggllll_fac025"   : dir0+"Sherpa_CT10_ggllll_fac025-*.root",
@@ -24,24 +34,33 @@ def getROOTFileName(filename):
             "Sherpa_CT10_llvv_ckkw15"     : dir0+"Sherpa_CT10_llvv_ckkw15-*.root",
             "Sherpa_CT10_llvv_ckkw30"     : dir0+"Sherpa_CT10_llvv_ckkw30-*.root",
 
-            "aMcAtNloHerwigppEvtGen_ttbar_nonallhad"    : dir0+"aMcAtNloHerwigppEvtGen_ttbar_nonallhad-*.root",
-            "aMcAtNloHerwigppEvtGen_UEEE5_CTEQ6L1_CT10ME_Wt_dilepton"    : dir0+"aMcAtNloHerwigppEvtGen_UEEE5_CTEQ6L1_CT10ME_Wt_dilepton-*.root",
+            "aMcAtNloHerwigppEvtGen_ttbar_nonallhad"    : dirj+"aMcAtNloHerwigppEvtGen_ttbar_nonallhad-*.root",
+            "PowhegPythiaEvtGen_P2012_ttbar_hdamp172p5_nonallhad": dirg+"PowhegPythiaEvtGen_P2012_ttbar_hdamp172p5_nonallhad-*.root",
+            "PowhegPythiaEvtGen_P2012_ttbar_hdamp170_nonallhad":   dirc+"PowhegPythiaEvtGen_P2012_ttbar_hdamp170_nonallhad-*.root",
+            "PowhegPythiaEvtGen_P2012_ttbar_hdamp171p5_nonallhad": diri+"PowhegPythiaEvtGen_P2012_ttbar_hdamp171p5_nonallhad-*.root",
+            "PowhegPythiaEvtGen_P2012_ttbar_hdamp173p5_nonallhad": dirc+"PowhegPythiaEvtGen_P2012_ttbar_hdamp173p5_nonallhad-*.root",
+            "PowhegPythiaEvtGen_P2012_ttbar_hdamp175_nonallhad":   dirg+"PowhegPythiaEvtGen_P2012_ttbar_hdamp175_nonallhad-*.root",
+            "PowhegPythiaEvtGen_P2012_ttbar_hdamp177p5_nonallhad": dirg+"PowhegPythiaEvtGen_P2012_ttbar_hdamp177p5_nonallhad-*.root",
+            "PowhegPythiaEvtGen_P2012_ttbar_hdamp172p5_dil"    : dirh+"PowhegPythiaEvtGen_P2012_ttbar_hdamp172p5_dil-*.root", ## nominal
+            "PowhegHerwigppEvtGen_UEEE5_ttbar_hdamp172p5_nonallhad"    : dirj+"PowhegHerwigppEvtGen_UEEE5_ttbar_hdamp172p5_nonallhad-*.root",
+#             "PowhegHerwigppEvtGen_UEEE5_ttbar_hdamp172p5_nonallhad"    : dirc+"PowhegHerwigppEvtGen_UEEE5_ttbar_hdamp172p5_nonallhad-*.root",
+            "PowhegPythiaEvtGen_P2012radLo_ttbar_hdamp172_up_nonallhad"    : dirc+"PowhegPythiaEvtGen_P2012radLo_ttbar_hdamp172_up_nonallhad-*.root",
+            "PowhegPythiaEvtGen_P2012radHi_ttbar_hdamp345_down_nonallhad"    : dirc+"PowhegPythiaEvtGen_P2012radHi_ttbar_hdamp345_down_nonallhad-*.root",
+
+
+            "aMcAtNloHerwigppEvtGen_UEEE5_CTEQ6L1_CT10ME_Wt_dilepton"    : dirc+"aMcAtNloHerwigppEvtGen_UEEE5_CTEQ6L1_CT10ME_Wt_dilepton-*.root",
+            "PowhegHerwigppEvtGen_UEEE5_Wt_dilepton_antitop"    : dirc+"PowhegHerwigppEvtGen_UEEE5_Wt_dilepton_antitop-*.root",
+            "PowhegHerwigppEvtGen_UEEE5_Wt_dilepton_top"    : dirc+"PowhegHerwigppEvtGen_UEEE5_Wt_dilepton_top-*.root",
+            "PowhegPythiaEvtGen_P2012radHi_Wt_dilepton_antitop"    : dirc+"PowhegPythiaEvtGen_P2012radHi_Wt_dilepton_antitop-*.root",
+            "PowhegPythiaEvtGen_P2012radHi_Wt_dilepton_top"    : dirc+"PowhegPythiaEvtGen_P2012radHi_Wt_dilepton_top-*.root",
+            "PowhegPythiaEvtGen_P2012radLo_Wt_dilepton_antitop"    : dirc+"PowhegPythiaEvtGen_P2012radLo_Wt_dilepton_antitop-*.root",
+            "PowhegPythiaEvtGen_P2012radLo_Wt_dilepton_top"    : dirc+"PowhegPythiaEvtGen_P2012radLo_Wt_dilepton_top-*.root",
+            "PowhegPythiaEvtGen_P2012_Wt_dilepton_antitop"    : dirb+"PowhegPythiaEvtGen_P2012_Wt_dilepton_antitop-*.root", ## nominal
+            "PowhegPythiaEvtGen_P2012_Wt_dilepton_top"    : dirb+"PowhegPythiaEvtGen_P2012_Wt_dilepton_top-*.root", ## nominal
+            "PowhegPythiaEvtGen_P2012_Wt_DS_dilepton_antitop"    : dirc+"PowhegPythiaEvtGen_P2012_Wt_DS_dilepton_antitop-*.root",
+            "PowhegPythiaEvtGen_P2012_Wt_DS_dilepton_top"    : dirc+"PowhegPythiaEvtGen_P2012_Wt_DS_dilepton_top-*.root",
             "PhHppEG_AU2CT10_WlnuWlnu"    : dir0+"PhHppEG_AU2CT10_WlnuWlnu-*.root",
-            "PowhegHerwigppEvtGen_UEEE5_ttbar_hdamp172p5_nonallhad"    : dir0+"PowhegHerwigppEvtGen_UEEE5_ttbar_hdamp172p5_nonallhad-*.root",
-            "PowhegHerwigppEvtGen_UEEE5_Wt_dilepton_antitop"    : dir0+"PowhegHerwigppEvtGen_UEEE5_Wt_dilepton_antitop-*.root",
-            "PowhegHerwigppEvtGen_UEEE5_Wt_dilepton_top"    : dir0+"PowhegHerwigppEvtGen_UEEE5_Wt_dilepton_top-*.root",
             "PowhegPy8EG_CT10nloME_AZNLOCTEQ6L1_WWlvlv"    : dir0+"PowhegPy8EG_CT10nloME_AZNLOCTEQ6L1_WWlvlv-*.root",
-            "PowhegPythiaEvtGen_P2012radHi_ttbar_hdamp345_down_nonallhad"    : dir0+"PowhegPythiaEvtGen_P2012radHi_ttbar_hdamp345_down_nonallhad-*.root",
-            "PowhegPythiaEvtGen_P2012radHi_Wt_dilepton_antitop"    : dir0+"PowhegPythiaEvtGen_P2012radHi_Wt_dilepton_antitop-*.root",
-            "PowhegPythiaEvtGen_P2012radHi_Wt_dilepton_top"    : dir0+"PowhegPythiaEvtGen_P2012radHi_Wt_dilepton_top-*.root",
-            "PowhegPythiaEvtGen_P2012radLo_ttbar_hdamp172_up_nonallhad"    : dir0+"PowhegPythiaEvtGen_P2012radLo_ttbar_hdamp172_up_nonallhad-*.root",
-            "PowhegPythiaEvtGen_P2012radLo_Wt_dilepton_antitop"    : dir0+"PowhegPythiaEvtGen_P2012radLo_Wt_dilepton_antitop-*.root",
-            "PowhegPythiaEvtGen_P2012radLo_Wt_dilepton_top"    : dir0+"PowhegPythiaEvtGen_P2012radLo_Wt_dilepton_top-*.root",
-            "PowhegPythiaEvtGen_P2012_ttbar_hdamp172p5_dil"    : dir0+"PowhegPythiaEvtGen_P2012_ttbar_hdamp172p5_dil-*.root", ## nominal
-            "PowhegPythiaEvtGen_P2012_Wt_dilepton_antitop"    : dir0+"PowhegPythiaEvtGen_P2012_Wt_dilepton_antitop-*.root", ## nominal
-            "PowhegPythiaEvtGen_P2012_Wt_dilepton_top"    : dir0+"PowhegPythiaEvtGen_P2012_Wt_dilepton_top-*.root", ## nominal
-            "PowhegPythiaEvtGen_P2012_Wt_DS_dilepton_antitop"    : dir0+"PowhegPythiaEvtGen_P2012_Wt_DS_dilepton_antitop-*.root",
-            "PowhegPythiaEvtGen_P2012_Wt_DS_dilepton_top"    : dir0+"PowhegPythiaEvtGen_P2012_Wt_DS_dilepton_top-*.root",
             "Sherpa_CT10_ggllll"    : dir0+"Sherpa_CT10_ggllll-*.root",
             "Sherpa_CT10_ggllll_fac025"    : dir0+"Sherpa_CT10_ggllll_fac025-*.root",
             "Sherpa_CT10_ggllll_fac4"    : dir0+"Sherpa_CT10_ggllll_fac4-*.root",
@@ -225,25 +244,28 @@ def getCrossSection(filename):
     "Sherpa_CT10_ZqqZll_SHv21_improved_qsf4"         : 16.071*0.91*1.4353E-01,    # 363034
     "Sherpa_CT10_ZqqZll_SHv21_improved_qsf025"         : 16.858*0.91*1.4331E-01,    # 363035
 
+    "PowhegPythiaEvtGen_P2012_ttbar_hdamp172p5_dil"             : 696.12*1.1949*0.1053,    # 410009
     "PowhegPythiaEvtGen_P2012radHi_ttbar_hdamp345_down_nonallhad"     : 783.73*1.0613*0.543,    # 410001
     "PowhegPythiaEvtGen_P2012radLo_ttbar_hdamp172_up_nonallhad"     : 611.1*1.3611*0.543,        # 410002
     "aMcAtNloHerwigppEvtGen_ttbar_nonallhad"                 : 694.59*1.1975*0.543,    # 410003
     "PowhegHerwigppEvtGen_UEEE5_ttbar_hdamp172p5_nonallhad"     : 696.32*1.1926*0.543,    # 410004
+    "PowhegPythiaEvtGen_P2012_ttbar_hdamp172p5_nonallhad": 696.11*1.1949*0.543,
+    "PowhegPythiaEvtGen_P2012_ttbar_hdamp170_nonallhad":  696.11*1.1949*0.543,
+    "PowhegPythiaEvtGen_P2012_ttbar_hdamp171p5_nonallhad": 696.11*1.1949*0.543,
+    "PowhegPythiaEvtGen_P2012_ttbar_hdamp173p5_nonallhad": 696.11*1.1949*0.543,
+    "PowhegPythiaEvtGen_P2012_ttbar_hdamp175_nonallhad": 696.11*1.1949*0.543,
+    "PowhegPythiaEvtGen_P2012_ttbar_hdamp177p5_nonallhad": 696.11*1.1949*0.543,
 
-    "PowhegPythiaEvtGen_P2012_ttbar_hdamp172p5_dil"             : 696.12*1.1949*0.1053,    # 410009
     "PowhegPythiaEvtGen_P2012_Wt_dilepton_top"                 : 3.5835*1.054,        # 410015
-    "PowhegPythiaEvtGen_P2012radHi_Wt_dilepton_top"             : 3.5835*1.054,        # 410103
-    "PowhegPythiaEvtGen_P2012radLo_Wt_dilepton_top"             : 3.5835*1.054,        # 410104
-    "PowhegHerwigppEvtGen_UEEE5_Wt_dilepton_top"             : 3.5835*1.054,        # 410145
-
     "PowhegPythiaEvtGen_P2012_Wt_dilepton_antitop"             : 3.5814*1.054,        # 410016
+    "PowhegPythiaEvtGen_P2012radHi_Wt_dilepton_top"             : 3.5835*1.054,        # 410103
     "PowhegPythiaEvtGen_P2012radHi_Wt_dilepton_antitop"             : 3.5814*1.054,        # 410105
+    "PowhegPythiaEvtGen_P2012radLo_Wt_dilepton_top"             : 3.5835*1.054,        # 410104
     "PowhegPythiaEvtGen_P2012radLo_Wt_dilepton_antitop"             : 3.5814*1.054,        # 410106
+    "PowhegHerwigppEvtGen_UEEE5_Wt_dilepton_top"             : 3.5835*1.054,        # 410145
     "PowhegHerwigppEvtGen_UEEE5_Wt_dilepton_antitop"             : 3.5814*1.054,        # 410146
-
     "PowhegPythiaEvtGen_P2012_Wt_DS_dilepton_top"             : 3.4133*1.054,        # 410064
     "PowhegPythiaEvtGen_P2012_Wt_DS_dilepton_antitop"             : 3.409*1.054,            # 410065
-
     "aMcAtNloHerwigppEvtGen_UEEE5_CTEQ6L1_CT10ME_Wt_dilepton"     : 7.871,            # 410164
 
         "Sherpa_ggllll"          : 14.022*0.91,   # 361068 https://twiki.cern.ch/twiki/bin/view/AtlasProtected/MC15SystematicUncertainties#VV_Diboson_V_W_Z 24/11/15
@@ -508,9 +530,15 @@ def getRegionTCut(region):
 
         "EW2L_SR_XF"              : "("  + diLep + bVeto + centralJetVeto30 + forwardJetVeto + ")",
         "EW2L_TopVR_XF"           : "("  + diLep + bSelection + centralJetVeto30 + forwardJetVeto + "&&mT2ll>70&&mT2ll<120)",
+        "EW2L_TopVR_XF_noMT2"     : "("  + diLep + bSelection + centralJetVeto30 + forwardJetVeto + ')',
 
         "EW2L_NOmT2_DF"           : "("  + DFSel + ")",
         "EW2L_NOmT2NOmll_SF"      : "("  + SFSel + ")",
+
+        "EW2L_looseSR_SF"         : "("  + isOSSF + zVeto + ")",
+        "EW2L_looseCR_SF"         : "("  + isOSSF + zSel  + "&&mT2ll>90)",
+        "EW2L_looseSR_DF"         : "("  + isOSDF + ")",
+        "EW2L_looseCR_DF"         : "("  + isOSDF + "&&mT2ll>50&&mT2ll<75)",
     }.get(region,"1") # 1 is default if region is not found
 
 # Define histogram bins

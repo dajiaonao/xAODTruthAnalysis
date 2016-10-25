@@ -464,11 +464,18 @@ def get_DF_SF(options, mT2CutList=[90, 120, 150], showPlot=False):
 def checkVary(r0_df, vary, opoints):
     options = oo1()
     options.varname    = "mT2ll"                                       # Dummy variable
-#     options.regionname = "EW2L_CR_DF,EW2L_SR_DF"        #               # 0 is SR 1 is CR
-    options.regionname = "EW2L_CR_SF,EW2L_SR_SF"        #               # 0 is SR 1 is CR
+    options.regionname = "EW2L_CR_DF,EW2L_SR_DF"        #               # 0 is SR 1 is CR
+#     options.regionname = "EW2L_CR_SF,EW2L_SR_SF"        #               # 0 is SR 1 is CR
+#     options.regionname = "EW2L_looseCR_SF,EW2L_looseSR_SF"        #               # 0 is SR 1 is CR
+#     options.regionname = "EW2L_looseCR_DF,EW2L_looseSR_DF"        #               # 0 is SR 1 is CR
+    funcname = 'pol1'
+    showInfo = 'DF'
+    sTag = 'r2_ST_pol1_DF_'
+
     options.luminosity = 10000.
-    funcname = 'pol2'
     mtb = range(60,200,10)
+
+    lt = TLatex()
 
     if not r0_df:
         options.inputname  = vary[1][2]
@@ -490,7 +497,7 @@ def checkVary(r0_df, vary, opoints):
         g2.SetPoint(i, mtb[i]-shift, (r2_df[i+1][2]-r0_df[i+1][2])/r0_df[i+1][2]*100)
         g2.SetPointError(i, 0, r2_df[i+1][3])
 
-    lg = TLegend(0.2, 0.7, 0.4, 0.9)
+    lg = TLegend(0.2, 0.7, 0.55, 0.9)
     lg.SetFillStyle(0)
 
     g0.SetMarkerSize(0.01)
@@ -501,7 +508,8 @@ def checkVary(r0_df, vary, opoints):
     g1.SetLineColor(2)
     g1.SetMarkerStyle(23)
     g1.Draw('sameP')
-    checkFit(g1.Fit(funcname, 'S'))
+#     checkFit(g1.Fit(funcname, 'S'))
+    fr1 = g1.Fit(funcname, 'S')
     fun1 = g1.GetFunction(funcname)
     fun1.SetLineColor(2)
 
@@ -509,15 +517,15 @@ def checkVary(r0_df, vary, opoints):
     g2.SetMarkerStyle(26)
     g2.SetLineColor(4)
     g2.Draw('sameP')
-    checkFit(g2.Fit(funcname, 'S'))
+#     checkFit(g2.Fit(funcname, 'S'))
+    fr2 = g2.Fit(funcname, 'S')
     fun2 = g2.GetFunction(funcname)
     fun2.SetLineColor(4)
 
     lg.AddEntry(g0, vary[1][1], 'l')
-    lg.AddEntry(g1, vary[2][1], 'p')
-    lg.AddEntry(g2, vary[3][1], 'p')
+    lg.AddEntry(g1, vary[2][1]+' (#chi^{2}='+'{0:.1f}'.format(fr1.Chi2())+')', 'p')
+    lg.AddEntry(g2, vary[3][1]+' (#chi^{2}='+'{0:.1f}'.format(fr2.Chi2())+')', 'p')
     lg.Draw()
-
 
     uncert = []
     for x in opoints:
@@ -525,6 +533,8 @@ def checkVary(r0_df, vary, opoints):
         e2 = fun2.Eval(x)
         uncert.append((max(abs(e1),abs(e2)), e1, e2))
     print uncert
+
+    if showInfo: lt.DrawLatexNDC(0.2,0.3,showInfo)
 
     gPad.Update()
     waitRootCmd(sDir+sTag+vary[0])
@@ -536,10 +546,10 @@ def runVVSF():
     sf1 = None
     opoints=[90, 120, 150]
     vv1 = []
-    vv1.append(['renorm', ('norm', 'Nominal', 'Sherpa_llvv'),('renorm4', 'renorm4', 'Sherpa_llvv_renorm4'), ('renorm025', 'renorm025', 'Sherpa_llvv_renorm025')])
-    vv1.append(['qsf', ('norm', 'Nominal', 'Sherpa_llvv'),('qsf4', 'qsf4', 'Sherpa_llvv_qsf4'), ('qsf025', 'qsf025', 'Sherpa_llvv_qsf025')])
-    vv1.append(['fac', ('norm', 'Nominal', 'Sherpa_llvv'),('fac4', 'fac4', 'Sherpa_llvv_fac4'), ('fac025', 'fac025', 'Sherpa_llvv_fac025')])
-    vv1.append(['ckkw', ('norm', 'Nominal', 'Sherpa_llvv'),('ckkw15', 'ckkw15', 'Sherpa_llvv_ckkw15'), ('ckkw30', 'ckkw30', 'Sherpa_llvv_ckkw30')])
+    vv1.append(['renorm', ('norm', 'Nominal', 'Sherpa_CT10_llvv'),('renorm4', 'renorm4', 'Sherpa_CT10_llvv_renorm4'), ('renorm025', 'renorm025', 'Sherpa_CT10_llvv_renorm025')])
+    vv1.append(['qsf', ('norm', 'Nominal', 'Sherpa_CT10_llvv'),('qsf4', 'qsf4', 'Sherpa_CT10_llvv_qsf4'), ('qsf025', 'qsf025', 'Sherpa_CT10_llvv_qsf025')])
+    vv1.append(['fac', ('norm', 'Nominal', 'Sherpa_CT10_llvv'),('fac4', 'fac4', 'Sherpa_CT10_llvv_fac4'), ('fac025', 'fac025', 'Sherpa_CT10_llvv_fac025')])
+    vv1.append(['ckkw', ('norm', 'Nominal', 'Sherpa_CT10_llvv'),('ckkw15', 'ckkw15', 'Sherpa_CT10_llvv_ckkw15'), ('ckkw30', 'ckkw30', 'Sherpa_CT10_llvv_ckkw30')])
 
     allS = [0 for x in opoints]
     for v1 in vv1:
